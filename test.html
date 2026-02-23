@@ -1573,7 +1573,7 @@ h4{font-size: 23px;}
             };
 
             // เก็บข้อมูลใน localStorage
-           fetch('http://localhost:3000/survey', {
+           fetch('/api/survey', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -1616,7 +1616,7 @@ h4{font-size: 23px;}
         }
 
         function viewSurveyResults() {
-            fetch('http://localhost:3000/survey')
+            fetch('/api/survey')
   .then(res => res.json())
   .then(allSurveys => {
 });
