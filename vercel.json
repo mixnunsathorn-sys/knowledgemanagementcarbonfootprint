@@ -29,8 +29,5 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ],
-  "env": {
-    "DATABASE_URL": "@DATABASE_URL"
-  }
+  ]
 }
