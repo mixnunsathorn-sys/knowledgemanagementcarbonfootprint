@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
 const path = require('path');
+// Vercel deployment with environment variables
 
 const app = express();
 app.use(cors());
