@@ -502,6 +502,7 @@ body {
                     <div class="menu-item" onclick="showPage('quiz')">
                         แบบประเมินการเรียนรู้
                     </div>
+                   
                 </div>
             </div>
         </div>
@@ -860,14 +861,43 @@ body {
             <div class="content-card">
                 <h2>แบบประเมินการเรียนรู้</h2>
                 
+                <!-- ฟอร์มกรอกข้อมูลส่วนตัว -->
+                <div id="infoForm" style="background: rgba(76, 175, 80, 0.2); padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 2px solid rgba(76, 175, 80, 0.5);">
+                    <h3 style="margin-bottom: 25px; color: #a8d5ba;">📋 กรุณากรอกข้อมูลส่วนตัวก่อนเริ่มแบบทดสอบ</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">ชื่อ <span style="color: #ff5252;">*</span></label>
+                            <input type="text" id="firstName" placeholder="ชื่อ" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 1em;" />
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">นามสกุล <span style="color: #ff5252;">*</span></label>
+                            <input type="text" id="lastName" placeholder="นามสกุล" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 1em;" />
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">อีเมล <span style="color: #ff5252;">*</span></label>
+                            <input type="email" id="email" placeholder="example@email.com" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 1em;" />
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">เบอร์โทร <span style="color: #ff5252;">*</span></label>
+                            <input type="tel" id="phone" placeholder="0812345678" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 1em;" />
+                        </div>
+                    </div>
+
+                    <p style="color: #c8e6c9; font-size: 0.95em; margin-top: 15px;">ℹ️ ข้อมูลนี้จะถูกเก็บเพื่อประเมินผลการเรียนรู้ของท่าน</p>
+                </div>
+                
                 <div class="quiz-section">
                     <h3>แบบทดสอบก่อนเรียน</h3>
-                    <button class="calc-btn" onclick="startQuiz('pre')">เริ่มทำแบบทดสอบ</button>
+                    <button class="calc-btn" onclick="validateAndStartQuiz('pre')">เริ่มทำแบบทดสอบ</button>
                 </div>
 
                 <div class="quiz-section">
                     <h3>แบบทดสอบหลังเรียน</h3>
-                    <button class="calc-btn" onclick="startQuiz('post')">เริ่มทำแบบทดสอบ</button>
+                    <button class="calc-btn" onclick="validateAndStartQuiz('post')">เริ่มทำแบบทดสอบ</button>
                 </div>
 
                 <div class="quiz-section">
@@ -885,14 +915,199 @@ body {
                 <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
             </div>
         </div>
-    </div>
+
 
     <script>
+        // ตัวแปรสำหรับเก็บข้อมูลส่วนตัว
+        let userInfo = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: ''
+        };
+
+        let currentQuizType = ''; // เก็บประเภทของแบบทดสอบ (pre/post)
+
         function showPage(pageId) {
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0, 0);
+        }
+
+        // ฟังก์ชันแสดงหน้า results และโหลดข้อมูล
+        function showResultsPage() {
+            showPage('results');
+            loadAssessmentData();
+        }
+
+        // ดึงข้อมูลจาก API และแสดงในตาราง
+        let assessmentData = [];
+        function loadAssessmentData() {
+            const resultsTable = document.getElementById('resultsTable');
+            resultsTable.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
+
+            fetch('/api/assessments')
+                .then(res => res.json())
+                .then(data => {
+                    assessmentData = data;
+                    displayAssessmentTable(data);
+                })
+                .catch(err => {
+                    resultsTable.innerHTML = `<p style="color: #ff5252; text-align: center;">❌ เกิดข้อผิดพลาดในการโหลดข้อมูล: ${err.message}</p>`;
+                    console.error('Error loading data:', err);
+                });
+        }
+
+        // แสดงตารางข้อมูล
+        function displayAssessmentTable(data) {
+            const resultsTable = document.getElementById('resultsTable');
+            
+            if (data.length === 0) {
+                resultsTable.innerHTML = '<p style="text-align: center; color: #81d4fa;">ยังไม่มีข้อมูลการทดสอบ</p>';
+                return;
+            }
+
+            let html = `
+                <table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+                    <thead style="background: rgba(76, 175, 80, 0.3);">
+                        <tr>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ลำดับที่</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ชื่อ-นามสกุล</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">อีเมล</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">เบอร์โทร</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ประเภท</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.2);">คะแนนเฉลี่ย</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">วันที่</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach((row, index) => {
+                const categoryDisplay = row.category === 'แบบทดสอบก่อนเรียน' ? '📚 ก่อนเรียน' : 
+                                       row.category === 'แบบทดสอบหลังเรียน' ? '✅ หลังเรียน' : row.category;
+                const scoreColor = row.avg_score >= 0.7 ? '#4CAF50' : row.avg_score >= 0.5 ? '#FFC107' : '#ff5252';
+                const createdDate = new Date(row.created_at).toLocaleString('th-TH');
+                
+                html += `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); hover: {background: rgba(255,255,255,0.1);}">
+                        <td style="padding: 15px;">${index + 1}</td>
+                        <td style="padding: 15px;">${row.name}</td>
+                        <td style="padding: 15px;">${row.email}</td>
+                        <td style="padding: 15px;">${row.phone || '-'}</td>
+                        <td style="padding: 15px;">${categoryDisplay}</td>
+                        <td style="padding: 15px; text-align: center; color: ${scoreColor}; font-weight: bold;">${(row.avg_score * 100).toFixed(0)}%</td>
+                        <td style="padding: 15px; font-size: 0.9em; color: #81d4fa;">${createdDate}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+                <p style="margin-top: 20px; color: #81d4fa; text-align: center;">
+                    📊 รวมทั้งหมด: <strong>${data.length}</strong> รายการ
+                </p>
+            `;
+
+            resultsTable.innerHTML = html;
+        }
+
+        // ดาวน์โหลดเป็นไฟล์ Excel
+        function downloadExcel() {
+            if (assessmentData.length === 0) {
+                alert('❌ ยังไม่มีข้อมูลให้ดาวน์โหลด');
+                return;
+            }
+
+            // สร้างข้อมูล CSV
+            let csv = 'ลำดับที่,ชื่อ-นามสกุล,อีเมล,เบอร์โทร,ประเภท,คะแนนเฉลี่ย(%),บันทึก,วันที่กำหนด\n';
+            
+            assessmentData.forEach((row, index) => {
+                const categoryName = row.category === 'แบบทดสอบก่อนเรียน' ? 'ก่อนเรียน' : 
+                                   row.category === 'แบบทดสอบหลังเรียน' ? 'หลังเรียน' : row.category;
+                const scorePercent = (row.avg_score * 100).toFixed(0);
+                const comment = (row.comment || '-').replace(/"/g, '""').replace(/\n/g, ' ');
+                const createdDate = new Date(row.created_at).toLocaleDateString('th-TH');
+                
+                csv += `${index + 1},"${row.name}","${row.email}","${row.phone || ''}","${categoryName}",${scorePercent},\"${comment}\",${createdDate}\n`;
+            });
+
+            // เพิ่มสรุป
+            csv += '\n\nสรุปผล\n';
+            const preTests = assessmentData.filter(r => r.category === 'แบบทดสอบก่อนเรียน');
+            const postTests = assessmentData.filter(r => r.category === 'แบบทดสอบหลังเรียน');
+            
+            csv += `ทดสอบก่อนเรียน,${preTests.length},คน\n`;
+            csv += `ทดสอบหลังเรียน,${postTests.length},คน\n`;
+            
+            if (preTests.length > 0) {
+                const preAvg = (preTests.reduce((sum, r) => sum + r.avg_score, 0) / preTests.length * 100).toFixed(1);
+                csv += `คะแนนเฉลี่ยก่อนเรียน,${preAvg},%\n`;
+            }
+            
+            if (postTests.length > 0) {
+                const postAvg = (postTests.reduce((sum, r) => sum + r.avg_score, 0) / postTests.length * 100).toFixed(1);
+                csv += `คะแนนเฉลี่ยหลังเรียน,${postAvg},%\n`;
+            }
+
+            // ดาวน์โหลดไฟล์
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `ผลการทดสอบ_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            
+            alert('✅ ดาวน์โหลดไฟล์สำเร็จ!\\n\\nไฟล์นี้สามารถเปิดด้วย:\\n- Microsoft Excel\\n- Google Sheets\\n- LibreOffice Calc');
+        }
+        function validateAndStartQuiz(type) {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            // ตรวจสอบเบอร์โทร (ต้องเป็นตัวเลขและมี 10 หลักขึ้นไป)
+            const phoneRegex = /^[0-9]{10,}$/;
+            
+            // ตรวจสอบอีเมล
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!firstName) {
+                alert('❌ กรุณากรอกชื่อ');
+                return;
+            }
+            if (!lastName) {
+                alert('❌ กรุณากรอกนามสกุล');
+                return;
+            }
+            if (!email) {
+                alert('❌ กรุณากรอกอีเมล');
+                return;
+            }
+            if (!emailRegex.test(email)) {
+                alert('❌ กรุณากรอกอีเมลให้ถูกต้อง (เช่น example@email.com)');
+                return;
+            }
+            if (!phone) {
+                alert('❌ กรุณากรอกเบอร์โทร');
+                return;
+            }
+            if (!phoneRegex.test(phone)) {
+                alert('❌ กรุณากรอกเบอร์โทรให้ถูกต้อง (ตัวเลขอย่างน้อย 10 หลัก)');
+                return;
+            }
+
+            // เก็บข้อมูลที่กรอก
+            userInfo = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone
+            };
+
+            currentQuizType = type;
+            startQuiz(type);
         }
 
         function calculateCarbon() {
@@ -1456,7 +1671,11 @@ body {
             });
 
             const percentage = (totalScore / currentQuiz.length * 100).toFixed(0);
+            const avgScore = (totalScore / currentQuiz.length).toFixed(2);
             const resultBox = document.getElementById('quizResult');
+            
+            // บันทึกข้อมูลไปยัง Backend
+            saveQuizToDatabase(avgScore, totalScore, userAnswers, currentQuizType);
             
             // สร้างกราฟแท่งแสดงคะแนนแต่ละหมวดหมู่
             let chartHTML = '<div style="background: rgba(0,0,0,0.5); padding: 30px; border-radius: 20px; margin: 30px 0;">';
@@ -1530,6 +1749,11 @@ body {
                     margin-top: 30px;
                 ">
                     <h3 style="color: white; margin-bottom: 20px; font-size: 1.8em;">ผลการทำแบบทดสอบ</h3>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                        <p style="font-size: 0.95em; color: #c8e6c9; margin-bottom: 10px;">ชื่อ-นามสกุล: <strong>${userInfo.firstName} ${userInfo.lastName}</strong></p>
+                        <p style="font-size: 0.95em; color: #c8e6c9; margin-bottom: 10px;">อีเมล: <strong>${userInfo.email}</strong></p>
+                        <p style="font-size: 0.95em; color: #c8e6c9;">เบอร์โทร: <strong>${userInfo.phone}</strong></p>
+                    </div>
                     <p style="font-size: 1.5em; margin: 15px 0;">
                         คะแนนที่ได้: <strong style="color: ${summaryColor}; font-size: 1.3em;">${totalScore}/${currentQuiz.length}</strong>
                     </p>
@@ -1539,10 +1763,11 @@ body {
                     <p style="font-size: 1.5em; margin-top: 20px; color: ${summaryColor}; font-weight: bold;">
                         ${summaryText}
                     </p>
+                    <p style="font-size: 0.9em; color: #81d4fa; margin-top: 15px;">✅ ข้อมูลของท่านได้ถูกบันทึกเรียบร้อยแล้ว</p>
                 </div>
                 
                 <div style="text-align: center; margin-top: 30px;">
-                    <button class="calc-btn" onclick="startQuiz('${currentQuiz[0] ? 'pre' : 'pre'}')" style="margin: 10px;">
+                    <button class="calc-btn" onclick="showPage('quiz')" style="margin: 10px;">
                         🔄 ทำแบบทดสอบใหม่
                     </button>
                     <button class="calc-btn" onclick="showPage('home')" style="margin: 10px; background: #607D8B;">
@@ -1553,6 +1778,34 @@ body {
             resultBox.classList.add('show');
             
             window.scrollTo(0, resultBox.offsetTop - 100);
+        }
+
+        // ฟังก์ชันบันทึกคะแนนแบบทดสอบไปยังฐานข้อมูล
+        function saveQuizToDatabase(avgScore, totalScore, answers, quizType) {
+            const fullName = `${userInfo.firstName} ${userInfo.lastName}`;
+            
+            fetch('/api/assessment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: fullName,
+                    email: userInfo.email,
+                    phone: userInfo.phone,
+                    category: quizType === 'pre' ? 'แบบทดสอบก่อนเรียน' : 'แบบทดสอบหลังเรียน',
+                    answers: answers,
+                    avgScore: parseFloat(avgScore),
+                    comment: `คะแนนรวม ${totalScore}/20`
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('✅ บันทึกข้อมูลไปยังฐานข้อมูลสำเร็จ:', data);
+            })
+            .catch(err => {
+                console.error('❌ เกิดข้อผิดพลาดในการบันทึกข้อมูล:', err);
+            });
         }
 
         function startSurvey() {
@@ -1577,7 +1830,7 @@ body {
                                 border-radius: 8px;
                                 border: 2px solid rgba(255,255,255,0.2);
                                 background: rgba(255,255,255,0.1);
-                                color: white;
+                                color: black;
                                 font-size: 1em;
                                 font-family: inherit;
                             " onfocus="this.style.borderColor='#4CAF50';" onblur="this.style.borderColor='rgba(255,255,255,0.2)';">
@@ -1590,7 +1843,7 @@ body {
                                 border-radius: 8px;
                                 border: 2px solid rgba(255,255,255,0.2);
                                 background: rgba(255,255,255,0.1);
-                                color: white;
+                                color: black;
                                 font-size: 1em;
                                 font-family: inherit;
                             " onfocus="this.style.borderColor='#4CAF50';" onblur="this.style.borderColor='rgba(255,255,255,0.2)';">
@@ -1603,7 +1856,7 @@ body {
                                 border-radius: 8px;
                                 border: 2px solid rgba(255,255,255,0.2);
                                 background: rgba(255,255,255,0.1);
-                                color: white;
+                                color: black;
                                 font-size: 1em;
                                 font-family: inherit;
                             " onfocus="this.style.borderColor='#4CAF50';" onblur="this.style.borderColor='rgba(255,255,255,0.2)';">
@@ -1667,7 +1920,7 @@ body {
                         border-radius: 10px;
                         border: 2px solid rgba(255,255,255,0.2);
                         background: rgba(255,255,255,0.1);
-                        color: white;
+                        color: black;
                         font-size: 1em;
                         font-family: inherit;
                         resize: vertical;
@@ -1762,7 +2015,7 @@ body {
                 name: name,
                 email: email,
                 phone: phone,
-                category: 'survey',
+                category: 'แบบประเมินความพึงพอใจ',
                 answers: surveyAnswers,
                 comment: comment,
                 avgScore: avgScore,
@@ -1805,9 +2058,6 @@ body {
                     <p style="margin-top: 20px; font-size: 1.1em;">✅ ข้อมูลของท่านได้ถูกบันทึกเรียบร้อยแล้ว</p>
                     <button class="calc-btn" onclick="viewSurveyResults()" style="margin-top: 20px;">
                         📊 ดูสรุปผลการประเมินทั้งหมด
-                    </button>
-                    <button class="calc-btn" onclick="window.open('/admin.html', '_blank')" style="margin-top: 10px; background: #2196F3;">
-                        🔐 ดูระบบจัดการข้อมูล (Admin)
                     </button>
                 `;
                 resultBox.classList.add('show');

@@ -301,9 +301,9 @@
             <button class="btn-primary" onclick="refreshData()">🔄 รีเฟรชข้อมูล</button>
             <select id="categoryFilter" onchange="filterByCategory()">
                 <option value="">📋 ทั้งหมด</option>
-                <option value="pre">📚 แบบทดสอบก่อนเรียน</option>
-                <option value="post">✅ แบบทดสอบหลังเรียน</option>
-                <option value="survey">📝 แบบสอบถาม</option>
+                <option value="แบบทดสอบก่อนเรียน">📚 แบบทดสอบก่อนเรียน</option>
+                <option value="แบบทดสอบหลังเรียน">✅ แบบทดสอบหลังเรียน</option>
+                <option value="แบบประเมินความพึงพอใจ">📝 แบบประเมิน</option>
             </select>
             <button class="btn-secondary" onclick="downloadCSV()">📥 ดาวน์โหลด CSV</button>
             <button class="btn-secondary" onclick="downloadTXT()">📥 ดาวน์โหลด TXT</button>
@@ -355,18 +355,21 @@
                     </div>
                     <div class="stat-card">
                         <h3>⭐ คะแนนเฉลี่ยรวม</h3>
-                        <div class="stat-value">${stats.avgScore}/5.00</div>
+                        <div class="stat-value">${stats.avgScore}</div>
                     </div>
                 `;
 
                 Object.keys(stats.categories).forEach(cat => {
                     const catData = stats.categories[cat];
-                    const catName = cat === 'pre' ? 'ก่อนเรียน' : (cat === 'post' ? 'หลังเรียน' : 'สอบถาม');
+                    const catName = cat === 'แบบทดสอบก่อนเรียน' ? '📚 ก่อนเรียน' : 
+                                   cat === 'แบบทดสอบหลังเรียน' ? '✅ หลังเรียน' : 
+                                   cat === 'แบบประเมินความพึงพอใจ' ? '📝 ประเมิน' :
+                                   cat === 'survey' ? '📝 แบบประเมิน' : cat;
                     html += `
                         <div class="stat-card">
                             <h3>${catName}</h3>
                             <div class="stat-value">${catData.count}</div>
-                            <p style="margin-top: 10px;">เฉลี่ย: ${catData.avgScore}/5</p>
+                            <p style="margin-top: 10px;">เฉลี่ย: ${(catData.avgScore).toFixed(2)}</p>
                         </div>
                     `;
                 });
@@ -429,12 +432,14 @@
             `;
 
             data.forEach((item, index) => {
-                const scoreClass = item.avgScore >= 4.5 ? 'score-good' : 
-                                  item.avgScore >= 2.5 ? 'score-medium' : 'score-low';
-                const categoryName = item.category === 'pre' ? '📚 ก่อนเรียน' : 
-                                    item.category === 'post' ? '✅ หลังเรียน' : 
-                                    '📝 สอบถาม';
-                const date = new Date(item.createdAt).toLocaleDateString('th-TH', {
+                const scoreClass = item.avg_score >= 0.7 ? 'score-good' : 
+                                  item.avg_score >= 0.5 ? 'score-medium' : 'score-low';
+                const categoryName = item.category === 'แบบทดสอบก่อนเรียน' ? '📚 ก่อนเรียน' : 
+                                    item.category === 'แบบทดสอบหลังเรียน' ? '✅ หลังเรียน' : 
+                                    item.category === 'แบบประเมินความพึงพอใจ' ? '📝 ประเมิน' : 
+                                    item.category === 'survey' ? '📝 แบบประเมิน' : item.category;
+                const createdDate = item.created_at || item.createdAt;
+                const date = new Date(createdDate).toLocaleDateString('th-TH', {
                     year: 'numeric',
                     month: 'short',
                     day: 'numeric',
@@ -449,7 +454,7 @@
                         <td>${item.email}</td>
                         <td>${item.phone || '-'}</td>
                         <td>${categoryName}</td>
-                        <td class="${scoreClass}">${item.avgScore.toFixed(2)}/5.00</td>
+                        <td class="${scoreClass}">${(item.avg_score * 5).toFixed(2)}</td>
                         <td>${date}</td>
                         <td>
                             <button class="btn-primary" onclick="showDetail(${item.id})" style="font-size: 0.8em; padding: 5px 10px;">
@@ -482,20 +487,23 @@
             const item = allData.find(x => x.id === id);
             if (!item) return;
 
+            const createdDate = item.created_at || item.createdAt;
             let html = `
                 <p><strong>ชื่อ-สกุล:</strong> ${item.name}</p>
                 <p><strong>อีเมล:</strong> ${item.email}</p>
                 <p><strong>เบอร์โทร:</strong> ${item.phone || '-'}</p>
-                <p><strong>หมวดหมู่:</strong> ${item.category === 'pre' ? 'แบบทดสอบก่อนเรียน' : item.category === 'post' ? 'แบบทดสอบหลังเรียน' : 'แบบสอบถาม'}</p>
-                <p><strong>คะแนนเฉลี่ย:</strong> ${item.avgScore.toFixed(2)}/5.00</p>
-                <p><strong>วันที่:</strong> ${new Date(item.createdAt).toLocaleString('th-TH')}</p>
+                <p><strong>หมวดหมู่:</strong> ${item.category}</p>
+                <p><strong>คะแนนเฉลี่ย:</strong> ${(item.avg_score * 5).toFixed(2)}</p>
+                <p><strong>วันที่:</strong> ${new Date(createdDate).toLocaleString('th-TH')}</p>
             `;
 
             if (item.comment) {
-                html += `<p><strong>ความเห็น:</strong> ${item.comment}</p>`;
+                html += `<p><strong>ความเห็น/บันทึก:</strong> ${item.comment}</p>`;
             }
 
-            html += `<p><strong>คำตอบ:</strong></p><p>${JSON.stringify(item.answers, null, 2)}</p>`;
+            if (item.answers && Array.isArray(item.answers) && item.answers.length > 0) {
+                html += `<p><strong>คำตอบ:</strong></p><pre style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; color: #81d4fa; max-height: 300px; overflow-y: auto;">${JSON.stringify(item.answers, null, 2)}</pre>`;
+            }
 
             document.getElementById('modalDetails').innerHTML = html;
             document.getElementById('detailModal').classList.add('show');
