@@ -6,9 +6,7 @@
     <title>Carbon Footprint for School</title>
     <style>
         /* ❌ ไม่ให้ช่องจางตอนเอาเมาส์ชี้ */
-.menu-item:hover,
-.quiz-option:hover,
-.reduction-item:hover,
+
 /* =========================
    แก้หัวข้อและเนื้อหาให้เข้ม ชัด อ่านง่าย
    ========================= */
@@ -125,19 +123,25 @@
             position: fixed;
             top: 20px;
             left: 20px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 10px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            color: white;
+            padding: 0;
             transition: all 0.3s;
             z-index: 1000;
+        }
+
+        .home-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 2px;
         }
 
 p{font-size: 20px;}
@@ -164,41 +168,74 @@ h4{font-size: 23px;}
 
         .hero {
             text-align: center;
-            padding: 100px 20px;
+            padding: 40px 20px 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .school-logo {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .school-logo img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
 
         .hero h1 {
             font-size: 3.5em;
             margin-bottom: 30px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #1e7f5c;
+            font-weight: 800;
+            letter-spacing: 1px;
         }
 
         .menu-card {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 25px;
+            padding: 50px 40px;
             margin: 30px auto;
-            max-width: 600px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            max-width: 650px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+            width: 100%;
         }
 
         .menu-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px 30px;
-            margin: 15px 0;
+            background: #1e7f5c;
+            color: white;
+            padding: 18px 30px;
+            margin: 12px 0;
             border-radius: 15px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             border: 2px solid transparent;
-            font-size: 1.1em;
+            font-size: 1.15em;
             text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(30, 127, 92, 0.3);
         }
 
         .menu-item:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateX(10px);
+            background: #165a47;
+            color: #ffffff;
+            border-color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(30, 127, 92, 0.5);
+        }
+
+        .menu-item:active {
+            transform: translateY(-1px);
         }
 
         .content-card {
@@ -476,13 +513,20 @@ body {
 <body>
     <div class="leaf-bg"></div>
     
-    <button class="home-btn" onclick="showPage('home')">🏠</button>
-
+    <button class="home-btn" onclick="showPage('home')"><img src="image/Logo_of_Silpakorn_University.svg.png" alt="Home"></button>
     <div class="container">
         <!-- หน้าหลัก -->
         <div id="home" class="page active">
             <div class="hero">
+                <!-- Website Logo -->
+                <div class="school-logo">
+                    <img src="image/logo.png" alt="Website Logo">
+                </div>
+                
+                <!-- Main Title -->
                 <h1>CARBON<br>FOOTPRINT FOR<br>SCHOOL</h1>
+                
+                <!-- Menu Card -->
                 <div class="menu-card">
                     <div class="menu-item" onclick="showPage('global-warming')">
                         ภาวะโลกร้อนในปัจจุบัน
@@ -492,17 +536,13 @@ body {
                     </div>
                     <div class="menu-item" onclick="showPage('ghg-protocol')">
                         GHG Protocol
-                    </div>
-                    <div class="menu-item" onclick="showPage('calculation')">
-                        การคำนวณปริมาณการปล่อย Carbon
-                    </div>
+                    </div>                  
                     <div class="menu-item" onclick="showPage('reduction')">
                         แนวทางการลดปริมาณ Carbon
                     </div>
                     <div class="menu-item" onclick="showPage('quiz')">
                         แบบประเมินการเรียนรู้
                     </div>
-                   
                 </div>
             </div>
         </div>
@@ -849,6 +889,7 @@ body {
                         <p>• ปลูกต้นไม้และอนุรักษ์พื้นที่ป่า<br>
                         • สนับสนุนโครงการ Carbon Offset เช่น การปลูกป่า หรือการผลิตพลังงานสะอาด<br>
                         • จัดการของเสียและน้ำเสียอย่างถูกวิธีเพื่อลดก๊าซมีเทน</p>
+                        
                     </div>
                 </div>
 
@@ -1869,7 +1910,7 @@ body {
                 "1. ความชัดเจนและเข้าใจง่ายของข้อมูลเกี่ยวกับการคำนวณคาร์บอนฟุตพริ้นต์ในโรงเรียน",
                 "2. ความง่ายในการใช้งานของหน้าเว็บไซต์โดยรวม",
                 "3. ความสวยงามและเหมาะสมของการออกแบบเว็บไซต์",
-                "4. ความชัดเจนของขั้นตอนการกรอกข้อมูลเพื่อคำนวณ Carbon Footprint",
+                "4. ความครบถ้วนของเนื้อหาและข้อมูลที่เว็บไซต์นำเสนอเกี่ยวกับ Carbon Footprint ในโรงเรียน",
                 "5. ความถูกต้องและความน่าเชื่อถือของผลลัพธ์ที่เว็บไซต์แสดง",
                 "6. ความรวดเร็วในการประมวลผลและแสดงผลข้อมูลของเว็บไซต์",
                 "7. ความเหมาะสมของภาษาและคำอธิบายที่ใช้ในเว็บไซต์",
