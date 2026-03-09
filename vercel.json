@@ -10,12 +10,24 @@
     {
       "src": "*.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "image/**/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.{css,js,json}",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
       "dest": "backend/server.js"
+    },
+    {
+      "src": "/image/(.*)",
+      "dest": "/image/$1"
     },
     {
       "src": "/admin",
