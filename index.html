@@ -121,13 +121,13 @@
 
         .home-btn {
             position: fixed;
-            top: 20px;
+            top: 70px;
             left: 20px;
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid #007a6d;
+            border-radius: 14px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -135,6 +135,8 @@
             padding: 0;
             transition: all 0.3s;
             z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 22px;
         }
 
         .home-btn img {
@@ -517,9 +519,13 @@ body {
     height: 100%;
     background: #f3f6f8;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     z-index: 2000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 60px 0 20px 0;
 }
 
 .login-box {
@@ -530,6 +536,7 @@ body {
     width: 90%;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     text-align: center;
+    margin: 20px auto;
 }
 
 .login-logo {
@@ -764,7 +771,7 @@ body {
         </div>
     </div>
     
-    <button class="home-btn" onclick="showPage('home')"><img src="image/Logo_of_Silpakorn_University.svg.png" alt="Home"></button>
+    <button class="home-btn" onclick="showPage('home')">🏠</button>
     <div class="container">
         <!-- หน้าหลัก -->
         <div id="home" class="page active">
@@ -785,11 +792,15 @@ body {
                     <div class="menu-item" onclick="showPage('carbon-info')">
                         ความรู้เกี่ยวกับ Carbon Footprint
                     </div>
+                   
                     <div class="menu-item" onclick="showPage('ghg-protocol')">
                         GHG Protocol
                     </div>                  
                     <div class="menu-item" onclick="showPage('reduction')">
                         แนวทางการลดปริมาณ Carbon
+                    </div>
+                    <div class="menu-item" onclick="showPage('carbon-neutrality')">
+                        Carbon Neutrality และ Net Zero Emissions
                     </div>
                     <div class="menu-item" onclick="showPage('quiz')">
                         แบบประเมินการเรียนรู้
@@ -860,7 +871,7 @@ body {
                     <p>ผลกระทบจากการเปลี่ยนแปลงของภูมิอากาศจากภาวะโลกร้อน (Global Warming) เช่น ความแห้งแล้ง น้ำท่วม หรือพายุที่รุนแรง สามารถทำลายกรัพยากรธรรมชาติและโครงสร้างพื้นฐานทางเศรษฐกิจ ภาคเกษตรกรรม การท่องเที่ยวและอุตสาหกรรมที่เกี่ยวข้องกับธรรมชาติ โดยส่งผลให้เกิดความเสียหายทางเศรษฐกิจที่มีมูลค่าสูงและกำให้เศรษฐกิจท้องถิ่นและระดับประเทศต้องเผชิญกับความท้าทายใหม่ ๆ</p>
                 </div>
 
-                <h3 style="margin-top: 40px; text-align: center; color: #81d4fa;">📺 สื่อวิดีโอให้ความรู้เกี่ยวกับภาวะโลกร้อน</h3>
+                <h3 style="margin-top: 40px; text-align: center; color: #81d4fa;">สื่อวิดีโอให้ความรู้เกี่ยวกับภาวะโลกร้อน</h3>
                 
                 <div style="background: rgba(129,212,250,0.2); padding: 30px; border-radius: 20px; margin: 30px 0; text-align: center;">
                     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
@@ -906,6 +917,67 @@ body {
             </div>
         </div>
 
+        <!-- หน้า Carbon Neutrality และ Net Zero -->
+        <div id="carbon-neutrality" class="page">
+            <div class="content-card">
+                <h2>Carbon Neutrality และ Net Zero Emissions</h2>
+
+                <h3 style="color: #007a6d; margin-top: 30px;">Carbon Neutrality คืออะไร?</h3>
+                <p>Carbon Neutrality หมายถึง การทำให้ปริมาณการปล่อยก๊าซคาร์บอนไดออกไซด์จากกิจกรรมต่าง ๆ เท่ากับปริมาณคาร์บอนที่สามารถดูดซับหรือชดเชยได้ จนทำให้การปล่อยคาร์บอนสุทธิเป็นศูนย์</p>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <img src="image/30.png" alt="การชดเชยคาร์บอน" style="max-width: 700px; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.15);">
+                </div>
+
+                <h3 style="color: #007a6d; margin-top: 40px;">Net Zero Emissions คืออะไร?</h3>
+                <p><strong>Net Zero Emissions</strong> คือ การลดการปล่อยก๊าซเรือนกระจกจากกิจกรรมต่าง ๆ ให้เหลือน้อยที่สุด และชดเชยส่วนที่เหลือด้วยวิธีการดูดซับคาร์บอน</p>
+                <p style="margin-top: 10px;">เป้าหมาย Net Zero เป็นแนวทางสำคัญในการแก้ไขปัญหาการเปลี่ยนแปลงสภาพภูมิอากาศ และหลายประเทศทั่วโลกตั้งเป้าหมายในการบรรลุ Net Zero ภายในปี ค.ศ. 2050</p>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <img src="image/28.png" alt="แนวทางสู่ Net Zero ในโรงเรียน" style="max-width: 700px; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.15);">
+                </div>
+
+                <h3 style="color: #007a6d; margin-top: 40px; text-align: center;">ความแตกต่างระหว่าง Carbon Neutrality และ Net Zero</h3>
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="image/29.png" alt="ความแตกต่างระหว่าง Carbon Neutrality และ Net Zero" style="max-width: 700px; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.15);">
+                </div>
+
+                <h3 style="color: #007a6d; margin-top: 40px;">บทบาทของประเทศไทยต่อการแก้ปัญหาโลกร้อน</h3>
+                <p>ประเทศไทยมีบทบาทสำคัญในการร่วมมือกับนานาประเทศเพื่อลดการปล่อยก๊าซเรือนกระจกและแก้ไขปัญหาการเปลี่ยนแปลงสภาพภูมิอากาศ โดยประเทศไทยได้เข้าร่วมความตกลงและโครงการระดับโลกหลายโครงการ</p>
+
+                <h3 style="color: #007a6d; margin-top: 40px;">ความตกลงปารีส</h3>
+                <p>ประเทศไทยเข้าร่วม Paris Agreement ซึ่งเป็นความตกลงระหว่างประเทศที่มีเป้าหมายในการจำกัดการเพิ่มขึ้นของอุณหภูมิโลกไม่ให้เกิน 1.5–2 องศาเซลเซียส ภายใต้ข้อตกลงนี้ ประเทศต่าง ๆ ต้องร่วมกันลดการปล่อยก๊าซเรือนกระจก และรายงานความก้าวหน้าในการดำเนินงานอย่างต่อเนื่อง</p>
+
+                <div style="background: #e8f5e9; border-left: 5px solid #4caf50; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                    <h4 style="color: #2e7d32; margin-bottom: 15px;">การประชุมด้านสภาพภูมิอากาศของโลก</h4>
+                    <p style="color: #1a1a1a;">ประเทศไทยเข้าร่วมการประชุมระดับโลกเกี่ยวกับการเปลี่ยนแปลงสภาพภูมิอากาศ เช่น COP26 ซึ่งเป็นการประชุมของประเทศต่าง ๆ เพื่อกำหนดแนวทางและมาตรการในการลดการปล่อยก๊าซเรือนกระจก ในการประชุมดังกล่าว ประเทศไทยได้ประกาศเป้าหมายสำคัญ ได้แก่</p>
+                    <ul style="margin-top: 10px; margin-left: 20px; color: #1a1a1a;">
+                        <li>บรรลุ Carbon Neutrality ภายในปี 2050</li>
+                        <li>บรรลุ Net Zero Emissions ภายในปี 2065</li>
+                    </ul>
+                </div>
+
+                <div style="background: #fff8e1; border-left: 5px solid #fbc02d; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                    <h4 style="color: #f57f17; margin-bottom: 15px;">ความร่วมมือของประเทศไทยในการลดก๊าซเรือนกระจก</h4>
+                    <p style="color: #1a1a1a;">ประเทศไทยได้ดำเนินมาตรการหลายด้าน เช่น</p>
+                    <ul style="margin-top: 10px; margin-left: 20px; color: #1a1a1a;">
+                        <li>ส่งเสริมการใช้พลังงานหมุนเวียน</li>
+                        <li>สนับสนุนการใช้รถยนต์ไฟฟ้า (EV)</li>
+                        <li>เพิ่มพื้นที่สีเขียวและปลูกป่า</li>
+                        <li>ลดการใช้พลังงานในภาคอุตสาหกรรมและอาคาร</li>
+                    </ul>
+                    <p style="margin-top: 10px; color: #1a1a1a;">มาตรการเหล่านี้มีเป้าหมายเพื่อช่วยลด Carbon Footprint ของประเทศ และสนับสนุนการพัฒนาอย่างยั่งยืน</p>
+                </div>
+
+                <div style="background: #e3f2fd; border-left: 5px solid #1976d2; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                    <h4 style="color: #1565c0; margin-bottom: 15px;">ความสำคัญของความร่วมมือระดับโลก</h4>
+                    <p style="color: #1a1a1a;">ปัญหาภาวะโลกร้อนเป็นปัญหาที่ส่งผลกระทบต่อทุกประเทศทั่วโลก ดังนั้นการแก้ไขปัญหานี้จำเป็นต้องอาศัยความร่วมมือจากทุกภาคส่วน ทั้งรัฐบาล ภาคธุรกิจ และประชาชน การมีส่วนร่วมของประเทศไทยจึงเป็นส่วนสำคัญในการช่วยลดการปล่อยก๊าซเรือนกระจก และรักษาสิ่งแวดล้อมของโลกในระยะยาว</p>
+                </div>
+
+                <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
+            </div>
+        </div>
+
         <!-- หน้า GHG Protocol -->
         <div id="ghg-protocol" class="page">
             <div class="content-card">
@@ -918,7 +990,7 @@ body {
 
                 <div class="diagram-card">
                     <h3 style="color: #333; margin-bottom: 20px;">องค์กรบริหารจัดการก๊าซเรือนกระจก</h3>
-                   <img src="image/IMG_5274.png" alt="Carbon Footprint Diagram">
+                   <img src="image/messageImage_1773503115329.jpg" alt="Carbon Footprint Diagram">
                 </div>
 
                 <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>

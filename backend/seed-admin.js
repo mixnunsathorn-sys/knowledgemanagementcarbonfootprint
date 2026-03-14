@@ -17,7 +17,7 @@ async function seedAdminUser() {
     await pool.query('SELECT NOW()');
     console.log('✅ Connected to database');
 
-    // สร้างตาราง users ถ้ายังไม่มี
+    // สร้างตาราง users 
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
