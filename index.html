@@ -1,0 +1,3015 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Footprint for School</title>
+    <style>
+        /* ❌ ไม่ให้ช่องจางตอนเอาเมาส์ชี้ */
+
+/* =========================
+   แก้หัวข้อและเนื้อหาให้เข้ม ชัด อ่านง่าย
+   ========================= */
+
+/* หัวข้อใหญ่ */
+.content-card h2 {
+    color: #0b3d2e !important;
+    font-weight: 700;
+}
+
+/* หัวข้อรอง */
+.content-card h3 {
+    color: #145a32 !important;
+    font-weight: 600;
+}
+
+/* หัวข้อย่อย */
+.content-card h4 {
+    color: #1e7f5c !important;
+    font-weight: 600;
+}
+
+/* เนื้อหาทั่วไป */
+.content-card p,
+.content-card li {
+    color: #1a1a1a !important;
+    font-weight: 400;
+}
+
+/* ตัวหนา */
+.content-card strong {
+    color: #0b3d2e;
+}
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c2f 0%, #2d5a45 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        /* ===============================
+   ปรับขนาดฟอนต์หน้าแบบทดสอบ
+   =============================== */
+
+#quiz .content-card {
+    font-size: 20px;
+}
+
+/* ข้อคำถาม */
+#quiz h4 {
+    font-size: 22px;
+    line-height: 1.6;
+}
+
+/* ตัวเลือกคำตอบ */
+#quiz .quiz-option,
+#quiz .quiz-option label {
+    font-size: 20px;
+}
+
+/* หัวข้อ */
+#quiz h2 {
+    font-size: 32px;
+}
+
+#quiz h3 {
+    font-size: 26px;
+}
+
+/* มือถือ */
+@media (max-width: 768px) {
+    #quiz .content-card {
+        font-size: 18px;
+    }
+
+    #quiz h4 {
+        font-size: 20px;
+    }
+
+    #quiz .quiz-option label {
+        font-size: 18px;
+    }
+}
+
+
+        .leaf-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,50 Q30,30 50,40 T80,50" fill="%23ffffff" opacity="0.05"/></svg>');
+            background-size: 200px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .home-btn {
+            position: fixed;
+            top: 70px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid #007a6d;
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 22px;
+        }
+
+        .home-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 2px;
+        }
+
+p{font-size: 20px;}
+h4{font-size: 23px;}
+
+        .home-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .school-logo {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .school-logo img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #1e7f5c;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .menu-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 50px 40px;
+            margin: 30px auto;
+            max-width: 650px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+            width: 100%;
+        }
+
+        .menu-item {
+            background: #1e7f5c;
+            color: white;
+            padding: 18px 30px;
+            margin: 12px 0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-size: 1.15em;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(30, 127, 92, 0.3);
+        }
+
+        .menu-item:hover {
+            background: #165a47;
+            color: #ffffff;
+            border-color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(30, 127, 92, 0.5);
+        }
+
+        .menu-item:active {
+            transform: translateY(-1px);
+        }
+
+        .content-card {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        .content-card h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #a8d5ba;
+        }
+
+        .content-card h3 {
+            font-size: 1.5em;
+            margin: 25px 0 15px;
+            color: #c8e6c9;
+        }
+
+        .content-card ul {
+            margin-left: 30px;
+        }
+
+        .content-card li {
+            margin: 10px 0;
+        }
+
+        .scope-diagram {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .scope-diagram img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .calculator-card {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        .calc-input-group {
+            margin: 20px 0;
+        }
+
+        .calc-input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .calc-input-group input,
+        .calc-input-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .calc-btn {
+            background: #4caf50;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .calc-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .result-box {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.3em;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+            animation: slideUp 0.5s;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reduction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .reduction-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+
+        .reduction-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .reduction-item h4 {
+            color: #a8d5ba;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .quiz-section {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        .quiz-options {
+            margin: 20px 0;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .quiz-option.selected {
+            background: rgba(76, 175, 80, 0.3);
+            border: 2px solid #4caf50;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(76, 175, 80, 0.3);
+            font-weight: bold;
+        }
+
+        .diagram-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .diagram-card img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
+            
+            .reduction-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* ===== ใส่โค้ดธีมเขียว-ขาวตรงนี้ ===== */
+
+body {
+    background: #f0eeee;
+    color: #007a6d;
+}
+
+.content-card,
+.menu-card,
+.calculator-card,
+.quiz-section {
+    background: rgba(255, 255, 255, 0.9);
+    color: #007a6d;
+}
+
+.menu-item {
+    background: #007a6d;
+    color: #ffffff;
+}
+
+.calc-btn {
+    background: #007a6d;
+    color: rgb(255, 255, 255);
+}
+/* =========================
+   กล่องผลกระทบจากภาวะโลกร้อน
+   ========================= */
+
+.impact-box {
+    background: #fde2dc;
+    border-left: 6px solid #2e7d32;
+    padding: 25px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+/* หัวข้อในกล่อง */
+.impact-box h4 {
+    color: #1b5e20;
+    font-weight: 600;
+}
+
+/* เนื้อหา */
+.impact-box p {
+    color: #2b2b2b;
+    line-height: 1.8;
+}
+
+/* ===== Login System Styles ===== */
+.login-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f3f6f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 2000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 60px 0 20px 0;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    margin: 20px auto;
+}
+
+.login-logo {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+}
+
+.login-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+}
+
+.login-box h2 {
+    text-align: center;
+    color: #007a6d;
+    margin-bottom: 5px;
+    font-size: 1.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.login-box h2 em {
+    font-style: normal;
+    font-size: 1.1em;
+}
+
+.login-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    background: #f5f5f5;
+    padding: 5px;
+    border-radius: 12px;
+}
+
+.login-tab {
+    flex: 1;
+    padding: 12px 15px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #007a6d;
+    transition: all 0.3s ease;
+    font-size: 0.95em;
+}
+
+.login-tab.active {
+    background: linear-gradient(135deg, #1e7f5c 0%, #155a45 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(30, 127, 92, 0.3);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #007a6d;
+    font-size: 0.95em;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 2px solid #e8e8e8;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: all 0.3s;
+    background: #f9f9f9;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+    color: #bbb;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #007a6d;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(0, 122, 109, 0.1);
+}
+
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #1e7f5c 0%, #155a45 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(30, 127, 92, 0.3);
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 127, 92, 0.4);
+}
+
+.login-message {
+    text-align: center;
+    margin-top: 15px;
+    color: #d32f2f;
+    font-size: 0.9em;
+}
+
+.login-message.success {
+    color: #388e3c;
+}
+
+.user-info-bar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: #007a6d;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 0 0 0 15px;
+    z-index: 999;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.logout-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+    </style>
+</head>
+<body>
+    <div class="leaf-bg"></div>
+    
+    <!-- User Info Bar (hidden until login) -->
+    <div id="userInfoBar" class="user-info-bar" style="display: none;">
+        <div>👤 ยินดีต้อนรับ: <strong id="currentUsername"></strong></div>
+        <button id="adminDashboardBtn" class="logout-btn" onclick="showPage('admin')" style="display: none; background: #ff6b00;">📊 Admin Dashboard</button>
+        <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+    </div>
+    
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            
+            <div class="login-logo"><img src="image/Logo_of_Silpakorn_University.svg.png" alt=""></div>
+            
+            <h2>Carbon Footprint</h2>
+            
+            <div class="login-tabs">
+                <button class="login-tab active" onclick="switchTab('login')">เข้าสู่ระบบ</button>
+                <button class="login-tab" onclick="switchTab('register')">สมัครสมาชิก</button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="loginForm" style="display: block;">
+                <div class="form-group">
+                    <label>ชื่อผู้ใช้:</label>
+                    <input type="text" id="loginUsername" placeholder="กรอกชื่อผู้ใช้" />
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่าน:</label>
+                    <input type="password" id="loginPassword" placeholder="กรอกรหัสผ่าน" />
+                </div>
+                <button class="login-button" onclick="handleLogin()">เข้าสู่ระบบ</button>
+                <div id="loginMessage" class="login-message"></div>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label>ชื่อ:</label>
+                    <input type="text" id="regFirstName" placeholder="กรอกชื่อ" />
+                </div>
+                <div class="form-group">
+                    <label>นามสกุล:</label>
+                    <input type="text" id="regLastName" placeholder="กรอกนามสกุล" />
+                </div>
+                <div class="form-group">
+                    <label>อีเมล:</label>
+                    <input type="email" id="regEmail" placeholder="กรอกอีเมล" />
+                </div>
+                <div class="form-group">
+                    <label>เบอร์โทร:</label>
+                    <input type="tel" id="regPhone" placeholder="กรอกเบอร์โทร" />
+                </div>
+                <div class="form-group">
+                    <label>ชื่อผู้ใช้:</label>
+                    <input type="text" id="regUsername" placeholder="กรอกชื่อผู้ใช้" />
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่าน:</label>
+                    <input type="password" id="regPassword" placeholder="กรอกรหัสผ่าน" />
+                </div>
+                <div class="form-group">
+                    <label>ยืนยันรหัสผ่าน:</label>
+                    <input type="password" id="regPasswordConfirm" placeholder="ยืนยันรหัสผ่าน" />
+                </div>
+                <button class="login-button" onclick="handleRegister()">สมัครสมาชิก</button>
+                <div id="registerMessage" class="login-message"></div>
+            </div>
+        </div>
+    </div>
+    
+    <button class="home-btn" onclick="showPage('home')">🏠</button>
+    <div class="container">
+        <!-- หน้าหลัก -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <!-- Website Logo -->
+                <div class="school-logo">
+                    <img src="image/logo.png" alt="Website Logo">
+                </div>
+                
+                <!-- Main Title -->
+                <h1>CARBON<br>FOOTPRINT FOR<br>SCHOOL</h1>
+                
+                <!-- Menu Card -->
+                <div class="menu-card">
+                    <div class="menu-item" onclick="showPage('global-warming')">
+                        ภาวะโลกร้อนในปัจจุบัน
+                    </div>
+                    <div class="menu-item" onclick="showPage('carbon-info')">
+                        ความรู้เกี่ยวกับ Carbon Footprint
+                    </div>
+                   
+                    <div class="menu-item" onclick="showPage('ghg-protocol')">
+                        GHG Protocol
+                    </div>                  
+                    <div class="menu-item" onclick="showPage('reduction')">
+                        แนวทางการลดปริมาณ Carbon
+                    </div>
+                    <div class="menu-item" onclick="showPage('carbon-neutrality')">
+                        Carbon Neutrality และ Net Zero Emissions
+                    </div>
+                    <div class="menu-item" onclick="showPage('quiz')">
+                        แบบประเมินการเรียนรู้
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- หน้าภาวะโลกร้อนในปัจจุบัน -->
+        <div id="global-warming" class="page">
+            <div class="content-card">
+                <h2>ภาวะโลกร้อน คืออะไร ?</h2>
+            
+                <p style="line-height: 1.8; text-indent: 2em; margin: 20px 0;">
+                    <strong>ภาวะโลกร้อน</strong> คือ การที่ อุณหภูมิเฉลี่ยของโลกเพิ่มขึ้นจากภาวะเรือนกระจก หรือที่เรารู้จักกันดีในชื่อว่า <strong>Green house effect</strong> ซึ่งมีดันเหตุจากการที่มนุษย์ ได้เพิ่มปริมาณก๊าซคาร์บอนไดออกไซด์ จากการเผาให้มีเชื้อเพลิงต่างๆ การขนส่ง และการผลิตในโรงงานอุตสาหกรรม นอกจากนั้น มนุษย์เรายังได้เพิ่มก๊าซคลุ่มในดีร์สออกไซด์ และคลอโรฟลูโอโรคาร์บอน (CFC) เข้าไปอีกด้วย พร้อมๆกับการที่เราดักและทำลาย ป่าไม้จำนวนมากศาคาลเพื่อสร้างสิ่งอำนวยความสะดวกให้แก่มนุษย์ ทำให้กลไกในการดึงเอาก๊าซคาร์บอนไดออกไซด์เอื่อนำจากระบบบรรยากาศถูกลดเอบประสิทธิภาพลง และในที่สุดสิ่งที่เราได้กระทำต่อโลกได้ห่วนกลับมาสู่เราในลักษณะของภาวะโลกร้อน ปัจจัยสำคัญที่ทำให้เกิดสภาวะโลกร้อน ซึ่งปรากฏการณ์ก็องหลายเกิดจากภาวะโลกร้อนนั้นก็มีมูลเหตุมาจากการปล่อยก๊าซพิษต่างๆ จากโรงงานอุตสาหกรรม ทำให้แสงจากดวยส่องทะลุผ่านชั้นบรรยากาศมาสู่พื้นโลกได้มากขึ้น ซึ่งนั้นเป็นที่รู้จักกันโดยเรียกว่า <strong>สภาวะเรือนกระจก</strong>
+                </p>
+
+                <div style="text-align: center; margin: 40px 0;">
+                    <img src="image/9509b0dd-acb2-4407-94cf-5f8a1a6671e2.png" alt="ภาวะโลกร้อน" style="max-width: 500px; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+                </div>
+
+                <h3>สาเหตุหลัก ๆ ที่ทำให้เกิดภาวะโลกร้อน</h3>
+<div style="background: linear-gradient(135deg, rgba(255,152,0,0.2), rgba(255,193,7,0.2)); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #FF9800;">
+                    <h4 style="color: #FFB74D; margin-bottom: 15px;">การเผาไหม้เชื้อเพลิงฟอสซิล:</h4>
+                    <p>สาเหตุหลักของภาวะโลกร้อน (Global Warming) ซึ่งพบได้ทั่วโลก คือการใช้พลังงานจากด้านผืน น้ำมัน และก๊าซธรรมชาติในภาคอุตสาหกรรม การขนส่ง และการผลิตไฟฟ้า อันเป็นแหล่งปล่อยก๊าซคาร์บอนไดออกไซด์ (CO₂) และก๊าซเรือนกระจกอื่น ๆ ที่สำคัญที่สุด</p>
+                </div>
+  <div style="background: linear-gradient(135deg, rgba(244,67,54,0.2), rgba(233,30,99,0.2)); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #F44336;">
+                    <h4 style="color: #EF5350; margin-bottom: 15px;">การตัดไม้ทำลายป่า:</h4>
+                    <p>การลดจำนวนต้นไม้ที่ทำหน้าที่ดูดซึมก๊าซคาร์บอนไดออกไซด์ ทำให้มีการสะสมของ CO₂ ในชั้นบรรยากาศเพิ่มขึ้นอย่างต่อเนื่อง ส่งผลให้เกิดภาวะเรือนกระจกและปัญหาโลกร้อนตามมา</p>
+                </div>
+<div style="background: linear-gradient(135deg, rgba(0,188,212,0.2), rgba(76,175,80,0.2)); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #00BCD4;">
+                    <h4 style="color: #4DD0E1; margin-bottom: 15px;">กระบวนการเกษตรกรรม:</h4>
+                    <p>การทำปศุสัตว์และเกษตรกรรมปล่อยก๊าซมีเทน (CH₄) และไนตรัสออกไซด์ (N₂O) ซึ่งเป็นก๊าซเรือนกระจกที่มีศักยภาพในการกักเก็บความร้อนสูงกว่าก๊าซคาร์บอนไดออกไซด์</p>
+                </div>
+
+<div style="background: linear-gradient(135deg, rgba(255,152,0,0.2), rgba(255,193,7,0.2)); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #FF9800;">
+                    <h4 style="color: #FFB74D; margin-bottom: 15px;">ขยะและการจัดการของเสีย:</h4>
+                    <p>การฝังกลบขยะทำให้เกิดการปล่อยก๊าซมีเทนจากการย่อยสลายอินทรียวัตถุ นอกจากนี้ยังมีผลพิษจากการเผายะ-กับปล่อยก๊าซเรือนกระจกสู่ชั้นบรรยากาศ ทำให้เกิดภาวะโลกร้อนได้เหมือนกัน</p>
+                </div>              
+<div style="background: linear-gradient(135deg, rgba(244,67,54,0.2), rgba(233,30,99,0.2)); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #F44336;">
+                    <h4 style="color: #EF5350; margin-bottom: 15px;">การใช้สารเคมีและอุตสาหกรรม:</h4>
+                    <p>สารเคมีบางชนิด เช่น สาร CFCs (Chlorofluorocarbons) ที่ใช้ในเครื่องปรับอากาศและเครื่องทำความเย็น มีศักยภาพในการทำลายชั้นโอโซนและเพิ่มอุณหภูมิของโลก จนเกิดปัญหาโลกร้อนในที่สุด</p>
+                </div>   
+<div style="background: linear-gradient(135deg, rgba(0,188,212,0.2), rgba(76,175,80,0.2)); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #00BCD4;">
+                    <h4 style="color: #4DD0E1; margin-bottom: 15px;">การขยายตัวของเมืองและโครงสร้างพื้นฐาน:</h4>
+                    <p>การเพิ่มขึ้นของพื้นที่ก่อนครัติและแอสฟัลต์นับพื้นที่สีเขียว ส่งผลให้เกิด "เกาะความร้อน" ในเมือง ซึ่งทำให้อุณหภูมิในเขตเมืองสูงขึ้น เมื่อสะสมใหหลายพื้นที่จึงทำให้โลกเข้าสู่ภาวะโลกร้อน (Global Warming)</p>
+                </div>  
+
+                <h3 style="margin-top: 40px;">ผลกระทบจากภาวะโลกร้อน (Global Warming)</h3>
+
+                <div style="background: linear-gradient(135deg, rgba(255,152,0,0.2), rgba(255,193,7,0.2)); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #FF9800;">
+                    <h4 style="color: #FFB74D; margin-bottom: 15px;">ด้านสุขภาพ:</h4>
+                    <p>ภาวะโลกร้อน (Global Warming) สามารถเพิ่มความรุนแรงของโรคต่าง ๆ เช่น โรคเกี่ยวกับระบบทางเดินหายใจที่เกิดจากมลพิษทางอากาศ โรคติดเชื้อจากยุง (อาทิ โรคมาลาเรีย โรคไข้เลือดออก) เนื่องจากการเปลี่ยนแปลงของอุณหภูมิและสภาพภูมิอากาศที่เอื้อต่อการเจรีญเติบโดยของยุง และโรคที่เกี่ยวข้องกับความร้อน อย่างโรคลมแดด ซึ่งมีความเสี่ยงสูงขึ้นในพื้นที่ที่มีอุณหภูมิสูงและอุตหภูมิสูงขึ้น</p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, rgba(244,67,54,0.2), rgba(233,30,99,0.2)); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #F44336;">
+                    <h4 style="color: #EF5350; margin-bottom: 15px;">ด้านภูมิอากาศ:</h4>
+                    <p>ภาวะโลกร้อน (Global Warming) ส่งผลให้เกิดการเปลี่ยนแปลงของสภาพอากาศที่ไม่แน่นอน ไม่ว่าจะเป็นการเกิดคลื่นความร้อนที่รุนแรง พายุที่มีความรุนแรงมากขึ้น ฝนตกหนักเกินไปหรือแห้งแล้งเกินไป ทำให้เกิดอุกถ้ายและภัยแล้งที่มีผลกระทบต่อทั้งชีวิตมนุษย์และธรรมชาติ</p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, rgba(0,188,212,0.2), rgba(76,175,80,0.2)); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #00BCD4;">
+                    <h4 style="color: #4DD0E1; margin-bottom: 15px;">ด้านนิเวศวิทยา:</h4>
+                    <p>ปัญหาโลกร้อนจะทำให้เกิดการเปลี่ยนแปลงทางด้านอุณหภูมิ ซึ่งส่งผลต่อการเปลี่ยนแปลงของสิ่งมีชีวิตด้วย เช่น การสูญพันธุ์ของสัตว์และพืชบางชนิดที่ไม่สามารถปรับตัวเข้ากับสภาพแวดล้อมใหม่ ๆ ได้ การเปลี่ยนแปลงนี้ยังมีผลกระทบต่อห่วงโซ่อาหารในธรรมชาติและระบบนิเวศที่อาจถูกทำลายเนื่องจากการเปลี่ยนแปลงของพื้นที่หรือองค์ถ่ายาย</p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, rgba(255,193,7,0.2), rgba(255,152,0,0.2)); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #FBC02D;">
+                    <h4 style="color: #FFD54F; margin-bottom: 15px;">ด้านเศรษฐกิจ:</h4>
+                    <p>ผลกระทบจากการเปลี่ยนแปลงของภูมิอากาศจากภาวะโลกร้อน (Global Warming) เช่น ความแห้งแล้ง น้ำท่วม หรือพายุที่รุนแรง สามารถทำลายกรัพยากรธรรมชาติและโครงสร้างพื้นฐานทางเศรษฐกิจ ภาคเกษตรกรรม การท่องเที่ยวและอุตสาหกรรมที่เกี่ยวข้องกับธรรมชาติ โดยส่งผลให้เกิดความเสียหายทางเศรษฐกิจที่มีมูลค่าสูงและกำให้เศรษฐกิจท้องถิ่นและระดับประเทศต้องเผชิญกับความท้าทายใหม่ ๆ</p>
+                </div>
+
+                <h3 style="margin-top: 40px; text-align: center; color: #81d4fa;">📺 สื่อวิดีโอให้ความรู้เกี่ยวกับภาวะโลกร้อน</h3>
+                
+                <div style="background: rgba(129,212,250,0.2); padding: 30px; border-radius: 20px; margin: 30px 0; text-align: center;">
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
+                        <iframe 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                            src="https://www.youtube.com/embed/ibdvzk90X-Y" 
+                            title="สื่อวิดีโอเกี่ยวกับภาวะโลกร้อน" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 1.1em; color: #b3e5fc;">
+                        วิดีโอให้ความรู้เกี่ยวกับภาวะโลกร้อนและผลกระทบต่อโลกของเรา
+                    </p>
+                </div>
+
+                <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
+            </div>
+        </div>
+
+        <!-- หน้าความรู้เกี่ยวกับ Carbon Footprint -->
+        <div id="carbon-info" class="page">
+            <div class="content-card">
+                <h2>Carbon Footprint คืออะไร?</h2>
+                <p><strong>Carbon Footprint</strong> คือ ปริมาณก๊าซเรือนกระจกทั้งหมดที่ถูกปล่อยออกมาจากกิจกรรมของมนุษย์ ไม่ว่าจะเป็นการใช้ชีวิตประจำวัน การคมนาคมขนส่ง การผลิตสินค้าปโภคบริโภค ฯลฯ ทางพฤติให้เห็นกาพง่าย ๆ การดำเนินชีวิตประจำวันของเรากก คน ไม่ว่าจะเป็นการเลี้ยงสัตว์ การใช้ไฟฟ้า การเดินทางโดยรถยนต์ส่วนตัว หรือแม้กระทั้งของเสียที่เกิดจากกอาหารในแต่ละวัน ล้วนแต่ก่อให้เกิดการปล่อยก๊าซเรือนกระจกทั้งสิ้น</p>
+                
+                <p>โดยก๊าซเรือนกระจกที่น่าหน่วงพวงรณาม์อยู่ 7 ตัวด้วยกัน คือ ก๊าซคาร์บอนไดออกไซด์, ก๊าซมีเทน, ก๊าซในตรีสออกไซด์, กลุ่มก๊าซไฮโดรฟลูออโรคาร์บอน, กลุ่มก๊าซเปอร์ฟลูออโรคาร์บอน, ก๊าซซัลเฟอร์เฮกซะฟลูออโรไซด์ และก๊าซไนโตรเจนไตรฟลูออโรไซด์</p>
+
+                <h3>ผลกระทบของ Carbon</h3>
+                <p>ผลกระทบจากคาร์บอนมีทั้งด้านสิ่งแวดล้อมและสุขภาพ ได้แก่ โลกร้อนขึ้น ทำให้เกิดภัยพิบัติรุนแรงและบ่อยขึ้น, การสูญเสียความหลากหลายทางชีวภาพ, ระดับน้ำทะเลสูงขึ้น และระบบนิเวศเปลี่ยนแปลง สำหรับมนุษย์ การสูดดมคาร์บอนไดออกไซด์แบปริมาณมากจากที่ให้เกิดผลกระทบต่อสุขภาพ เช่น หัวใจเต้นเร็ว, เลือดเป็นกรด, หายใจลำบาก, และหมดสติได้ นอกจากนี้ ยังส่งผลกระทบต่อเศรษฐกิจและสังคม เช่น ต้นทุนสินค้าและบริการสูงขึ้น และความเหลื่อมล้ำทางสังคมที่มากขึ้น</p>
+
+                <h3>ผลกระทบต่อสิ่งแวดล้อม</h3>
+                <ul>
+                    <li><strong>ภาวะโลกร้อน:</strong> ทำให้อุณหภูมิเฉลี่ยของโลกสูงขึ้น</li>
+                    <li><strong>ภัยพิบัติทางธรรมชาติ:</strong> เกิดภัยพิบัติรุนแรงและบ่อยขึ้น เช่น ภัยแล้ง, น้ำท่วม, พายุ</li>
+                    <li><strong>การสูญเสียความหลากหลายทางชีวภาพ:</strong> สัตว์หลายชนิดมีสถานะกันบริดตัวเข้ากับการเปลี่ยนแปลงสภาพภูมิอากาศได้ทันทำให้ประชากรสัตว์ป่าลดลง</li>
+                    <li><strong>ระดับน้ำทะเลสูงขึ้น:</strong> น้ำแข็งที่ละลายส่งผลให้ระดับน้ำทะเลสูงขึ้น</li>
+                    <li><strong>การเปลี่ยนแปลงระบบนิเวศ:</strong> เช่น การเปลี่ยนแปลงของฤดูกาล, การย้ายถิ่นของสัตว์, และการเปลี่ยนแปลงของแหล่งอาหาร</li>
+                </ul>
+
+                <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
+            </div>
+        </div>
+
+        <!-- หน้า Carbon Neutrality และ Net Zero -->
+        <div id="carbon-neutrality" class="page">
+            <div class="content-card">
+                <h2>🌿 Carbon Neutrality และ Net Zero Emissions</h2>
+
+                <h3 style="color: #007a6d; margin-top: 30px;">Carbon Neutrality คืออะไร?</h3>
+                <p>Carbon Neutrality หมายถึง การทำให้ปริมาณการปล่อยก๊าซคาร์บอนไดออกไซด์จากกิจกรรมต่าง ๆ เท่ากับปริมาณคาร์บอนที่สามารถดูดซับหรือชดเชยได้ จนทำให้การปล่อยคาร์บอนสุทธิเป็นศูนย์</p>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <img src="image/30.png" alt="การชดเชยคาร์บอน" style="max-width: 700px; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.15);">
+                </div>
+
+                <h3 style="color: #007a6d; margin-top: 40px;">Net Zero Emissions คืออะไร?</h3>
+                <p><strong>Net Zero Emissions</strong> คือ การลดการปล่อยก๊าซเรือนกระจกจากกิจกรรมต่าง ๆ ให้เหลือน้อยที่สุด และชดเชยส่วนที่เหลือด้วยวิธีการดูดซับคาร์บอน</p>
+                <p style="margin-top: 10px;">เป้าหมาย Net Zero เป็นแนวทางสำคัญในการแก้ไขปัญหาการเปลี่ยนแปลงสภาพภูมิอากาศ และหลายประเทศทั่วโลกตั้งเป้าหมายในการบรรลุ Net Zero ภายในปี ค.ศ. 2050</p>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <img src="image/28.png" alt="แนวทางสู่ Net Zero ในโรงเรียน" style="max-width: 700px; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.15);">
+                </div>
+
+                <h3 style="color: #007a6d; margin-top: 40px; text-align: center;">ความแตกต่างระหว่าง Carbon Neutrality และ Net Zero</h3>
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="image/29.png" alt="ความแตกต่างระหว่าง Carbon Neutrality และ Net Zero" style="max-width: 700px; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.15);">
+                </div>
+
+                <h3 style="color: #007a6d; margin-top: 40px;">บทบาทของประเทศไทยต่อการแก้ปัญหาโลกร้อน</h3>
+                <p>ประเทศไทยมีบทบาทสำคัญในการร่วมมือกับนานาประเทศเพื่อลดการปล่อยก๊าซเรือนกระจกและแก้ไขปัญหาการเปลี่ยนแปลงสภาพภูมิอากาศ โดยประเทศไทยได้เข้าร่วมความตกลงและโครงการระดับโลกหลายโครงการ</p>
+
+                <h3 style="color: #007a6d; margin-top: 40px;">ความตกลงปารีส</h3>
+                <p>ประเทศไทยเข้าร่วม Paris Agreement ซึ่งเป็นความตกลงระหว่างประเทศที่มีเป้าหมายในการจำกัดการเพิ่มขึ้นของอุณหภูมิโลกไม่ให้เกิน 1.5–2 องศาเซลเซียส ภายใต้ข้อตกลงนี้ ประเทศต่าง ๆ ต้องร่วมกันลดการปล่อยก๊าซเรือนกระจก และรายงานความก้าวหน้าในการดำเนินงานอย่างต่อเนื่อง</p>
+
+                <div style="background: #e8f5e9; border-left: 5px solid #4caf50; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                    <h4 style="color: #2e7d32; margin-bottom: 15px;">การประชุมด้านสภาพภูมิอากาศของโลก</h4>
+                    <p style="color: #1a1a1a;">ประเทศไทยเข้าร่วมการประชุมระดับโลกเกี่ยวกับการเปลี่ยนแปลงสภาพภูมิอากาศ เช่น COP26 ซึ่งเป็นการประชุมของประเทศต่าง ๆ เพื่อกำหนดแนวทางและมาตรการในการลดการปล่อยก๊าซเรือนกระจก ในการประชุมดังกล่าว ประเทศไทยได้ประกาศเป้าหมายสำคัญ ได้แก่</p>
+                    <ul style="margin-top: 10px; margin-left: 20px; color: #1a1a1a;">
+                        <li>บรรลุ Carbon Neutrality ภายในปี 2050</li>
+                        <li>บรรลุ Net Zero Emissions ภายในปี 2065</li>
+                    </ul>
+                </div>
+
+                <div style="background: #fff8e1; border-left: 5px solid #fbc02d; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                    <h4 style="color: #f57f17; margin-bottom: 15px;">ความร่วมมือของประเทศไทยในการลดก๊าซเรือนกระจก</h4>
+                    <p style="color: #1a1a1a;">ประเทศไทยได้ดำเนินมาตรการหลายด้าน เช่น</p>
+                    <ul style="margin-top: 10px; margin-left: 20px; color: #1a1a1a;">
+                        <li>ส่งเสริมการใช้พลังงานหมุนเวียน</li>
+                        <li>สนับสนุนการใช้รถยนต์ไฟฟ้า (EV)</li>
+                        <li>เพิ่มพื้นที่สีเขียวและปลูกป่า</li>
+                        <li>ลดการใช้พลังงานในภาคอุตสาหกรรมและอาคาร</li>
+                    </ul>
+                    <p style="margin-top: 10px; color: #1a1a1a;">มาตรการเหล่านี้มีเป้าหมายเพื่อช่วยลด Carbon Footprint ของประเทศ และสนับสนุนการพัฒนาอย่างยั่งยืน</p>
+                </div>
+
+                <div style="background: #e3f2fd; border-left: 5px solid #1976d2; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                    <h4 style="color: #1565c0; margin-bottom: 15px;">ความสำคัญของความร่วมมือระดับโลก</h4>
+                    <p style="color: #1a1a1a;">ปัญหาภาวะโลกร้อนเป็นปัญหาที่ส่งผลกระทบต่อทุกประเทศทั่วโลก ดังนั้นการแก้ไขปัญหานี้จำเป็นต้องอาศัยความร่วมมือจากทุกภาคส่วน ทั้งรัฐบาล ภาคธุรกิจ และประชาชน การมีส่วนร่วมของประเทศไทยจึงเป็นส่วนสำคัญในการช่วยลดการปล่อยก๊าซเรือนกระจก และรักษาสิ่งแวดล้อมของโลกในระยะยาว</p>
+                </div>
+
+                <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
+            </div>
+        </div>
+
+        <!-- หน้า GHG Protocol -->
+        <div id="ghg-protocol" class="page">
+            <div class="content-card">
+                <h2>GHG Protocol การจัดทำบัญชีก๊าซเรือนกระจก มาตรฐานสู่ความยั่งยืนขององค์กร</h2>
+                
+                <p>" ประเทศไทยได้ประกาศเป้าหมายว่า ภายในปี 2030 จะต้องลดการปล่อยก๊าซเรือนกระจกให้ได้ร้อยละ 30-40 จากการดำเนินการตามปกติ สู่การเป็นกลางทางคาร์บอน (Carbon Neutrality) ในปี 2050 และการปล่อยก๊าซเรือนกระจกสุทธิเป็นศูนย์ (Net Zero) ภายในปี 2065" จากจุดเริ่มต้นจากการดำเนินตัวในการสร้างสมดุลให้ซับบรรยากาศของโลกข้องนานาประเทศผ่านพิธีสารโตเกียว (Kyoto Protocol) ในปี 1997 สู่แผนเป้าหมายของไทยที่ต้องการสลดการปล่อยก๊าซเรือนกระจก ทำให้องค์กรต่างต้องปรับแผนการดำเนินงาน ตั้งเป้าหมายในการดำเนินธุรกิจอย่างยั่งยืน (Sustainability) ซึ่งต้องดำเนินการลดหรือดูดซึมยภารปล่อยก๊าซคาร์บอนกี่เงส่องทำบัญชีคาร์บอน (Carbon Accounting) ซึ่งมีขั้นตอน ข้อมูลใน การจัดการกับการจัดเก็บข้อมูลและการคำนวณ การกำหนดขอบเขตของการประเมินการปล่อยก๊าซเรือนกระจก (Scope of GHGs Emissions) ตั้งจะกำหนดมาตรการการลดหรือดูดซึมยภาคาร์บอนได้ ต้องสามารถดรวดวจอบความถูกต้องได้ มีความโปร่งใส ข้อมูลที่ได้สามารถนำไปวิเคราะห์ในการวางแผนงาน บริหารจัดการในการดำเนินกิจการ ซึ่งต้องมีการรายงาน และตรวจสอบรายงานการปล่อยก๊าซเรือนกระจกขององค์กรอย่างสม่ำเสมอรักด้วย</p>
+
+                <h3>GHG Protocol</h3>
+                <p><strong>GHG Protocol</strong> คือ มาตรฐานการทำบัญชีก๊าซเรือนกระจกสำหรับภาครัฐและเอกชน ซึ่งได้รับการพัฒนาโดย World Resource Institute (WRI) ร่วมกับ World Business Council for Sustainable Development (WBCSD) มีการแบ่งการปล่อยก๊าซเรือนกระจก ทั้งทางตรงและทางอ้อมเป็น 3 scope</p>
+
+                <div class="diagram-card">
+                    <h3 style="color: #333; margin-bottom: 20px;">องค์กรบริหารจัดการก๊าซเรือนกระจก</h3>
+                   <img src="image/messageImage_1773503115329.jpg" alt="Carbon Footprint Diagram">
+                </div>
+
+                <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
+            </div>
+        </div>
+
+        <!-- หน้าการคำนวณ -->
+        <div id="calculation" class="page">
+            <div class="content-card">
+                <h2>การคำนวณปริมาณการปล่อย Carbon</h2>
+                
+                <div class="calculator-card">
+                    <h3>ปริมาณการปล่อยก๊าซเรือนกระจก = ข้อมูลกิจกรรม × ค่าการปล่อยก๊าซเรือนกระจก</h3>
+                    
+                    <p><strong>ข้อมูลกิจกรรม (Activity Data)</strong> คือ ปริมาณการใช้พลังงานหรือปริมาณก๊าซเรือนกระจกที่เกิดขึ้นจากกระบวนการที่ทำให้เกิดการปล่อยก๊าซออกมา เช่น ปริมาณการใช้น้ำมันเชื้อเพลิง ปริมาณการใช้ไฟฟ้า ที่มีบอกมาเป็นหน่วยของการใช้งาน</p>
+                    
+                    <p><strong>ค่าการปล่อยก๊าซเรือนกระจก (Emission Factor)</strong> คือ ค่าที่แสดงปริมาณการปล่อยก๊าซเรือนกระจกต่อหน่วย</p>
+
+                    <div class="calc-input-group">
+                        <label for="activity">เลือกกิจกรรม:</label>
+                        <select id="activity">
+                            <option value="">-- เลือกกิจกรรม --</option>
+                            <option value="0.5">การใช้ไฟฟ้า (กิโลวัตต์-ชั่วโมง)</option>
+                            <option value="2.3">การใช้น้ำมันเชื้อเพลิง (ลิตร)</option>
+                            <option value="0.18">การเดินทางสาธารณะ (กิโลกรัม)</option>
+                            <option value="0.12">การใช้น้ำประปา (ลูกบาศก์เมตร)</option>
+                        </select>
+                    </div>
+
+                    <div class="calc-input-group">
+                        <label for="amount">ปริมาณ:</label>
+                        <input type="number" id="amount" placeholder="กรอกปริมาณ">
+                    </div>
+
+                    <div class="calc-input-group">
+                        <label for="unit">หน่วย:</label>
+                        <select id="unit">
+                            <option value="kg">กระดาษ (Kg)</option>
+                            <option value="l">ค่าน้ำ (L)</option>
+                            <option value="kwh">ค่าไฟ (หน่วย)</option>
+                            <option value="l2">น้ำมันดีเซล (L)</option>
+                        </select>
+                    </div>
+
+                    <button class="calc-btn" onclick="calculateCarbon()">คำนวณ</button>
+
+                    <div id="result" class="result-box">
+                        <h3>ผลการคำนวณ</h3>
+                        <p id="resultText"></p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px;">ตัวอย่างการเก็บรวบรวมข้อมูลกิจกรรมที่มีการปล่อยและดูดกลับก๊าซเรือนกระจก</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>กิจกรรม</th>
+                            <th>แหล่งข้อมูล</th>
+                            <th>หน่วย</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>การใช้ไฟฟ้า</td>
+                            <td>ใบเสร็จรับเงิน</td>
+                            <td>กิโลวัตต์-ชั่วโมง</td>
+                        </tr>
+                        <tr>
+                            <td>การใช้น้ำมันเชื้อเพลิงยานพาหนะ ประเภทน้ำมันดีเซล</td>
+                            <td>ใบเสร็จรับเงิน</td>
+                            <td>ลิตร</td>
+                        </tr>
+                        <tr>
+                            <td>การเดินสารท่าความเย็นสำหรับอากาศและยานพาหนะ</td>
+                            <td>ใบเสร็จรับเงิน</td>
+                            <td>กิโลกรัม</td>
+                        </tr>
+                        <tr>
+                            <td>การใช้น้ำประปา</td>
+                            <td>ใบเสร็จรับเงิน</td>
+                            <td>ลูกบาศก์เมตร</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
+            </div>
+        </div>
+
+        <!-- หน้าแนวทางการลด -->
+        <div id="reduction" class="page">
+            <div class="content-card">
+                <h2>แนวทางการลดปริมาณ Carbon</h2>
+
+                <div style="text-align: center; margin: 40px 0;">
+                    <img src="image/Screenshot 2026-03-14 163945.png" alt="ภาวะโลกร้อน" style="max-width: 900px; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+                </div>
+
+                <h3>1. ด้านพลังงาน</h3>
+                <div class="reduction-grid">
+                    <div class="reduction-item">
+                        <h4>พลังงานหมุนเวียน</h4>
+                        <p>• ใช้พลังงานหมุนเวียน เช่น พลังงานแสงอาทิตย์ ลม หรือชีวมวล<br>
+                        • ปรับปรุง ประสิทธิภาพการใช้พลังงาน เช่น ใช้หลอด LED เครื่องใช้ไฟฟ้าเบอร์ 5<br>
+                        • ปิดอุปกรณ์ไฟฟ้าเมื่อไม่ใช้งาน และถอดปลั๊กเพื่อลดพลังงานสแตนด์บาย</p>
+                    </div>
+                </div>
+
+                <h3>2. ด้านการเดินทางและคมนาคม</h3>
+                <div class="reduction-grid">
+                    <div class="reduction-item">
+                        <h4>ระบบขนส่งสาธารณะ</h4>
+                        <p>• ใช้ระบบขนส่งสาธารณะ, จักรยาน, หรือ เดินเท้า<br>
+                        • เลือกใช้รถยนต์ไฟฟ้า (EV) หรือรถยนต์ไฮบริด<br>
+                        • วางแผนเส้นทางเพื่อลดการขับรถย้อนซ้ำ และบำรุงรักษารถให้อยู่ในสภาพดี</p>
+                    </div>
+                </div>
+
+                <h3>3. ด้านการบริโภคและการใช้ชีวิต</h3>
+                <div class="reduction-grid">
+                    <div class="reduction-item">
+                        <h4>ลดการใช้</h4>
+                        <p>• ลดการใช้ พลาสติกแบบใช้ครั้งเดียว<br>
+                        • เลือกซื้อสินค้า ท้องถิ่น และ สินค้าที่มีฉลากคาร์บอนต่ำ (Carbon Label)<br>
+                        • ลดการบริโภค เนื้อสัตว์โดยเฉพาะเนื่อวัว เพราะมีการปล่อยก๊าซมีเทนสูง<br>
+                        • นำของกลับมาใช้ซ้ำ (Reuse) และรีไซเคิล (Recycle)</p>
+                    </div>
+                </div>
+
+                <h3>4. ด้านอุตสาหกรรมและองค์กร</h3>
+                <div class="reduction-grid">
+                    <div class="reduction-item">
+                        <h4>จัดการคาร์บอน</h4>
+                        <p>• ปรับกระบวนการผลิตให้ ใช้พลังงานและทรัพยากรอย่างมีประสิทธิภาพ<br>
+                        • จัดทำ ระบบจัดการคาร์บอน (Carbon Management System)<br>
+                        • สนับสนุน เทคโนโลยีดักจับและกักเก็บคาร์บอน (Carbon Capture and Storage)<br>
+                        • รายงานผลและลดการปล่อยคาร์บอนในห่วงโซ่อุปทาน (Supply Chain)</p>
+                    </div>
+                </div>
+
+                <h3>5. ด้านสิ่งแวดล้อมและพื้นที่สีเขียว</h3>
+                <div class="reduction-grid">
+                    <div class="reduction-item">
+                        <h4>ปลูกต้นไม้</h4>
+                        <p>• ปลูกต้นไม้และอนุรักษ์พื้นที่ป่า<br>
+                        • สนับสนุนโครงการ Carbon Offset เช่น การปลูกป่า หรือการผลิตพลังงานสะอาด<br>
+                        • จัดการของเสียและน้ำเสียอย่างถูกวิธีเพื่อลดก๊าซมีเทน</p>
+                        <h3 style="margin-top: 40px; text-align: center; color: #81d4fa;">📺 วิดีโอแนวทางการลดปริมาณ Carbon</h3>
+
+<div style="background: rgba(129,212,250,0.2); padding: 30px; border-radius: 20px; margin: 30px 0; text-align: center;">
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
+        <iframe 
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+            src="https://www.youtube.com/embed/cHabfIIPGqY" 
+            title="วิดีโอแนวทางการลดปริมาณ Carbon" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    <p style="margin-top: 20px; font-size: 1.1em; color: #b3e5fc;">
+         วิดีโอแนะนำแนวทางการลดคาร์บอนฟุตพริ้นต์
+    </p>
+</div>
+                    </div>
+                </div>
+
+                <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
+            </div>
+        </div>
+
+        <!-- หน้าแบบทดสอบ -->
+        <div id="quiz" class="page">
+            <div class="content-card">
+                <h2>แบบประเมินการเรียนรู้</h2>
+                
+
+                <div class="quiz-section">
+                    <h3>แบบทดสอบก่อนเรียน</h3>
+                    <button class="calc-btn" onclick="currentQuizType = 'pre'; startQuiz('pre')">เริ่มทำแบบทดสอบ</button>
+                </div>
+
+                <div class="quiz-section">
+                    <h3>แบบทดสอบหลังเรียน</h3>
+                    <button class="calc-btn" onclick="currentQuizType = 'post'; startQuiz('post')">เริ่มทำแบบทดสอบ</button>
+                </div>
+
+                <div class="quiz-section">
+                    <h3>แบบสอบถามการประเมินการเรียนรู้</h3>
+                    <button class="calc-btn" onclick="startSurvey()">ทำแบบสอบถาม</button>
+                </div>
+
+                <div id="quizContent" style="display:none; margin-top: 30px;">
+                    <h3 id="quizTitle"></h3>
+                    <div id="quizQuestions"></div>
+                    <button class="calc-btn" onclick="submitQuiz()">ส่งคำตอบ</button>
+                    <div id="quizResult" class="result-box"></div>
+                </div>
+
+                <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
+            </div>
+        </div>
+
+        <!-- หน้า Admin Dashboard -->
+        <div id="admin" class="page">
+            <div class="content-card">
+                <h2>📊 Admin Dashboard</h2>
+                
+                <div style="margin: 20px 0; display: flex; flex-wrap: wrap; gap: 10px;">
+                    <button class="calc-btn" onclick="loadAdminUsers()" style="margin-right: 10px;">👥 ดูรายชื่อผู้ใช้งาน</button>
+                    <button class="calc-btn" onclick="loadAdminAssessments()" style="margin-right: 10px;">📝 ดูผลการประเมิน</button>
+                    <button class="calc-btn" onclick="loadAdminStats()" style="margin-right: 10px;">📈 ดูสถิติ</button>
+                    <button class="calc-btn" onclick="downloadAssessmentsExcel()" style="background: #4CAF50; margin-right: 10px;">📥 ดาวน์โหลด Excel</button>
+                    <button class="calc-btn" onclick="showAddUserForm()" style="background: #ff9800;">➕ เพิ่ม User ใหม่</button>
+                </div>
+
+                <div id="adminContent" style="margin-top: 30px;"></div>
+
+                <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
+            </div>
+        </div>
+
+    <script>
+        // ตัวแปรสำหรับเก็บข้อมูลส่วนตัว
+        let userInfo = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: ''
+        };
+
+        let currentQuizType = ''; // เก็บประเภทของแบบทดสอบ (pre/post)
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // ฟังก์ชันแสดงหน้า results และโหลดข้อมูล
+        function showResultsPage() {
+            showPage('results');
+            loadAssessmentData();
+        }
+
+        // ดึงข้อมูลจาก API และแสดงในตาราง
+        let assessmentData = [];
+        function loadAssessmentData() {
+            const resultsTable = document.getElementById('resultsTable');
+            resultsTable.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
+
+            fetch('/api/assessments')
+                .then(res => res.json())
+                .then(data => {
+                    assessmentData = data;
+                    displayAssessmentTable(data);
+                })
+                .catch(err => {
+                    resultsTable.innerHTML = `<p style="color: #ff5252; text-align: center;">❌ เกิดข้อผิดพลาดในการโหลดข้อมูล: ${err.message}</p>`;
+                    console.error('Error loading data:', err);
+                });
+        }
+
+        // แสดงตารางข้อมูล
+        function displayAssessmentTable(data) {
+            const resultsTable = document.getElementById('resultsTable');
+            
+            if (data.length === 0) {
+                resultsTable.innerHTML = '<p style="text-align: center; color: #81d4fa;">ยังไม่มีข้อมูลการทดสอบ</p>';
+                return;
+            }
+
+            let html = `
+                <table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+                    <thead style="background: rgba(76, 175, 80, 0.3);">
+                        <tr>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ลำดับที่</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ชื่อ-นามสกุล</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">อีเมล</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">เบอร์โทร</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ประเภท</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.2);">คะแนนเฉลี่ย</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">วันที่</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach((row, index) => {
+                const categoryDisplay = row.category === 'แบบทดสอบก่อนเรียน' ? '📚 ก่อนเรียน' : 
+                                       row.category === 'แบบทดสอบหลังเรียน' ? '✅ หลังเรียน' : row.category;
+                const scoreColor = row.avg_score >= 0.7 ? '#4CAF50' : row.avg_score >= 0.5 ? '#FFC107' : '#ff5252';
+                const createdDate = new Date(row.created_at).toLocaleString('th-TH');
+                
+                html += `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); hover: {background: rgba(255,255,255,0.1);}">
+                        <td style="padding: 15px;">${index + 1}</td>
+                        <td style="padding: 15px;">${row.name}</td>
+                        <td style="padding: 15px;">${row.email}</td>
+                        <td style="padding: 15px;">${row.phone || '-'}</td>
+                        <td style="padding: 15px;">${categoryDisplay}</td>
+                        <td style="padding: 15px; text-align: center; color: ${scoreColor}; font-weight: bold;">${(row.avg_score * 100).toFixed(0)}%</td>
+                        <td style="padding: 15px; font-size: 0.9em; color: #81d4fa;">${createdDate}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+                <p style="margin-top: 20px; color: #81d4fa; text-align: center;">
+                    📊 รวมทั้งหมด: <strong>${data.length}</strong> รายการ
+                </p>
+            `;
+
+            resultsTable.innerHTML = html;
+        }
+
+        // ดาวน์โหลดเป็นไฟล์ Excel
+        function downloadExcel() {
+            if (assessmentData.length === 0) {
+                alert('❌ ยังไม่มีข้อมูลให้ดาวน์โหลด');
+                return;
+            }
+
+            // สร้างข้อมูล CSV
+            let csv = 'ลำดับที่,ชื่อ-นามสกุล,อีเมล,เบอร์โทร,ประเภท,คะแนนเฉลี่ย(%),บันทึก,วันที่กำหนด\n';
+            
+            assessmentData.forEach((row, index) => {
+                const categoryName = row.category === 'แบบทดสอบก่อนเรียน' ? 'ก่อนเรียน' : 
+                                   row.category === 'แบบทดสอบหลังเรียน' ? 'หลังเรียน' : row.category;
+                const scorePercent = (row.avg_score * 100).toFixed(0);
+                const comment = (row.comment || '-').replace(/"/g, '""').replace(/\n/g, ' ');
+                const createdDate = new Date(row.created_at).toLocaleDateString('th-TH');
+                
+                csv += `${index + 1},"${row.name}","${row.email}","${row.phone || ''}","${categoryName}",${scorePercent},\"${comment}\",${createdDate}\n`;
+            });
+
+            // เพิ่มสรุป
+            csv += '\n\nสรุปผล\n';
+            const preTests = assessmentData.filter(r => r.category === 'แบบทดสอบก่อนเรียน');
+            const postTests = assessmentData.filter(r => r.category === 'แบบทดสอบหลังเรียน');
+            
+            csv += `ทดสอบก่อนเรียน,${preTests.length},คน\n`;
+            csv += `ทดสอบหลังเรียน,${postTests.length},คน\n`;
+            
+            if (preTests.length > 0) {
+                const preAvg = (preTests.reduce((sum, r) => sum + r.avg_score, 0) / preTests.length * 100).toFixed(1);
+                csv += `คะแนนเฉลี่ยก่อนเรียน,${preAvg},%\n`;
+            }
+            
+            if (postTests.length > 0) {
+                const postAvg = (postTests.reduce((sum, r) => sum + r.avg_score, 0) / postTests.length * 100).toFixed(1);
+                csv += `คะแนนเฉลี่ยหลังเรียน,${postAvg},%\n`;
+            }
+
+            // ดาวน์โหลดไฟล์
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `ผลการทดสอบ_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            
+            alert('✅ ดาวน์โหลดไฟล์สำเร็จ!\\n\\nไฟล์นี้สามารถเปิดด้วย:\\n- Microsoft Excel\\n- Google Sheets\\n- LibreOffice Calc');
+        }
+
+
+        function calculateCarbon() {
+            const activity = parseFloat(document.getElementById('activity').value);
+            const amount = parseFloat(document.getElementById('amount').value);
+            const unit = document.getElementById('unit').value;
+
+            if (!activity || !amount) {
+                alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+                return;
+            }
+
+            const result = activity * amount;
+            const resultBox = document.getElementById('result');
+            const resultText = document.getElementById('resultText');
+
+            resultText.innerHTML = `ปริมาณการปล่อย CO2: <strong>${result.toFixed(2)} tCO2e/ปี</strong>`;
+            resultBox.classList.add('show');
+        }
+
+        const allQuestions = [
+            // ภาวะโลกร้อน (5 ข้อ)
+            {
+                question: "ภาวะโลกร้อนหมายถึงข้อใด",
+                category: "ภาวะโลกร้อน",
+                options: [
+                    "ก. การที่โลกมีอุณหภูมิลดลงจากการเปลี่ยนแปลงของฤดูกาล",
+                    "ข. การที่อุณหภูมิเฉลี่ยของโลกเพิ่มขึ้นจากภาวะเรือนกระจก",
+                    "ค. การที่โลกได้รับพลังงานจากดวงอาทิตย์ลดลง",
+                    "ง. การเปลี่ยนแปลงของแกนโลก"
+                ],
+                answer: 1
+            },
+            {
+                question: "กิจกรรมใดของมนุษย์เป็นสาเหตุหลักที่ทำให้เกิดการปล่อยก๊าซคาร์บอนไดออกไซด์มากที่สุด",
+                category: "ภาวะโลกร้อน",
+                options: [
+                    "ก. การเผาไหม้เชื้อเพลิงฟอสซิล",
+                    "ข. การปลูกป่าเพิ่มพื้นที่สีเขียว",
+                    "ค. การใช้พลังงานแสงอาทิตย์",
+                    "ง. การอนุรักษ์ทรัพยากรธรรมชาติ"
+                ],
+                answer: 0
+            },
+            {
+                question: "ข้อใดกล่าวถูกต้องเกี่ยวกับผลของการตัดไม้ทำลายป่าต่อภาวะโลกร้อน",
+                category: "ภาวะโลกร้อน",
+                options: [
+                    "ก. ทำให้โลกสะท้อนความร้อนกลับสู่อวกาศมากขึ้น",
+                    "ข. ทำให้กลไกการดูดซับก๊าซคาร์บอนไดออกไซด์ลดลง",
+                    "ค. ช่วยลดปริมาณก๊าซเรือนกระจกในบรรยากาศ",
+                    "ง. ไม่มีความเกี่ยวข้องกับภาวะโลกร้อน"
+                ],
+                answer: 1
+            },
+            {
+                question: "ก๊าซชนิดใดต่อไปนี้เป็นก๊าซเรือนกระจกที่เกิดจากกิจกรรมทางเกษตรกรรม",
+                category: "ภาวะโลกร้อน",
+                options: [
+                    "ก. ออกซิเจน (O₂)",
+                    "ข. ไนโตรเจน (N₂)",
+                    "ค. มีเทน (CH₄)",
+                    "ง. อาร์กอน (Ar)"
+                ],
+                answer: 2
+            },
+            {
+                question: "ข้อใด ไม่ใช่ ผลกระทบจากภาวะโลกร้อนตามเนื้อหา",
+                category: "ภาวะโลกร้อน",
+                options: [
+                    "ก. การเกิดคลื่นความร้อนและพายุรุนแรง",
+                    "ข. การสูญพันธุ์ของพืชและสัตว์บางชนิด",
+                    "ค. การเพิ่มขึ้นของพื้นที่สีเขียวในเมือง",
+                    "ง. ความเสียหายทางเศรษฐกิจ"
+                ],
+                answer: 2
+            },
+            
+            // Carbon Footprint (5 ข้อ)
+            {
+                question: "Carbon Footprint หมายถึงข้อใด",
+                category: "Carbon Footprint",
+                options: [
+                    "ก. ปริมาณพลังงานที่มนุษย์ใช้ในชีวิตประจำวัน",
+                    "ข. ปริมาณก๊าซเรือนกระจกทั้งหมดที่ถูกปล่อยจากกิจกรรมของมนุษย์",
+                    "ค. ปริมาณออกซิเจนที่ถูกใช้ในกระบวนการผลิต",
+                    "ง. ปริมาณขยะที่เกิดจากการบริโภคของมนุษย์"
+                ],
+                answer: 1
+            },
+            {
+                question: "ข้อใด ไม่ใช่ ก๊าซเรือนกระจก 1 ใน 7 ชนิดที่ใช้ในการคำนวณ Carbon Footprint",
+                category: "Carbon Footprint",
+                options: [
+                    "ก. ก๊าซคาร์บอนไดออกไซด์",
+                    "ข. ก๊าซมีเทน",
+                    "ค. ก๊าซไนโตรเจน",
+                    "ง. ก๊าซซัลเฟอร์เฮกซะฟลูออไรด์"
+                ],
+                answer: 2
+            },
+            {
+                question: "เหตุใดก๊าซคาร์บอนไดออกไซด์จึงถูกใช้เป็นค่ามาตรฐานในการเปรียบเทียบศักยภาพการทำให้เกิดภาวะโลกร้อน",
+                category: "Carbon Footprint",
+                options: [
+                    "ก. เพราะเป็นก๊าซที่มีอันตรายต่อสุขภาพมากที่สุด",
+                    "ข. เพราะเป็นก๊าซที่มีปริมาณมากที่สุดในอากาศ",
+                    "ค. เพราะ IPCC กำหนดให้มีค่าศักยภาพการทำให้โลกร้อนเท่ากับ 1",
+                    "ง. เพราะเป็นก๊าซที่ไม่ก่อให้เกิดภาวะเรือนกระจก"
+                ],
+                answer: 2
+            },
+            {
+                question: "ข้อใดเป็นผลกระทบต่อสิ่งแวดล้อมที่เกิดจากการเพิ่มขึ้นของ Carbon Footprint",
+                category: "Carbon Footprint",
+                options: [
+                    "ก. อุณหภูมิโลกลดลง",
+                    "ข. ความหลากหลายทางชีวภาพเพิ่มขึ้น",
+                    "ค. ภัยพิบัติทางธรรมชาติเกิดบ่อยและรุนแรงขึ้น",
+                    "ง. ฤดูกาลมีความคงที่มากขึ้น"
+                ],
+                answer: 2
+            },
+            {
+                question: "ข้อใดเป็นผลกระทบต่อสุขภาพของมนุษย์จากการได้รับก๊าซคาร์บอนไดออกไซด์ในปริมาณมาก",
+                category: "Carbon Footprint",
+                options: [
+                    "ก. การมองเห็นดีขึ้น",
+                    "ข. หัวใจเต้นเร็วและหายใจลำบาก",
+                    "ค. ระบบภูมิคุ้มกันแข็งแรงขึ้น",
+                    "ง. ความจำดีขึ้น"
+                ],
+                answer: 1
+            },
+            
+            // GHG Protocol (5 ข้อ)
+            {
+                question: "เป้าหมายด้านการลดก๊าซเรือนกระจกของประเทศไทยตามเนื้อหาคือข้อใด",
+                category: "GHG Protocol",
+                options: [
+                    "ก. ลดการปล่อยก๊าซเรือนกระจกร้อยละ 20 ภายในปี 2025",
+                    "ข. เป็นกลางทางคาร์บอนในปี 2030 และ Net Zero ในปี 2050",
+                    "ค. ลดการปล่อยก๊าซเรือนกระจกร้อยละ 30–40 ภายในปี 2030",
+                    "ง. ปล่อยก๊าซเรือนกระจกสุทธิเป็นศูนย์ภายในปี 2040"
+                ],
+                answer: 2
+            },
+            {
+                question: "GHG Protocol คืออะไร",
+                category: "GHG Protocol",
+                options: [
+                    "ก. กฎหมายด้านสิ่งแวดล้อมของประเทศไทย",
+                    "ข. มาตรฐานการทำบัญชีก๊าซเรือนกระจกสำหรับองค์กร",
+                    "ค. เครื่องมือวัดมลพิษทางอากาศ",
+                    "ง. โครงการลดโลกร้อนระดับชุมชน"
+                ],
+                answer: 1
+            },
+            {
+                question: "ข้อใดจัดอยู่ใน Scope 1 ตาม GHG Protocol",
+                category: "GHG Protocol",
+                options: [
+                    "ก. การใช้ไฟฟ้าที่ซื้อจากการไฟฟ้า",
+                    "ข. การเดินทางของพนักงานจากบ้านมาทำงาน",
+                    "ค. การปล่อยควันจากเครื่องจักรภายในโรงงาน",
+                    "ง. การขนส่งสินค้าจากโรงงานไปยังลูกค้า"
+                ],
+                answer: 2
+            },
+            {
+                question: "การปล่อยก๊าซเรือนกระจกจากการใช้พลังงานไฟฟ้าที่องค์กรซื้อมา จัดอยู่ใน Scope ใด",
+                category: "GHG Protocol",
+                options: [
+                    "ก. Scope 1",
+                    "ข. Scope 2",
+                    "ค. Scope 3",
+                    "ง. ไม่อยู่ในขอบเขตใด"
+                ],
+                answer: 1
+            },
+            {
+                question: "ข้อใดเป็นตัวอย่างของการปล่อยก๊าซเรือนกระจกใน Scope 3",
+                category: "GHG Protocol",
+                options: [
+                    "ก. การรั่วไหลของสารทำความเย็นจากเครื่องปรับอากาศขององค์กร",
+                    "ข. การเผาไหม้เชื้อเพลิงของรถบรรทุกที่องค์กรเป็นเจ้าของ",
+                    "ค. การผลิตไฟฟ้าในโรงไฟฟ้าที่องค์กรซื้อมาใช้",
+                    "ง. การเดินทางเพื่อติดต่อธุรกิจและการกำจัดของเสียขององค์กร"
+                ],
+                answer: 3
+            },
+            
+            // แนวทางการลดปริมาณ Carbon (5 ข้อ)
+            {
+                question: "ข้อใดเป็นแนวทางลดปริมาณคาร์บอนใน ด้านพลังงาน",
+                category: "แนวทางการลดปริมาณ Carbon",
+                options: [
+                    "ก. ใช้รถยนต์ส่วนตัวมากขึ้น",
+                    "ข. ใช้พลังงานแสงอาทิตย์แทนเชื้อเพลิงฟอสซิล",
+                    "ค. ใช้พลาสติกแบบใช้ครั้งเดียว",
+                    "ง. ลดการปลูกต้นไม้"
+                ],
+                answer: 1
+            },
+            {
+                question: "วิธีใดช่วยลดการปล่อยก๊าซเรือนกระจกจาก การเดินทางและคมนาคม ได้ดีที่สุด",
+                category: "แนวทางการลดปริมาณ Carbon",
+                options: [
+                    "ก. ขับรถยนต์ส่วนตัวทุกวัน",
+                    "ข. ใช้รถที่ขาดการบำรุงรักษา",
+                    "ค. ใช้ระบบขนส่งสาธารณะหรือจักรยาน",
+                    "ง. ขับรถอ้อมเพื่อหลีกเลี่ยงการจราจร"
+                ],
+                answer: 2
+            },
+            {
+                question: "ข้อใดเป็นพฤติกรรมที่ช่วยลด Carbon Footprint ใน ด้านการบริโภคและการใช้ชีวิต",
+                category: "แนวทางการลดปริมาณ Carbon",
+                options: [
+                    "ก. ใช้พลาสติกแบบใช้ครั้งเดียวอย่างต่อเนื่อง",
+                    "ข. บริโภคเนื้อวัวเป็นหลักทุกมื้อ",
+                    "ค. เลือกซื้อสินค้าที่มีฉลากคาร์บอนต่ำ",
+                    "ง. ทิ้งขยะโดยไม่คัดแยก"
+                ],
+                answer: 2
+            },
+            {
+                question: "การจัดทำระบบจัดการคาร์บอน (Carbon Management System) จัดอยู่ในแนวทางด้านใด",
+                category: "แนวทางการลดปริมาณ Carbon",
+                options: [
+                    "ก. ด้านการเดินทางและคมนาคม",
+                    "ข. ด้านการบริโภคและการใช้ชีวิต",
+                    "ค. ด้านอุตสาหกรรมและองค์กร",
+                    "ง. ด้านสิ่งแวดล้อมและพื้นที่สีเขียว"
+                ],
+                answer: 2
+            },
+            {
+                question: "ข้อใดเป็นแนวทางลดคาร์บอนใน ด้านสิ่งแวดล้อมและพื้นที่สีเขียว",
+                category: "แนวทางการลดปริมาณ Carbon",
+                options: [
+                    "ก. เพิ่มพื้นที่คอนกรีตในเมือง",
+                    "ข. ปลูกต้นไม้และสนับสนุนโครงการ Carbon Offset",
+                    "ค. เผาขยะกลางแจ้ง",
+                    "ง. ใช้พลังงานฟอสซิลในระยะยาว"
+                ],
+                answer: 1
+            },
+            
+            // คำถามเดิมที่เหลือ (สำหรับสุ่ม - รวม 20 ข้อ)
+            {
+                question: "ก๊าซใดเป็นก๊าซเรือนกระจกหลัก",
+                category: "เพิ่มเติม",
+                options: [
+                    "ก. ออกซิเจน",
+                    "ข. ไนโตรเจน",
+                    "ค. คาร์บอนไดออกไซด์",
+                    "ง. ไฮโดรเจน"
+                ],
+                answer: 2
+            },
+            {
+                question: "กิจกรรมใดปล่อยคาร์บอนฟุตปริ้นมากที่สุด",
+                category: "เพิ่มเติม",
+                options: [
+                    "ก. เดินไปโรงเรียน",
+                    "ข. ปั่นจักรยาน",
+                    "ค. ใช้รถยนต์ส่วนตัว",
+                    "ง. ใช้รถสาธารณะ"
+                ],
+                answer: 2
+            },
+            {
+                question: "การใช้หลอดไฟ LED มีผลอย่างไร",
+                options: [
+                    "ก. ใช้ไฟมากขึ้น",
+                    "ข. ลดการใช้พลังงานไฟฟ้า",
+                    "ค. เพิ่มความร้อนในบ้าน",
+                    "ง. ไม่เกี่ยวกับคาร์บอนฟุตปริ้น"
+                ],
+                answer: 1
+            },
+            {
+                question: "แหล่งกำเนิดคาร์บอนฟุตปริ้นที่สำคัญมาจากอะไร",
+                options: [
+                    "ก. แสงแดด",
+                    "ข. พลังงานหมุนเวียน",
+                    "ค. การเผาไหม้เชื้อเพลิงฟอสซิล",
+                    "ง. ลมธรรมชาติ"
+                ],
+                answer: 2
+            },
+            {
+                question: "การปิดเครื่องใช้ไฟฟ้าเมื่อไม่ใช้งานช่วยอย่างไร",
+                options: [
+                    "ก. เพิ่มค่าไฟ",
+                    "ข. ลดการใช้พลังงาน",
+                    "ค. ทำให้อุปกรณ์เสียเร็ว",
+                    "ง. ไม่มีผลใด ๆ"
+                ],
+                answer: 1
+            },
+            {
+                question: "การเดินทางแบบใดปล่อยคาร์บอนน้อยที่สุด",
+                options: [
+                    "ก. รถยนต์",
+                    "ข. รถจักรยานยนต์",
+                    "ค. รถไฟฟ้า",
+                    "ง. เดินเท้า"
+                ],
+                answer: 3
+            },
+            {
+                question: "การใช้ถุงผ้าช่วยลดคาร์บอนฟุตปริ้นได้อย่างไร",
+                options: [
+                    "ก. เพิ่มการผลิตพลาสติก",
+                    "ข. ลดการใช้ถุงพลาสติก",
+                    "ค. ใช้พลังงานมากขึ้น",
+                    "ง. ไม่มีผลต่อสิ่งแวดล้อม"
+                ],
+                answer: 1
+            },
+            {
+                question: "อาหารประเภทใดมีคาร์บอนฟุตปริ้นสูงกว่า",
+                options: [
+                    "ก. ผักสด",
+                    "ข. ผลไม้",
+                    "ค. เนื้อสัตว์",
+                    "ง. ธัญพืช"
+                ],
+                answer: 2
+            },
+            {
+                question: "การกินอาหารท้องถิ่นช่วยลดคาร์บอนฟุตปริ้นเพราะอะไร",
+                options: [
+                    "ก. ราคาถูกกว่า",
+                    "ข. ใช้บรรจุภัณฑ์มากกว่า",
+                    "ค. ลดการขนส่งระยะไกล",
+                    "ง. รสชาติดีกว่า"
+                ],
+                answer: 2
+            },
+            {
+                question: "ข้อใดเป็นพฤติกรรมที่ช่วยลดคาร์บอนฟุตปริ้น",
+                options: [
+                    "ก. เปิดแอร์ทั้งวัน",
+                    "ข. ใช้ไฟฟ้าโดยไม่ปิด",
+                    "ค. ใช้พลังงานอย่างประหยัด",
+                    "ง. ใช้รถยนต์ส่วนตัวทุกวัน"
+                ],
+                answer: 2
+            },
+            {
+                question: "พลังงานชนิดใดเป็นพลังงานสะอาด",
+                options: [
+                    "ก. ถ่านหิน",
+                    "ข. น้ำมัน",
+                    "ค. ก๊าซธรรมชาติ",
+                    "ง. พลังงานแสงอาทิตย์"
+                ],
+                answer: 3
+            },
+            {
+                question: "การรีไซเคิลช่วยลดคาร์บอนฟุตปริ้นได้อย่างไร",
+                options: [
+                    "ก. เพิ่มปริมาณขยะ",
+                    "ข. ลดการใช้ทรัพยากรใหม่",
+                    "ค. ใช้พลังงานมากขึ้น",
+                    "ง. ทำให้เกิดมลพิษ"
+                ],
+                answer: 1
+            },
+            {
+                question: "คาร์บอนฟุตปริ้นมีผลกระทบต่อสิ่งใดมากที่สุด",
+                options: [
+                    "ก. สภาพภูมิอากาศ",
+                    "ข. สีของท้องฟ้า",
+                    "ค. เสียงรบกวน",
+                    "ง. แสงสว่าง"
+                ],
+                answer: 0
+            },
+            {
+                question: "ข้อใดไม่ใช่ก๊าซเรือนกระจก",
+                options: [
+                    "ก. คาร์บอนไดออกไซด์",
+                    "ข. มีเทน",
+                    "ค. ไนตรัสออกไซด์",
+                    "ง. ออกซิเจน"
+                ],
+                answer: 3
+            },
+            {
+                question: "การปลูกต้นไม้ช่วยลดคาร์บอนฟุตปริ้นอย่างไร",
+                options: [
+                    "ก. เพิ่มก๊าซเรือนกระจก",
+                    "ข. ดูดซับคาร์บอนไดออกไซด์",
+                    "ค. เพิ่มอุณหภูมิ",
+                    "ง. ใช้น้ำมากขึ้น"
+                ],
+                answer: 1
+            },
+            {
+                question: "การใช้ขนส่งสาธารณะช่วยลดคาร์บอนฟุตปริ้นเพราะอะไร",
+                options: [
+                    "ก. ใช้พลังงานมากขึ้น",
+                    "ข. ลดจำนวนรถบนถนน",
+                    "ค. เพิ่มการปล่อยก๊าซ",
+                    "ง. ใช้เวลานานกว่า"
+                ],
+                answer: 1
+            },
+            {
+                question: "เครื่องใช้ไฟฟ้าเบอร์ 5 หมายถึงอะไร",
+                options: [
+                    "ก. ใช้ไฟมาก",
+                    "ข. ใช้ไฟปานกลาง",
+                    "ค. ประหยัดพลังงาน",
+                    "ง. ราคาสูง"
+                ],
+                answer: 2
+            },
+            {
+                question: "การใช้กระดาษสองหน้ามีผลอย่างไร",
+                options: [
+                    "ก. เพิ่มการตัดไม้",
+                    "ข. ลดการใช้ทรัพยากร",
+                    "ค. เพิ่มขยะ",
+                    "ง. ไม่เกี่ยวกับสิ่งแวดล้อม"
+                ],
+                answer: 1
+            },
+            {
+                question: "การลดคาร์บอนฟุตปริ้นควรเริ่มจากใคร",
+                options: [
+                    "ก. รัฐบาลเท่านั้น",
+                    "ข. โรงงานอุตสาหกรรมเท่านั้น",
+                    "ค. บุคคลทุกคน",
+                    "ง. องค์กรระหว่างประเทศเท่านั้น"
+                ],
+                answer: 2
+            }
+        ];
+
+        // สุ่มคำถาม 10 ข้อสำหรับแต่ละแบบทดสอบ
+        const quizData = {
+            pre: [],
+            post: []
+        };
+
+        let currentQuiz = [];
+        let userAnswers = [];
+
+        // ฟังก์ชันสุ่มคำถามตามหมวดหมู่
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz(type) {
+            // แบ่งคำถามตามหมวดหมู่
+            const categories = [
+                "ภาวะโลกร้อน",
+                "Carbon Footprint", 
+                "GHG Protocol",
+                "แนวทางการลดปริมาณ Carbon"
+            ];
+            
+            currentQuiz = [];
+            
+            // เลือกคำถามตามหมวดหมู่ (ไม่สุ่ม - เรียงตามลำดับ)
+            categories.forEach(cat => {
+                const catQuestions = allQuestions.filter(q => q.category === cat);
+                currentQuiz = currentQuiz.concat(catQuestions);
+            });
+            
+            userAnswers = new Array(currentQuiz.length).fill(null);
+            
+            const quizContent = document.getElementById('quizContent');
+            const quizTitle = document.getElementById('quizTitle');
+            const quizQuestions = document.getElementById('quizQuestions');
+            const quizResult = document.getElementById('quizResult');
+
+            quizTitle.textContent = type === 'pre' ? 'แบบทดสอบก่อนเรียน (20 ข้อ)' : 'แบบทดสอบหลังเรียน (20 ข้อ)';
+            quizResult.classList.remove('show');
+            
+            let html = '';
+            let currentCategory = '';
+            
+            currentQuiz.forEach((q, index) => {
+                // แสดงหัวข้อหมวดหมู่
+                if (q.category && q.category !== currentCategory && q.category !== 'เพิ่มเติม') {
+                    currentCategory = q.category;
+                    html += `
+                        <div style="background: linear-gradient(135deg, #4CAF50, #8BC34A); padding: 15px 25px; border-radius: 15px; margin: 30px 0 20px; text-align: center;">
+                            <h3 style="margin: 0; font-size: 1.3em; color: white;">📚 ${currentCategory}</h3>
+                        </div>
+                    `;
+                }
+                
+                html += `
+                    <div class="quiz-section">
+                        <h4>ข้อที่ ${index + 1}: ${q.question}</h4>
+                        <div class="quiz-options">
+                            ${q.options.map((opt, i) => `
+                                <div class="quiz-option" onclick="selectAnswer(${index}, ${i})">
+                                    <input type="radio" name="q${index}" value="${i}" id="q${index}_${i}">
+                                    <label for="q${index}_${i}" style="cursor: pointer; width: 100%; padding: 5px;">${opt}</label>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            quizQuestions.innerHTML = html;
+            quizContent.style.display = 'block';
+            window.scrollTo(0, document.getElementById('quizContent').offsetTop - 100);
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+            
+            const options = document.querySelectorAll(`input[name="q${questionIndex}"]`);
+            options.forEach((opt, i) => {
+                opt.parentElement.classList.remove('selected');
+                if (i === answerIndex) {
+                    opt.parentElement.classList.add('selected');
+                    opt.checked = true;
+                }
+            });
+        }
+
+        function submitQuiz() {
+            if (userAnswers.includes(null)) {
+                alert('กรุณาตอบคำถามให้ครบทุกข้อ');
+                return;
+            }
+
+            // คำนวณคะแนนแยกตามหมวดหมู่
+            const categoryScores = {
+                'ภาวะโลกร้อน': { correct: 0, total: 0 },
+                'Carbon Footprint': { correct: 0, total: 0 },
+                'GHG Protocol': { correct: 0, total: 0 },
+                'แนวทางการลดปริมาณ Carbon': { correct: 0, total: 0 }
+            };
+
+            let totalScore = 0;
+            currentQuiz.forEach((q, index) => {
+                if (q.category && q.category !== 'เพิ่มเติม') {
+                    categoryScores[q.category].total++;
+                    if (userAnswers[index] === q.answer) {
+                        categoryScores[q.category].correct++;
+                        totalScore++;
+                    }
+                }
+            });
+
+            const percentage = (totalScore / currentQuiz.length * 100).toFixed(0);
+            const avgScore = (totalScore / currentQuiz.length).toFixed(2);
+            const resultBox = document.getElementById('quizResult');
+            
+            // บันทึกข้อมูลไปยัง Backend
+            saveQuizToDatabase(avgScore, totalScore, userAnswers, currentQuizType);
+            
+            // สร้างกราฟแท่งแสดงคะแนนแต่ละหมวดหมู่
+            let chartHTML = '<div style="background: rgba(0,0,0,0.5); padding: 30px; border-radius: 20px; margin: 30px 0;">';
+            chartHTML += '<h3 style="text-align: center; margin-bottom: 30px; color: #81d4fa;">📊 แบบทดสอบก่อนเรียน</h3>';
+            
+            // แสดงกราฟแต่ละหมวดหมู่
+            const categories = Object.keys(categoryScores);
+            const maxScore = 5; // แต่ละหมวดหมู่มี 5 ข้อ
+            
+            categories.forEach(cat => {
+                const score = categoryScores[cat];
+                const barWidth = (score.correct / maxScore) * 100;
+                const barColor = score.correct >= 4 ? '#4CAF50' : score.correct >= 3 ? '#FFC107' : '#f44336';
+                
+                chartHTML += `
+                    <div style="margin: 25px 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <span style="font-size: 1em; color: white;">${cat}</span>
+                            <span style="font-size: 1.2em; font-weight: bold; color: ${barColor};">${score.correct}</span>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); height: 40px; border-radius: 10px; overflow: hidden; position: relative;">
+                            <div style="
+                                background: ${barColor}; 
+                                height: 100%; 
+                                width: ${barWidth}%; 
+                                transition: width 1s ease;
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-end;
+                                padding-right: 15px;
+                                border-radius: 10px;
+                            "></div>
+                            <div style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: white; font-size: 0.9em;">
+                                ${score.correct}/${maxScore}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            chartHTML += '</div>';
+            
+            // สรุปผลคะแนนรวม
+            let summaryColor = '#4CAF50';
+            let summaryEmoji = '💪';
+            let summaryText = 'ลองทำใหม่อีกครั้งนะ!';
+            
+            if (percentage >= 80) {
+                summaryEmoji = '🎉';
+                summaryText = 'ยอดเยี่ยม!';
+            } else if (percentage >= 70) {
+                summaryEmoji = '👍';
+                summaryText = 'ดีมาก!';
+            } else if (percentage >= 60) {
+                summaryColor = '#FFC107';
+                summaryEmoji = '😊';
+                summaryText = 'ดี!';
+            } else {
+                summaryColor = '#f44336';
+            }
+            
+            resultBox.innerHTML = `
+                ${chartHTML}
+                
+                <div style="
+                    background: linear-gradient(135deg, ${summaryColor}33, ${summaryColor}22);
+                    border: 3px solid ${summaryColor};
+                    border-radius: 25px;
+                    padding: 40px 30px;
+                    text-align: center;
+                    margin-top: 30px;
+                ">
+                    <h3 style="color: white; margin-bottom: 20px; font-size: 1.8em;">ผลการทำแบบทดสอบ</h3>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                        <p style="font-size: 0.95em; color: #c8e6c9; margin-bottom: 10px;">ชื่อ-นามสกุล: <strong>${userInfo.firstName} ${userInfo.lastName}</strong></p>
+                        <p style="font-size: 0.95em; color: #c8e6c9; margin-bottom: 10px;">อีเมล: <strong>${userInfo.email}</strong></p>
+                        <p style="font-size: 0.95em; color: #c8e6c9;">เบอร์โทร: <strong>${userInfo.phone}</strong></p>
+                    </div>
+                    <p style="font-size: 1.5em; margin: 15px 0;">
+                        คะแนนที่ได้: <strong style="color: ${summaryColor}; font-size: 1.3em;">${totalScore}/${currentQuiz.length}</strong>
+                    </p>
+                    <p style="font-size: 1.8em; margin: 15px 0;">
+                        คิดเป็น: <strong style="color: ${summaryColor}; font-size: 1.2em;">${percentage}%</strong>
+                    </p>
+                    <p style="font-size: 1.5em; margin-top: 20px; color: ${summaryColor}; font-weight: bold;">
+                        ${summaryText}
+                    </p>
+                    <p style="font-size: 0.9em; color: #81d4fa; margin-top: 15px;">✅ ข้อมูลของท่านได้ถูกบันทึกเรียบร้อยแล้ว</p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="calc-btn" onclick="showPage('quiz')" style="margin: 10px;">
+                        🔄 ทำแบบทดสอบใหม่
+                    </button>
+                    <button class="calc-btn" onclick="showPage('home')" style="margin: 10px; background: #607D8B;">
+                        🏠 กลับหน้าหลัก
+                    </button>
+                </div>
+            `;
+            resultBox.classList.add('show');
+            
+            window.scrollTo(0, resultBox.offsetTop - 100);
+        }
+
+        // ฟังก์ชันบันทึกคะแนนแบบทดสอบไปยังฐานข้อมูล
+        function saveQuizToDatabase(avgScore, totalScore, answers, quizType) {
+            fetch('/api/assessment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: loggedInUser.username,
+                    category: quizType === 'pre' ? 'แบบทดสอบก่อนเรียน' : 'แบบทดสอบหลังเรียน',
+                    answers: answers,
+                    avgScore: parseFloat(avgScore),
+                    comment: `คะแนนรวม ${totalScore}/20`
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('✅ บันทึกข้อมูลไปยังฐานข้อมูลสำเร็จ:', data);
+            })
+            .catch(err => {
+                console.error('❌ เกิดข้อผิดพลาดในการบันทึกข้อมูล:', err);
+            });
+        }
+
+        function startSurvey() {
+            const quizContent = document.getElementById('quizContent');
+            const quizTitle = document.getElementById('quizTitle');
+            const quizQuestions = document.getElementById('quizQuestions');
+            const quizResult = document.getElementById('quizResult');
+
+            quizTitle.textContent = 'แบบประเมินความพึงพอใจของผู้ใช้งานเว็บไซต์';
+            quizResult.classList.remove('show');
+            
+            // สร้างฟอร์มสำหรับกรอกข้อมูลส่วนตัว
+            let html = ``;
+            
+            const surveyQuestions = [
+                "1. ความชัดเจนและเข้าใจง่ายของข้อมูลเกี่ยวกับการคำนวณคาร์บอนฟุตพริ้นต์ในโรงเรียน",
+                "2. ความง่ายในการใช้งานของหน้าเว็บไซต์โดยรวม",
+                "3. ความสวยงามและเหมาะสมของการออกแบบเว็บไซต์",
+                "4. ความครบถ้วนของเนื้อหาและข้อมูลที่เว็บไซต์นำเสนอเกี่ยวกับ Carbon Footprint ในโรงเรียน",
+                "5. ความถูกต้องและความน่าเชื่อถือของผลลัพธ์ที่เว็บไซต์แสดง",
+                "6. ความรวดเร็วในการประมวลผลและแสดงผลข้อมูลของเว็บไซต์",
+                "7. ความเหมาะสมของภาษาและคำอธิบายที่ใช้ในเว็บไซต์",
+                "8. ประโยชน์ของเว็บไซต์ต่อการเรียนรู้เรื่องการปล่อยก๊าซเรือนกระจกในโรงเรียน",
+                "9. ความสามารถของเว็บไซต์ในการช่วยให้ผู้ใช้งานตระหนักถึงการลดการปล่อยคาร์บอน",
+                "10. ความพึงพอใจโดยรวมต่อการใช้งานเว็บไซต์ Carbon Footprint for School"
+            ];
+
+            const options = ["ดีมาก", "ดี", "ปานกลาง", "พอใช้", "น้อย"];
+            
+            html += '<div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px;">';
+            html += '<p style="font-size: 1.1em; margin-bottom: 15px;">📝 กรุณาประเมินความพึงพอใจในแต่ละหัวข้อ</p>';
+            html += '</div>';
+
+            surveyQuestions.forEach((q, index) => {
+                html += `
+                    <div class="quiz-section" style="background: #e8f5f4; padding: 25px; border-radius: 15px; margin-bottom: 20px; border-left: 4px solid #007a6d;">
+                        <h4 style="color: #a8d5ba; margin-bottom: 20px; font-size: 1.05em; line-height: 1.6;">${q}</h4>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                            ${options.map((opt, i) => `
+                                <label style="flex: 1; min-width: 100px;">
+                                    <input type="radio" name="survey${index}" value="${5-i}" id="survey${index}_${i}" style="display: none;" onchange="selectSurvey(${index}, ${5-i})">
+                                    <div id="survey_btn_${index}_${i}" style="
+                                        background: rgba(255,255,255,0.1);
+                                        padding: 15px 10px;
+                                        border-radius: 10px;
+                                        text-align: center;
+                                        cursor: pointer;
+                                        transition: all 0.3s;
+                                        border: 2px solid transparent;
+                                        font-size: 0.95em;
+                                    " onclick="document.getElementById('survey${index}_${i}').click()">
+                                        ${opt}
+                                    </div>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                <div style="background: #e8f5f4; padding: 25px; border-radius: 15px; margin: 30px 0; border-left: 4px solid #007a6d;">
+                    <h4 style="color: #007a6d; margin-bottom: 15px; font-weight: 600;">💬 ข้อเสนอแนะเพิ่มเติม (ถ้ามี)</h4>
+                    <textarea id="surveyComment" rows="4" style="
+                        width: 100%;
+                        padding: 15px;
+                        border-radius: 10px;
+                        border: 2px solid rgba(255,255,255,0.2);
+                        background: rgba(255,255,255,0.1);
+                        color: black;
+                        font-size: 1em;
+                        font-family: inherit;
+                        resize: vertical;
+                    " placeholder="กรุณาแสดงความคิดเห็นหรือข้อเสนอแนะของท่าน..."></textarea>
+                </div>
+            `;
+            
+            quizQuestions.innerHTML = html;
+            quizContent.style.display = 'block';
+            
+            // เปลี่ยนปุ่มส่งคำตอบเป็นส่งแบบประเมิน
+            const submitBtn = document.querySelector('#quizContent .calc-btn');
+            submitBtn.textContent = 'ส่งแบบประเมิน';
+            submitBtn.onclick = submitSurvey;
+            
+            window.scrollTo(0, document.getElementById('quizContent').offsetTop - 100);
+        }
+
+        let surveyAnswers = new Array(10).fill(null);
+
+        function selectSurvey(questionIndex, value) {
+            surveyAnswers[questionIndex] = value;
+            
+            // เปลี่ยนสีปุ่มที่เลือก
+            for (let i = 0; i < 5; i++) {
+                const btn = document.getElementById(`survey_btn_${questionIndex}_${i}`);
+                if (btn) {
+                    if (document.getElementById(`survey${questionIndex}_${i}`).checked) {
+                        btn.style.background = 'rgba(76, 175, 80, 0.5)';
+                        btn.style.borderColor = '#4CAF50';
+                        btn.style.transform = 'scale(1.05)';
+                    } else {
+                        btn.style.background = 'rgba(255,255,255,0.1)';
+                        btn.style.borderColor = 'transparent';
+                        btn.style.transform = 'scale(1)';
+                    }
+                }
+            }
+        }
+
+        async function submitSurvey() {
+            // ตรวจสอบว่าตอบครบทุกข้อหรือไม่
+            if (surveyAnswers.includes(null)) {
+                alert('กรุณาประเมินความพึงพอใจให้ครบทุกข้อ');
+                return;
+            }
+
+            const comment = document.getElementById('surveyComment').value;
+            
+            // คำนวณคะแนนเฉลี่ย
+            const totalScore = surveyAnswers.reduce((a, b) => a + b, 0);
+            const avgScore = parseFloat((totalScore / surveyAnswers.length).toFixed(2));
+            const percentage = ((avgScore / 5) * 100).toFixed(0);
+            
+            // แปลงคะแนนเป็นระดับความพึงพอใจ
+            let satisfactionLevel = '';
+            let emoji = '';
+            if (avgScore >= 4.5) {
+                satisfactionLevel = 'ดีมาก';
+                emoji = '🌟';
+            } else if (avgScore >= 3.5) {
+                satisfactionLevel = 'ดี';
+                emoji = '😊';
+            } else if (avgScore >= 2.5) {
+                satisfactionLevel = 'ปานกลาง';
+                emoji = '😐';
+            } else if (avgScore >= 1.5) {
+                satisfactionLevel = 'พอใช้';
+                emoji = '😕';
+            } else {
+                satisfactionLevel = 'น้อย';
+                emoji = '😞';
+            }
+
+            // บันทึกข้อมูล
+            const surveyData = {
+                username: loggedInUser.username,
+                category: 'แบบประเมินความพึงพอใจ',
+                answers: surveyAnswers,
+                comment: comment,
+                avgScore: avgScore,
+                percentage: percentage
+            };
+
+            try {
+                // ส่งข้อมูลไปยัง Backend API
+                const response = await fetch(
+  '/api/assessment',
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(surveyData)
+  }
+);
+
+
+                if (!response.ok) throw new Error('ไม่สามารถบันทึกข้อมูล');
+
+                const result = await response.json();
+
+                // เก็บข้อมูลใน localStorage ด้วย
+                let allSurveys = JSON.parse(localStorage.getItem('carbonSurveys') || '[]');
+                allSurveys.push({
+                    ...surveyData,
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('carbonSurveys', JSON.stringify(allSurveys));
+
+                // แสดงผล
+                const resultBox = document.getElementById('quizResult');
+                resultBox.innerHTML = `
+                    <h3>ขอบคุณสำหรับการประเมิน! ${emoji}</h3>
+                    <div style="margin: 20px 0; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                        <p style="font-size: 1.2em; margin: 10px 0;">คะแนนเฉลี่ย: <strong>${avgScore.toFixed(2)}/5.00</strong></p>
+                        <p style="font-size: 1.2em; margin: 10px 0;">คิดเป็น: <strong>${percentage}%</strong></p>
+                        <p style="font-size: 1.3em; margin: 10px 0;">ระดับความพึงพอใจ: <strong>${satisfactionLevel}</strong></p>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 1.1em;">✅ ข้อมูลของท่านได้ถูกบันทึกเรียบร้อยแล้ว</p>
+                    <button class="calc-btn" onclick="viewSurveyResults()" style="margin-top: 20px;">
+                        📊 ดูสรุปผลการประเมินทั้งหมด
+                    </button>
+                `;
+                resultBox.classList.add('show');
+                
+                // Reset
+                surveyAnswers = new Array(10).fill(null);
+                
+                window.scrollTo(0, resultBox.offsetTop - 100);
+            } catch (error) {
+                console.error('Error:', error);
+                
+                // หากบันทึก API ไม่สำเร็จ ให้บันทึก localStorage แทน
+                let allSurveys = JSON.parse(localStorage.getItem('carbonSurveys') || '[]');
+                allSurveys.push({
+                    ...surveyData,
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('carbonSurveys', JSON.stringify(allSurveys));
+                
+                // แสดงผลสำเร็จแม้ API ล่ม
+                const resultBox = document.getElementById('quizResult');
+                resultBox.innerHTML = `
+                    <h3>ขอบคุณสำหรับการประเมิน! ${emoji}</h3>
+                    <div style="margin: 20px 0; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                        <p style="font-size: 1.2em; margin: 10px 0;">คะแนนเฉลี่ย: <strong>${avgScore.toFixed(2)}/5.00</strong></p>
+                        <p style="font-size: 1.2em; margin: 10px 0;">คิดเป็น: <strong>${percentage}%</strong></p>
+                        <p style="font-size: 1.3em; margin: 10px 0;">ระดับความพึงพอใจ: <strong>${satisfactionLevel}</strong></p>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 1.1em;">✅ ข้อมูลของท่านได้ถูกบันทึกเรียบร้อยแล้ว</p>
+                    <button class="calc-btn" onclick="viewSurveyResults()" style="margin-top: 20px;">
+                        📊 ดูสรุปผลการประเมินทั้งหมด
+                    </button>
+                `;
+                resultBox.classList.add('show');
+                
+                // Reset
+                surveyAnswers = new Array(10).fill(null);
+                
+                window.scrollTo(0, resultBox.offsetTop - 100);
+            }
+        }
+
+        function viewSurveyResults() {
+            const allSurveys = JSON.parse(localStorage.getItem('carbonSurveys') || '[]');
+            
+            if (allSurveys.length === 0) {
+                alert('ยังไม่มีข้อมูลการประเมิน');
+                return;
+            }
+
+            // คำนวณค่าเฉลี่ยรวม
+            const totalAvg = allSurveys.reduce((sum, s) => sum + parseFloat(s.avgScore), 0) / allSurveys.length;
+            const totalPercentage = ((totalAvg / 5) * 100).toFixed(0);
+
+            // คำนวณค่าเฉลี่ยแต่ละข้อ
+            const questionAvgs = [];
+            for (let i = 0; i < 10; i++) {
+                const qAvg = allSurveys.reduce((sum, s) => sum + s.answers[i], 0) / allSurveys.length;
+                questionAvgs.push(qAvg.toFixed(2));
+            }
+
+            const resultBox = document.getElementById('quizResult');
+            let html = `
+                <h3>📊 สรุปผลการประเมินความพึงพอใจ</h3>
+                <div style="background: rgba(76, 175, 80, 0.2); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                    <p style="font-size: 1.2em;">จำนวนผู้ประเมิน: <strong>${allSurveys.length} คน</strong></p>
+                    <p style="font-size: 1.3em; margin-top: 10px;">คะแนนเฉลี่ยรวม: <strong>${totalAvg.toFixed(2)}/5.00</strong> (${totalPercentage}%)</p>
+                </div>
+                
+                <h4 style="margin-top: 30px; margin-bottom: 15px; color: #007a6d;">คะแนนเฉลี่ยแต่ละหัวข้อ:</h4>
+                <div style="background: #e8f5f4; padding: 20px; border-radius: 15px; border-left: 4px solid #007a6d;">
+            `;
+
+            const questions = [
+                "ความชัดเจนและเข้าใจง่ายของข้อมูล",
+                "ความง่ายในการใช้งาน",
+                "ความสวยงามของการออกแบบ",
+                "ความชัดเจนของขั้นตอนการกรอกข้อมูล",
+                "ความถูกต้องและน่าเชื่อถือของผลลัพธ์",
+                "ความรวดเร็วในการประมวลผล",
+                "ความเหมาะสมของภาษาและคำอธิบาย",
+                "ประโยชน์ต่อการเรียนรู้",
+                "ความสามารถในการสร้างการตระหนัก",
+                "ความพึงพอใจโดยรวม"
+            ];
+
+            questionAvgs.forEach((avg, i) => {
+                const barWidth = (avg / 5 * 100);
+                html += `
+                    <div style="margin: 15px 0;">
+                        <p style="margin-bottom: 8px; font-size: 0.95em;">${i + 1}. ${questions[i]}</p>
+                        <div style="background: rgba(255,255,255,0.1); height: 30px; border-radius: 10px; overflow: hidden; position: relative;">
+                            <div style="background: linear-gradient(90deg, #4CAF50, #8BC34A); height: 100%; width: ${barWidth}%; transition: width 1s; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px;">
+                                <span style="font-weight: bold; font-size: 0.9em;">${avg}/5</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                </div>
+                
+                <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                    <button class="calc-btn" onclick="downloadSurveyData()">
+                        💾 ดาวน์โหลดข้อมูล CSV
+                    </button>
+                    <button class="calc-btn" style="background: #f44336;" onclick="clearSurveyData()">
+                        🗑️ ล้างข้อมูลทั้งหมด
+                    </button>
+                </div>
+            `;
+
+            resultBox.innerHTML = html;
+            resultBox.classList.add('show');
+        }
+
+        function downloadSurveyData() {
+            const allSurveys = JSON.parse(localStorage.getItem('carbonSurveys') || '[]');
+            
+            if (allSurveys.length === 0) {
+                alert('ไม่มีข้อมูลให้ดาวน์โหลด');
+                return;
+            }
+
+            // สร้างหัวตาราง CSV แบบละเอียด
+            let csv = 'ลำดับ,วันที่,เวลา,';
+            
+            // ชื่อคำถามแต่ละข้อ
+            const questionNames = [
+                'ความชัดเจนและเข้าใจง่ายของข้อมูล',
+                'ความง่ายในการใช้งาน',
+                'ความสวยงามของการออกแบบ',
+                'ความชัดเจนของขั้นตอนการกรอกข้อมูล',
+                'ความถูกต้องและน่าเชื่อถือของผลลัพธ์',
+                'ความรวดเร็วในการประมวลผล',
+                'ความเหมาะสมของภาษาและคำอธิบาย',
+                'ประโยชน์ต่อการเรียนรู้',
+                'ความสามารถในการสร้างการตระหนัก',
+                'ความพึงพอใจโดยรวม'
+            ];
+            
+            csv += questionNames.join(',') + ',คะแนนเฉลี่ย,เปอร์เซ็นต์,ระดับความพึงพอใจ,ความคิดเห็น\n';
+            
+            // เพิ่มข้อมูลแต่ละแถว
+            allSurveys.forEach((survey, index) => {
+                const date = new Date(survey.timestamp);
+                const dateStr = date.toLocaleDateString('th-TH');
+                const timeStr = date.toLocaleTimeString('th-TH');
+                
+                // แปลงคะแนนเป็นระดับความพึงพอใจ
+                let satisfactionLevel = '';
+                const avg = parseFloat(survey.avgScore);
+                if (avg >= 4.5) satisfactionLevel = 'ดีมาก';
+                else if (avg >= 3.5) satisfactionLevel = 'ดี';
+                else if (avg >= 2.5) satisfactionLevel = 'ปานกลาง';
+                else if (avg >= 1.5) satisfactionLevel = 'พอใช้';
+                else satisfactionLevel = 'น้อย';
+                
+                // จัดการความคิดเห็นให้ปลอดภัยสำหรับ CSV
+                const comment = (survey.comment || '-')
+                    .replace(/"/g, '""')  // escape เครื่องหมาย "
+                    .replace(/\n/g, ' ')   // แทนที่ขึ้นบรรทัดใหม่ด้วยช่องว่าง
+                    .replace(/\r/g, '');   // ลบ carriage return
+                
+                csv += `${index + 1},${dateStr},${timeStr},`;
+                csv += survey.answers.join(',');
+                csv += `,${survey.avgScore},${survey.percentage}%,${satisfactionLevel},"${comment}"\n`;
+            });
+            
+            // เพิ่มแถวสรุปข้อมูลท้ายตาราง
+            csv += '\n';
+            csv += 'สรุปผลการประเมิน\n';
+            csv += `จำนวนผู้ประเมินทั้งหมด,${allSurveys.length},คน\n`;
+            
+            // คำนวณค่าเฉลี่ยแต่ละข้อ
+            csv += '\nค่าเฉลี่ยแต่ละหัวข้อ\n';
+            csv += 'หัวข้อ,คะแนนเฉลี่ย\n';
+            
+            for (let i = 0; i < 10; i++) {
+                const qAvg = allSurveys.reduce((sum, s) => sum + s.answers[i], 0) / allSurveys.length;
+                csv += `"${questionNames[i]}",${qAvg.toFixed(2)}\n`;
+            }
+            
+            // คะแนนเฉลี่ยรวม
+            const totalAvg = allSurveys.reduce((sum, s) => sum + parseFloat(s.avgScore), 0) / allSurveys.length;
+            csv += `\nคะแนนเฉลี่ยรวมทั้งหมด,${totalAvg.toFixed(2)}\n`;
+            csv += `เปอร์เซ็นต์ความพึงพอใจ,${((totalAvg / 5) * 100).toFixed(2)}%\n`;
+
+            // ดาวน์โหลดไฟล์ CSV (เปิดได้ทั้ง Excel และ Google Sheets)
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `ผลการประเมินความพึงพอใจ_Carbon_Footprint_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            
+            alert('✅ ดาวน์โหลดไฟล์สำเร็จ!\n\nไฟล์ CSV สามารถเปิดด้วย:\n- Microsoft Excel\n- Google Sheets\n- LibreOffice Calc');
+        }
+
+        function clearSurveyData() {
+            if (confirm('คุณแน่ใจหรือไม่ที่จะลบข้อมูลการประเมินทั้งหมด?')) {
+                localStorage.removeItem('carbonSurveys');
+                alert('ลบข้อมูลเรียบร้อยแล้ว');
+                document.getElementById('quizResult').classList.remove('show');
+            }
+        }
+
+        // ===== Login System Functions =====
+        let loggedInUser = null;
+
+        function initializeLoginSystem() {
+            // ตรวจสอบว่ามีผู้ใช้เข้าสู่ระบบอยู่แล้วหรือไม่
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                loggedInUser = JSON.parse(savedUser);
+                hideLoginPage();
+            } else {
+                showLoginPage();
+            }
+        }
+
+        function switchTab(tab) {
+            // ซ่อนฟอร์มทั้งหมด
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            
+            // ลบ active class จากแท็บทั้งหมด
+            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+            
+            // แสดงฟอร์มที่เลือก
+            if (tab === 'login') {
+                document.getElementById('loginForm').style.display = 'block';
+                document.querySelectorAll('.login-tab')[0].classList.add('active');
+                clearLoginMessages();
+            } else {
+                document.getElementById('registerForm').style.display = 'block';
+                document.querySelectorAll('.login-tab')[1].classList.add('active');
+                clearLoginMessages();
+            }
+        }
+
+        function clearLoginMessages() {
+            document.getElementById('loginMessage').textContent = '';
+            document.getElementById('registerMessage').textContent = '';
+        }
+
+        function handleLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const messageDiv = document.getElementById('loginMessage');
+
+            if (!username || !password) {
+                messageDiv.textContent = '❌ กรุณากรอกชื่อผู้ใช้และรหัสผ่าน';
+                return;
+            }
+
+            // ส่งข้อมูลไปยัง Backend API
+            fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    loggedInUser = data.user;
+                    localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
+                    messageDiv.textContent = '✅ เข้าสู่ระบบสำเร็จ!';
+                    messageDiv.classList.add('success');
+                    
+                    setTimeout(() => {
+                        hideLoginPage();
+                    }, 1000);
+                } else {
+                    messageDiv.textContent = '❌ ' + data.message;
+                }
+            })
+            .catch(err => {
+                messageDiv.textContent = '❌ เกิดข้อผิดพลาด: ' + err.message;
+                console.error('Login error:', err);
+            });
+
+            // ล้างฟอร์ม
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        function handleRegister() {
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+            const passwordConfirm = document.getElementById('regPasswordConfirm').value.trim();
+            const messageDiv = document.getElementById('registerMessage');
+
+            // ตรวจสอบความถูกต้อง
+            if (!firstName || !lastName || !email || !phone || !username || !password || !passwordConfirm) {
+                messageDiv.textContent = '❌ กรุณากรอกข้อมูลให้ครบถ้วน';
+                return;
+            }
+
+            if (password !== passwordConfirm) {
+                messageDiv.textContent = '❌ รหัสผ่านไม่ตรงกัน';
+                return;
+            }
+
+            if (password.length < 6) {
+                messageDiv.textContent = '❌ รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร';
+                return;
+            }
+
+            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                messageDiv.textContent = '❌ อีเมลไม่ถูกต้อง';
+                return;
+            }
+
+            // ส่งข้อมูลไปยัง Backend API
+            fetch('/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    loggedInUser = data.user;
+                    localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
+                    messageDiv.textContent = '✅ สมัครสมาชิกสำเร็จ! กำลังเข้าสู่ระบบ...';
+                    messageDiv.classList.add('success');
+
+                    setTimeout(() => {
+                        hideLoginPage();
+                    }, 1000);
+                } else {
+                    messageDiv.textContent = '❌ ' + data.message;
+                }
+            })
+            .catch(err => {
+                messageDiv.textContent = '❌ เกิดข้อผิดพลาด: ' + err.message;
+                console.error('Register error:', err);
+            });
+
+            // ล้างฟอร์ม
+            document.getElementById('regFirstName').value = '';
+            document.getElementById('regLastName').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regPhone').value = '';
+            document.getElementById('regUsername').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regPasswordConfirm').value = '';
+        }
+
+        function logout() {
+            if (confirm('คุณแน่ใจหรือไม่ที่ต้องการออกจากระบบ?')) {
+                localStorage.removeItem('currentUser');
+                loggedInUser = null;
+                showPage('home');
+                showLoginPage();
+            }
+        }
+
+        function showLoginPage() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('userInfoBar').style.display = 'none';
+            switchTab('login');
+        }
+
+        function hideLoginPage() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('userInfoBar').style.display = 'flex';
+            document.getElementById('currentUsername').textContent = loggedInUser.firstName + ' ' + loggedInUser.lastName;
+            
+            // แสดงปุ่ม Dashboard Admin เฉพาะ admin
+            if (loggedInUser.role === 'admin') {
+                document.getElementById('adminDashboardBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('adminDashboardBtn').style.display = 'none';
+            }
+            
+            showPage('home');
+        }
+
+        // ===== Admin Dashboard Functions =====
+        
+        function downloadAssessmentsExcel() {
+            // ใช้ค่า category ที่เก็บไว้
+            const category = selectedAssessmentCategory;
+            
+            // สร้าง URL params
+            let url = '/api/admin/assessments/export';
+            if (category) {
+                url += '?category=' + encodeURIComponent(category);
+            }
+            
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                    }
+                    return res.blob();
+                })
+                .then(blob => {
+                    // สร้าง URL จาก blob
+                    const url = window.URL.createObjectURL(blob);
+                    // สร้าง link สำหรับดาวน์โหลด
+                    const link = document.createElement('a');
+                    link.href = url;
+                    const filename = category ? `assessment_${category.replace(/\s+/g, '_')}_${new Date().getTime()}.xlsx` : `assessment_data_${new Date().getTime()}.xlsx`;
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                    alert(`✅ ดาวน์โหลดไฟล์ Excel สำเร็จ!\n(${category || 'ทั้งหมด'})`);
+                })
+                .catch(err => {
+                    alert(`❌ เกิดข้อผิดพลาด: ${err?.message || 'ไม่สามารถดาวน์โหลดได้'}`);
+                    console.error('Error:', err);
+                });
+        }
+        
+        function loadAdminUsers() {
+            const contentDiv = document.getElementById('adminContent');
+            contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
+
+            fetch('/api/admin/users')
+                .then(res => res.json())
+                .then(data => {
+                    let html = '<h3>👥 รายชื่อผู้ใช้งาน</h3>';
+                    html += '<div style="overflow-x: auto; margin-top: 20px;"><table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.1);">';
+                    html += '<thead><tr style="background: rgba(76, 175, 80, 0.3);">';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ลำดับ</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ชื่อผู้ใช้</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">สถานะ</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">วันที่สมัคร</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">จัดการ</th>';
+                    html += '</tr></thead><tbody>';
+
+                    data.forEach((user, index) => {
+                        const roleDisplay = user.role === 'admin' ? '👑 Admin' : '👤 User';
+                        const createdDate = new Date(user.created_at).toLocaleDateString('th-TH');
+                        const isAdmin = user.username === 'adminkm';
+                        
+                        html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">`;
+                        html += `<td style="padding: 15px;">${index + 1}</td>`;
+                        html += `<td style="padding: 15px;"><strong>${user.username}</strong></td>`;
+                        html += `<td style="padding: 15px;">${roleDisplay}</td>`;
+                        html += `<td style="padding: 15px;">${createdDate}</td>`;
+                        html += `<td style="padding: 15px;">`;
+                        
+                        if (!isAdmin) {
+                            if (user.role === 'admin') {
+                                html += `<button onclick="changeUserRole('${user.username}', 'user')" style="background: #2196F3; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; margin-right: 5px;">👤 เปลี่ยนเป็น User</button>`;
+                            } else {
+                                html += `<button onclick="changeUserRole('${user.username}', 'admin')" style="background: #FF9800; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; margin-right: 5px;">👑 เปลี่ยนเป็น Admin</button>`;
+                            }
+                            html += `<button onclick="deleteUser('${user.username}')" style="background: #f44336; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer;">🗑️ ลบ</button>`;
+                        } else {
+                            html += `<span style="color: #81d4fa;">ป้องกันการแก้ไข</span>`;
+                        }
+                        
+                        html += `</td>`;
+                        html += `</tr>`;
+                    });
+
+                    html += '</tbody></table></div>';
+                    contentDiv.innerHTML = html;
+                })
+                .catch(err => {
+                    contentDiv.innerHTML = `<p style="color: #ff5252; text-align: center;">❌ เกิดข้อผิดพลาด: ${err.message}</p>`;
+                    console.error('Error:', err);
+                });
+        }
+
+        // เก็บหมวดหมู่ที่เลือก
+        let selectedAssessmentCategory = '';
+
+        function loadAdminAssessments() {
+            const contentDiv = document.getElementById('adminContent');
+            contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
+
+            fetch('/api/admin/assessments')
+                .then(res => res.json())
+                .then(data => {
+                    // ดึงหมวดหมู่ที่มีอยู่
+                    const categories = [...new Set(data.map(item => item.category))];
+                    
+                    let html = '<h3>📝 ผลการประเมิน</h3>';
+                    
+                    // เพิ่ม filter dropdown
+                    html += '<div style="margin-bottom: 30px; padding: 15px; background: linear-gradient(135deg, rgba(30, 127, 92, 0.2) 0%, rgba(22, 90, 71, 0.2) 100%); border-radius: 8px; border-left: 4px solid #1e7f5c; position: relative; z-index: 10;">';
+                    html += '<label style="color: #4ade80; margin-right: 15px; font-weight: bold; font-size: 14px;">🏷️ กรองตามหมวดหมู่:</label>';
+                    html += '<select id="categoryFilter" onchange="handleCategoryChange()" style="padding: 10px 15px; border: 2px solid #1e7f5c; border-radius: 6px; background: rgba(30, 127, 92, 0.15); color: white; font-weight: 500; cursor: pointer; font-size: 14px; position: relative; z-index: 100; min-width: 250px;">';
+                    html += '<option value="" style="background: #1e3c2f; color: white;">📋 ทั้งหมด</option>';
+                    categories.forEach(cat => {
+                        html += `<option value="${cat}" style="background: #1e3c2f; color: white;">${cat}</option>`;
+                    });
+                    html += '</select>';
+                    html += '</div>';
+                    html += '<div style="overflow-x: auto; margin-top: 40px; position: relative; z-index: 1;"><table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.1);">';
+                    html += '<thead><tr style="background: rgba(76, 175, 80, 0.3); position: sticky; top: 0; z-index: 5;">';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ลำดับ</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ชื่อผู้ใช้</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">หมวดหมู่</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">คะแนน</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">หมายเหตุ</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">วันที่</th>';
+                    html += '</tr></thead><tbody>';
+
+                    // filter ข้อมูลตามหมวดหมู่ที่เลือก
+                    const filteredData = selectedAssessmentCategory ? data.filter(item => item.category === selectedAssessmentCategory) : data;
+                    
+                    filteredData.forEach((assessment, index) => {
+                        const scoreColor = assessment.avg_score >= 0.7 ? '#4CAF50' : assessment.avg_score >= 0.5 ? '#FFC107' : '#f44336';
+                        const date = new Date(assessment.created_at).toLocaleDateString('th-TH');
+                        html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">`;
+                        html += `<td style="padding: 15px;">${index + 1}</td>`;
+                        html += `<td style="padding: 15px;"><strong>${assessment.username}</strong></td>`;
+                        html += `<td style="padding: 15px;">${assessment.category}</td>`;
+                        html += `<td style="padding: 15px; color: ${scoreColor}; font-weight: bold;">${(assessment.avg_score || 0).toFixed(2)}/5.00</td>`;
+                        html += `<td style="padding: 15px;">${assessment.comment || '-'}</td>`;
+                        html += `<td style="padding: 15px;">${date}</td>`;
+                        html += `</tr>`;
+                    });
+
+                    html += '</tbody></table></div>';
+                    contentDiv.innerHTML = html;
+                    
+                    // ตั้งค่าดรอปดาวน์ให้เท่ากับค่าที่เลือก
+                    setTimeout(() => {
+                        const categoryFilter = document.getElementById('categoryFilter');
+                        if (categoryFilter && selectedAssessmentCategory) {
+                            categoryFilter.value = selectedAssessmentCategory;
+                        }
+                    }, 0);
+                })
+                .catch(err => {
+                    contentDiv.innerHTML = `<p style="color: #ff5252; text-align: center;">❌ เกิดข้อผิดพลาด: ${err.message}</p>`;
+                    console.error('Error:', err);
+                });
+        }
+
+        function handleCategoryChange() {
+            const categoryFilter = document.getElementById('categoryFilter');
+            selectedAssessmentCategory = categoryFilter.value;
+            loadAdminAssessments();
+        }
+
+        function changeUserRole(username, newRole) {
+            if (confirm(`ต้องการเปลี่ยนบทบาทของ ${username} เป็น ${newRole === 'admin' ? 'Admin' : 'User'} ใช่หรือไม่?`)) {
+                fetch(`/api/admin/users/${username}/role`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ role: newRole })
+                })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data && data.status === 'ok') {
+                        alert(`✅ เปลี่ยนบทบาทของ ${username} เป็น ${newRole} แล้ว`);
+                        loadAdminUsers();
+                    } else {
+                        alert(`❌ เกิดข้อผิดพลาด: ${data?.message || 'ไม่ทราบ'}`);
+                    }
+                })
+                .catch(err => {
+                    alert(`❌ เกิดข้อผิดพลาด: ${err?.message || err || 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์'}`);
+                    console.error('Error:', err);
+                });
+            }
+        }
+
+        function deleteUser(username) {
+            if (confirm(`⚠️ ต้องการลบผู้ใช้ ${username} ใช่หรือไม่? การกระทำนี้ไม่สามารถยกเลิกได้`)) {
+                fetch(`/api/admin/users/${username}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data && data.status === 'ok') {
+                        alert(`✅ ลบผู้ใช้ ${username} แล้ว`);
+                        loadAdminUsers();
+                    } else {
+                        alert(`❌ เกิดข้อผิดพลาด: ${data?.message || 'ไม่ทราบ'}`);
+                    }
+                })
+                .catch(err => {
+                    alert(`❌ เกิดข้อผิดพลาด: ${err?.message || err || 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์'}`);
+                    console.error('Error:', err);
+                });
+            }
+        }
+
+        function showAddUserForm() {
+            const contentDiv = document.getElementById('adminContent');
+            let html = '<h3>➕ เพิ่มผู้ใช้ใหม่</h3>';
+            html += '<form id="addUserForm" style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; max-width: 500px;">';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">ชื่อผู้ใช้ (Username):</label>';
+            html += '  <input type="text" id="newUsername" placeholder="ชื่อผู้ใช้" required style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">รหัสผ่าน (Password):</label>';
+            html += '  <input type="password" id="newPassword" placeholder="รหัสผ่าน" required style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">ชื่อจริง (First Name):</label>';
+            html += '  <input type="text" id="newFirstName" placeholder="ชื่อจริง" style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">นามสกุล (Last Name):</label>';
+            html += '  <input type="text" id="newLastName" placeholder="นามสกุล" style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">อีเมล (Email):</label>';
+            html += '  <input type="email" id="newEmail" placeholder="อีเมล" style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">เบอร์โทรศัพท์ (Phone):</label>';
+            html += '  <input type="tel" id="newPhone" placeholder="เบอร์โทรศัพท์" style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">บทบาท (Role):</label>';
+            html += '  <select id="newRole" style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '    <option value="user" style="background: #333;">👤 User</option>';
+            html += '    <option value="admin" style="background: #333;">👑 Admin</option>';
+            html += '  </select>';
+            html += '</div>';
+            html += '<div style="display: flex; gap: 10px;">';
+            html += '  <button type="button" onclick="submitAddUser()" style="flex: 1; background: #4CAF50; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">✅ เพิ่มผู้ใช้</button>';
+            html += '  <button type="button" onclick="loadAdminUsers()" style="flex: 1; background: #f44336; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">❌ ยกเลิก</button>';
+            html += '</div>';
+            html += '</form>';
+            contentDiv.innerHTML = html;
+        }
+
+        function submitAddUser() {
+            const username = document.getElementById('newUsername').value.trim();
+            const password = document.getElementById('newPassword').value.trim();
+            const firstName = document.getElementById('newFirstName').value.trim();
+            const lastName = document.getElementById('newLastName').value.trim();
+            const email = document.getElementById('newEmail').value.trim();
+            const phone = document.getElementById('newPhone').value.trim();
+            const role = document.getElementById('newRole').value;
+
+            if (!username || !password) {
+                alert('❌ กรุณากรอก ชื่อผู้ใช้ และ รหัสผ่าน');
+                return;
+            }
+
+            if (username.length < 3) {
+                alert('❌ ชื่อผู้ใช้ต้องมีอย่างน้อย 3 ตัวอักษร');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('❌ รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร');
+                return;
+            }
+
+            fetch('/api/admin/users/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    firstName: firstName || null,
+                    lastName: lastName || null,
+                    email: email || null,
+                    phone: phone || null,
+                    role: role
+                })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (data && data.status === 'ok') {
+                    alert(`✅ เพิ่มผู้ใช้ ${username} แล้ว`);
+                    loadAdminUsers();
+                } else {
+                    alert(`❌ เกิดข้อผิดพลาด: ${data?.message || 'ไม่ทราบ'}`);
+                }
+            })
+            .catch(err => {
+                alert(`❌ เกิดข้อผิดพลาด: ${err?.message || err || 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์'}`);
+                console.error('Error:', err);
+            });
+        }
+
+        function loadAdminStats() {
+            const contentDiv = document.getElementById('adminContent');
+            contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
+
+            fetch('/api/admin/stats')
+                .then(res => res.json())
+                .then(data => {
+                    let html = '<h3>📈 สถิติการประเมิน</h3>';
+                    html += '<div style="margin-top: 20px;">';
+
+                    if (data.length === 0) {
+                        html += '<p style="text-align: center;">ยังไม่มีข้อมูลการประเมิน</p>';
+                    } else {
+                        data.forEach(stat => {
+                            const avgScore = parseFloat(stat.avg_score).toFixed(2);
+                            const percentage = ((avgScore / 5) * 100).toFixed(0);
+                            const barColor = avgScore >= 3.5 ? '#4CAF50' : avgScore >= 2.5 ? '#FFC107' : '#f44336';
+                            
+                            html += `<div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid ${barColor};">`;
+                            html += `<h4 style="color: #81d4fa; margin-bottom: 15px;">${stat.category}</h4>`;
+                            html += `<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">`;
+                            html += `<div><strong>จำนวนที่ตอบ:</strong> ${stat.count} คน</div>`;
+                            html += `<div><strong>คะแนนเฉลี่ย:</strong> <span style="color: ${barColor}; font-weight: bold;">${avgScore}/5.00 (${percentage}%)</span></div>`;
+                            html += `<div><strong>คะแนนต่ำสุด:</strong> ${parseFloat(stat.min_score || 0).toFixed(2)}</div>`;
+                            html += `<div><strong>คะแนนสูงสุด:</strong> ${parseFloat(stat.max_score || 0).toFixed(2)}</div>`;
+                            html += `</div>`;
+                            html += `</div>`;
+                        });
+                    }
+
+                    html += '</div>';
+                    contentDiv.innerHTML = html;
+                })
+                .catch(err => {
+                    contentDiv.innerHTML = `<p style="color: #ff5252; text-align: center;">❌ เกิดข้อผิดพลาด: ${err.message}</p>`;
+                    console.error('Error:', err);
+                });
+        }
+
+        // เริ่มต้นระบบ login เมื่อหน้าโหลด
+        window.addEventListener('load', function() {
+            initializeLoginSystem();
+        });
+    </script>
+</body>
+</html>

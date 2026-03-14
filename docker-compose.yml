@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database Service
+  postgres:
+    image: postgres:15-alpine
+    container_name: carbon_footprint_postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin}
+      POSTGRES_DB: ${DB_NAME:-carbon_footprint_db}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      # เก็บข้อมูล Database เพื่อไม่เสียเมื่อ restart container
+      - postgres_data:/var/lib/postgresql/data
+      # (ไม่บังคับ) รัน init script เมื่อเริ่มต้น
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-admin}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network
+
+  # Node.js Backend Service (ไม่บังคับ)
+  backend:
+    build: .
+    container_name: carbon_footprint_backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-admin}
+      DB_PASSWORD: ${DB_PASSWORD:-admin}
+      DB_NAME: ${DB_NAME:-carbon_footprint_db}
+      NODE_ENV: development
+      SERVER_PORT: 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      # Live reload during development
+      - .:/app
+      - /app/node_modules
+    working_dir: /app
+    command: npm run dev
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  app_network:
+    driver: bridge

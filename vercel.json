@@ -1,0 +1,45 @@
+{
+  "version": 2,
+  "public": false,
+  "buildCommand": "cd backend && npm install",
+  "builds": [
+    {
+      "src": "backend/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "image/**/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.{css,js,json}",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "backend/server.js"
+    },
+    {
+      "src": "/image/(.*)",
+      "dest": "/image/$1"
+    },
+    {
+      "src": "/admin",
+      "dest": "/admin.html"
+    },
+    {
+      "src": "/test",
+      "dest": "/test.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
