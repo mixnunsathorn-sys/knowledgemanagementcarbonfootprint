@@ -508,10 +508,261 @@ body {
     line-height: 1.8;
 }
 
+/* ===== Login System Styles ===== */
+.login-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f3f6f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.login-logo {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+}
+
+.login-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+}
+
+.login-box h2 {
+    text-align: center;
+    color: #007a6d;
+    margin-bottom: 5px;
+    font-size: 1.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.login-box h2 em {
+    font-style: normal;
+    font-size: 1.1em;
+}
+
+.login-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    background: #f5f5f5;
+    padding: 5px;
+    border-radius: 12px;
+}
+
+.login-tab {
+    flex: 1;
+    padding: 12px 15px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #007a6d;
+    transition: all 0.3s ease;
+    font-size: 0.95em;
+}
+
+.login-tab.active {
+    background: linear-gradient(135deg, #1e7f5c 0%, #155a45 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(30, 127, 92, 0.3);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #007a6d;
+    font-size: 0.95em;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 2px solid #e8e8e8;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: all 0.3s;
+    background: #f9f9f9;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+    color: #bbb;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #007a6d;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(0, 122, 109, 0.1);
+}
+
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #1e7f5c 0%, #155a45 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(30, 127, 92, 0.3);
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 127, 92, 0.4);
+}
+
+.login-message {
+    text-align: center;
+    margin-top: 15px;
+    color: #d32f2f;
+    font-size: 0.9em;
+}
+
+.login-message.success {
+    color: #388e3c;
+}
+
+.user-info-bar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: #007a6d;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 0 0 0 15px;
+    z-index: 999;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.logout-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
     </style>
 </head>
 <body>
     <div class="leaf-bg"></div>
+    
+    <!-- User Info Bar (hidden until login) -->
+    <div id="userInfoBar" class="user-info-bar" style="display: none;">
+        <div>👤 ยินดีต้อนรับ: <strong id="currentUsername"></strong></div>
+        <button id="adminDashboardBtn" class="logout-btn" onclick="showPage('admin')" style="display: none; background: #ff6b00;">📊 Admin Dashboard</button>
+        <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+    </div>
+    
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            
+            <div class="login-logo"><img src="image/Logo_of_Silpakorn_University.svg.png" alt=""></div>
+            
+            <h2>Carbon Footprint</h2>
+            
+            <div class="login-tabs">
+                <button class="login-tab active" onclick="switchTab('login')">เข้าสู่ระบบ</button>
+                <button class="login-tab" onclick="switchTab('register')">สมัครสมาชิก</button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="loginForm" style="display: block;">
+                <div class="form-group">
+                    <label>ชื่อผู้ใช้:</label>
+                    <input type="text" id="loginUsername" placeholder="กรอกชื่อผู้ใช้" />
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่าน:</label>
+                    <input type="password" id="loginPassword" placeholder="กรอกรหัสผ่าน" />
+                </div>
+                <button class="login-button" onclick="handleLogin()">เข้าสู่ระบบ</button>
+                <div id="loginMessage" class="login-message"></div>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label>ชื่อ:</label>
+                    <input type="text" id="regFirstName" placeholder="กรอกชื่อ" />
+                </div>
+                <div class="form-group">
+                    <label>นามสกุล:</label>
+                    <input type="text" id="regLastName" placeholder="กรอกนามสกุล" />
+                </div>
+                <div class="form-group">
+                    <label>อีเมล:</label>
+                    <input type="email" id="regEmail" placeholder="กรอกอีเมล" />
+                </div>
+                <div class="form-group">
+                    <label>เบอร์โทร:</label>
+                    <input type="tel" id="regPhone" placeholder="กรอกเบอร์โทร" />
+                </div>
+                <div class="form-group">
+                    <label>ชื่อผู้ใช้:</label>
+                    <input type="text" id="regUsername" placeholder="กรอกชื่อผู้ใช้" />
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่าน:</label>
+                    <input type="password" id="regPassword" placeholder="กรอกรหัสผ่าน" />
+                </div>
+                <div class="form-group">
+                    <label>ยืนยันรหัสผ่าน:</label>
+                    <input type="password" id="regPasswordConfirm" placeholder="ยืนยันรหัสผ่าน" />
+                </div>
+                <button class="login-button" onclick="handleRegister()">สมัครสมาชิก</button>
+                <div id="registerMessage" class="login-message"></div>
+            </div>
+        </div>
+    </div>
     
     <button class="home-btn" onclick="showPage('home')"><img src="image/Logo_of_Silpakorn_University.svg.png" alt="Home"></button>
     <div class="container">
@@ -763,76 +1014,8 @@ body {
             <div class="content-card">
                 <h2>แนวทางการลดปริมาณ Carbon</h2>
 
-                <div class="diagram-card" style="background: #f5f5f5; padding: 50px 30px; border-radius: 20px;">
-                    <h3 style="color: #333; text-align: center; margin-bottom: 50px; font-size: 1.8em; font-weight: bold;">แนวทางการลดปริมาณ Carbon</h3>
-                    
-                    <div style="max-width: 1000px; margin: 0 auto; position: relative;">
-                        <!-- แถวบน: พลังงาน และ การเดินทาง -->
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
-                            <!-- ด้านพลังงาน -->
-                            <div style="background: linear-gradient(135deg, #d4f1d4, #a8e6a8); padding: 30px; border-radius: 20px; border: 4px solid #4CAF50; box-shadow: 0 6px 12px rgba(0,0,0,0.1); text-align: center;">
-                                <div style="font-size: 48px; margin-bottom: 15px;">🔌</div>
-                                <h4 style="color: #2E7D32; margin: 0 0 20px 0; font-size: 1.3em; font-weight: bold;">ด้านพลังงาน</h4>
-                                <p style="color: #333; line-height: 1.8; margin: 0; font-size: 1em;">
-                                    ใช้พลังงานหมุนเวียน<br>
-                                    ปรับปรุงประสิทธิภาพการใช้พลังงาน
-                                </p>
-                            </div>
-
-                            <!-- ด้านการเดินทางและคมนาคม -->
-                            <div style="background: linear-gradient(135deg, #e8d4f1, #d4b3e6); padding: 30px; border-radius: 20px; border: 4px solid #9C27B0; box-shadow: 0 6px 12px rgba(0,0,0,0.1); text-align: center;">
-                                <div style="font-size: 48px; margin-bottom: 15px;">🚌</div>
-                                <h4 style="color: #6A1B9A; margin: 0 0 20px 0; font-size: 1.3em; font-weight: bold;">ด้านการเดินทางและ<br>คมนาคม</h4>
-                                <p style="color: #333; line-height: 1.8; margin: 0; font-size: 1em;">
-                                    ใช้ระบบขนส่งสาธารณะ<br>
-                                    เลือกใช้รถยนต์ไฟฟ้า
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- แถวกลาง: องค์กร + กล่องกลาง + บริโภค -->
-                        <div style="display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 30px; margin-bottom: 30px; align-items: center;">
-                            <!-- ด้านอุตสาหกรรมและองค์กร -->
-                            <div style="background: linear-gradient(135deg, #d4e8f1, #b3d9eb); padding: 30px; border-radius: 20px; border: 4px solid #2196F3; box-shadow: 0 6px 12px rgba(0,0,0,0.1); text-align: center;">
-                                <div style="font-size: 48px; margin-bottom: 15px;">🏭</div>
-                                <h4 style="color: #1565C0; margin: 0 0 20px 0; font-size: 1.2em; font-weight: bold;">ด้านอุตสาหกรรม<br>และองค์กร</h4>
-                                <p style="color: #333; line-height: 1.8; margin: 0; font-size: 0.95em;">
-                                    ปรับกระบวนการผลิต<br>
-                                    จัดทำระบบจัดการคาร์บอน
-                                </p>
-                            </div>
-
-                            <!-- กล่องกลาง -->
-                            <div style="background: linear-gradient(135deg, #b3e5f5, #81d4f7); padding: 40px 30px; border-radius: 25px; border: 5px solid #00BCD4; box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-align: center; transform: scale(1.05);">
-                                <div style="font-size: 64px; margin-bottom: 15px;">💨</div>
-                                <h3 style="color: #006064; margin: 5px 0; font-size: 1.3em; font-weight: bold;">แนวทางการ</h3>
-                                <h3 style="color: #006064; margin: 5px 0; font-size: 1.3em; font-weight: bold;">ลดปริมาณ</h3>
-                                <h3 style="color: #006064; margin: 10px 0 0; font-size: 1.6em; font-weight: bold;">Carbon</h3>
-                            </div>
-
-                            <!-- ด้านการบริโภคและการใช้ชีวิต -->
-                            <div style="background: linear-gradient(135deg, #fff9b3, #ffeb3b); padding: 30px; border-radius: 20px; border: 4px solid #FBC02D; box-shadow: 0 6px 12px rgba(0,0,0,0.1); text-align: center;">
-                                <div style="font-size: 48px; margin-bottom: 15px;">💡</div>
-                                <h4 style="color: #F57F17; margin: 0 0 20px 0; font-size: 1.2em; font-weight: bold;">ด้านการบริโภคและ<br>การใช้ชีวิต</h4>
-                                <p style="color: #333; line-height: 1.8; margin: 0; font-size: 0.95em;">
-                                    ลดการใช้พลาสติก<br>
-                                    เลือกซื้อสินค้าท้องถิ่น
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- แถวล่าง: สิ่งแวดล้อม -->
-                        <div style="display: flex; justify-content: center;">
-                            <div style="background: linear-gradient(135deg, #ffd4e0, #ffb3c6); padding: 35px 50px; border-radius: 20px; border: 4px solid #E91E63; box-shadow: 0 6px 12px rgba(0,0,0,0.1); text-align: center; max-width: 650px; width: 100%;">
-                                <div style="font-size: 48px; margin-bottom: 15px;">🌱</div>
-                                <h4 style="color: #C2185B; margin: 0 0 20px 0; font-size: 1.3em; font-weight: bold;">ด้านสิ่งแวดล้อมและพื้นที่สีเขียว</h4>
-                                <p style="color: #333; line-height: 1.8; margin: 0; font-size: 1em;">
-                                    ปลูกต้นไม้<br>
-                                    สนับสนุนโครงการ Carbon Offset
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                <div style="text-align: center; margin: 40px 0;">
+                    <img src="image/Screenshot 2026-03-14 163945.png" alt="ภาวะโลกร้อน" style="max-width: 900px; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
                 </div>
 
                 <h3>1. ด้านพลังงาน</h3>
@@ -913,43 +1096,15 @@ body {
             <div class="content-card">
                 <h2>แบบประเมินการเรียนรู้</h2>
                 
-                <!-- ฟอร์มกรอกข้อมูลส่วนตัว -->
-                <div id="infoForm" style="background: rgba(76, 175, 80, 0.2); padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 2px solid rgba(76, 175, 80, 0.5);">
-                    <h3 style="margin-bottom: 25px; color: #a8d5ba;">📋 กรุณากรอกข้อมูลส่วนตัวก่อนเริ่มแบบทดสอบ</h3>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                        <div>
-                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">ชื่อ <span style="color: #ff5252;">*</span></label>
-                            <input type="text" id="firstName" placeholder="ชื่อ" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: black; font-size: 1em;" />
-                        </div>
-                        <div>
-                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">นามสกุล <span style="color: #ff5252;">*</span></label>
-                            <input type="text" id="lastName" placeholder="นามสกุล" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: black; font-size: 1em;" />
-                        </div>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                        <div>
-                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">อีเมล <span style="color: #ff5252;">*</span></label>
-                            <input type="email" id="email" placeholder="example@email.com" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: black; font-size: 1em;" />
-                        </div>
-                        <div>
-                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">เบอร์โทร <span style="color: #ff5252;">*</span></label>
-                            <input type="tel" id="phone" placeholder="0812345678" style="width: 100%; padding: 12px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: black; font-size: 1em;" />
-                        </div>
-                    </div>
 
-                    <p style="color: #c8e6c9; font-size: 0.95em; margin-top: 15px;">ℹ️ ข้อมูลนี้จะถูกเก็บเพื่อประเมินผลการเรียนรู้ของท่าน</p>
-                </div>
-                
                 <div class="quiz-section">
                     <h3>แบบทดสอบก่อนเรียน</h3>
-                    <button class="calc-btn" onclick="validateAndStartQuiz('pre')">เริ่มทำแบบทดสอบ</button>
+                    <button class="calc-btn" onclick="currentQuizType = 'pre'; startQuiz('pre')">เริ่มทำแบบทดสอบ</button>
                 </div>
 
                 <div class="quiz-section">
                     <h3>แบบทดสอบหลังเรียน</h3>
-                    <button class="calc-btn" onclick="validateAndStartQuiz('post')">เริ่มทำแบบทดสอบ</button>
+                    <button class="calc-btn" onclick="currentQuizType = 'post'; startQuiz('post')">เริ่มทำแบบทดสอบ</button>
                 </div>
 
                 <div class="quiz-section">
@@ -968,6 +1123,24 @@ body {
             </div>
         </div>
 
+        <!-- หน้า Admin Dashboard -->
+        <div id="admin" class="page">
+            <div class="content-card">
+                <h2>📊 Admin Dashboard</h2>
+                
+                <div style="margin: 20px 0; display: flex; flex-wrap: wrap; gap: 10px;">
+                    <button class="calc-btn" onclick="loadAdminUsers()" style="margin-right: 10px;">👥 ดูรายชื่อผู้ใช้งาน</button>
+                    <button class="calc-btn" onclick="loadAdminAssessments()" style="margin-right: 10px;">📝 ดูผลการประเมิน</button>
+                    <button class="calc-btn" onclick="loadAdminStats()" style="margin-right: 10px;">📈 ดูสถิติ</button>
+                    <button class="calc-btn" onclick="downloadAssessmentsExcel()" style="background: #4CAF50; margin-right: 10px;">📥 ดาวน์โหลด Excel</button>
+                    <button class="calc-btn" onclick="showAddUserForm()" style="background: #ff9800;">➕ เพิ่ม User ใหม่</button>
+                </div>
+
+                <div id="adminContent" style="margin-top: 30px;"></div>
+
+                <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
+            </div>
+        </div>
 
     <script>
         // ตัวแปรสำหรับเก็บข้อมูลส่วนตัว
@@ -1113,54 +1286,7 @@ body {
             
             alert('✅ ดาวน์โหลดไฟล์สำเร็จ!\\n\\nไฟล์นี้สามารถเปิดด้วย:\\n- Microsoft Excel\\n- Google Sheets\\n- LibreOffice Calc');
         }
-        function validateAndStartQuiz(type) {
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
 
-            // ตรวจสอบเบอร์โทร (ต้องเป็นตัวเลขและมี 10 หลักขึ้นไป)
-            const phoneRegex = /^[0-9]{10,}$/;
-            
-            // ตรวจสอบอีเมล
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (!firstName) {
-                alert('❌ กรุณากรอกชื่อ');
-                return;
-            }
-            if (!lastName) {
-                alert('❌ กรุณากรอกนามสกุล');
-                return;
-            }
-            if (!email) {
-                alert('❌ กรุณากรอกอีเมล');
-                return;
-            }
-            if (!emailRegex.test(email)) {
-                alert('❌ กรุณากรอกอีเมลให้ถูกต้อง (เช่น example@email.com)');
-                return;
-            }
-            if (!phone) {
-                alert('❌ กรุณากรอกเบอร์โทร');
-                return;
-            }
-            if (!phoneRegex.test(phone)) {
-                alert('❌ กรุณากรอกเบอร์โทรให้ถูกต้อง (ตัวเลขอย่างน้อย 10 หลัก)');
-                return;
-            }
-
-            // เก็บข้อมูลที่กรอก
-            userInfo = {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                phone: phone
-            };
-
-            currentQuizType = type;
-            startQuiz(type);
-        }
 
         function calculateCarbon() {
             const activity = parseFloat(document.getElementById('activity').value);
@@ -1834,17 +1960,13 @@ body {
 
         // ฟังก์ชันบันทึกคะแนนแบบทดสอบไปยังฐานข้อมูล
         function saveQuizToDatabase(avgScore, totalScore, answers, quizType) {
-            const fullName = `${userInfo.firstName} ${userInfo.lastName}`;
-            
             fetch('/api/assessment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: fullName,
-                    email: userInfo.email,
-                    phone: userInfo.phone,
+                    username: loggedInUser.username,
                     category: quizType === 'pre' ? 'แบบทดสอบก่อนเรียน' : 'แบบทดสอบหลังเรียน',
                     answers: answers,
                     avgScore: parseFloat(avgScore),
@@ -1870,52 +1992,7 @@ body {
             quizResult.classList.remove('show');
             
             // สร้างฟอร์มสำหรับกรอกข้อมูลส่วนตัว
-            let html = `
-                <div style="background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(0, 188, 212, 0.2)); padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #4CAF50;">
-                    <h3 style="color: #81d4fa; margin-bottom: 20px;">👤 กรุณากรอกข้อมูลส่วนตัว</h3>
-                    <div style="display: grid; gap: 15px;">
-                        <div>
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">ชื่อ-สกุล: <span style="color: #EF5350;">*</span></label>
-                            <input type="text" id="surveyName" placeholder="กรุณาระบุชื่อ-สกุล" style="
-                                width: 100%;
-                                padding: 12px;
-                                border-radius: 8px;
-                                border: 2px solid rgba(255,255,255,0.2);
-                                background: rgba(255,255,255,0.1);
-                                color: black;
-                                font-size: 1em;
-                                font-family: inherit;
-                            " onfocus="this.style.borderColor='#4CAF50';" onblur="this.style.borderColor='rgba(255,255,255,0.2)';">
-                        </div>
-                        <div>
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">อีเมล: <span style="color: #EF5350;">*</span></label>
-                            <input type="email" id="surveyEmail" placeholder="กรุณาระบุอีเมล" style="
-                                width: 100%;
-                                padding: 12px;
-                                border-radius: 8px;
-                                border: 2px solid rgba(255,255,255,0.2);
-                                background: rgba(255,255,255,0.1);
-                                color: black;
-                                font-size: 1em;
-                                font-family: inherit;
-                            " onfocus="this.style.borderColor='#4CAF50';" onblur="this.style.borderColor='rgba(255,255,255,0.2)';">
-                        </div>
-                        <div>
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600;">เบอร์โทร:</label>
-                            <input type="tel" id="surveyPhone" placeholder="กรุณาระบุเบอร์โทร (ไม่บังคับ)" style="
-                                width: 100%;
-                                padding: 12px;
-                                border-radius: 8px;
-                                border: 2px solid rgba(255,255,255,0.2);
-                                background: rgba(255,255,255,0.1);
-                                color: black;
-                                font-size: 1em;
-                                font-family: inherit;
-                            " onfocus="this.style.borderColor='#4CAF50';" onblur="this.style.borderColor='rgba(255,255,255,0.2)';">
-                        </div>
-                    </div>
-                </div>
-            `;
+            let html = ``;
             
             const surveyQuestions = [
                 "1. ความชัดเจนและเข้าใจง่ายของข้อมูลเกี่ยวกับการคำนวณคาร์บอนฟุตพริ้นต์ในโรงเรียน",
@@ -2014,21 +2091,6 @@ body {
         }
 
         async function submitSurvey() {
-            // ตรวจสอบข้อมูลส่วนตัว
-            const name = document.getElementById('surveyName').value.trim();
-            const email = document.getElementById('surveyEmail').value.trim();
-            const phone = document.getElementById('surveyPhone').value.trim();
-
-            if (!name || !email) {
-                alert('กรุณากรอกชื่อและอีเมลให้ครบถ้วน');
-                return;
-            }
-
-            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-                alert('กรุณากรอกอีเมลให้ถูกต้อง');
-                return;
-            }
-
             // ตรวจสอบว่าตอบครบทุกข้อหรือไม่
             if (surveyAnswers.includes(null)) {
                 alert('กรุณาประเมินความพึงพอใจให้ครบทุกข้อ');
@@ -2064,9 +2126,7 @@ body {
 
             // บันทึกข้อมูล
             const surveyData = {
-                name: name,
-                email: email,
-                phone: phone,
+                username: loggedInUser.username,
                 category: 'แบบประเมินความพึงพอใจ',
                 answers: surveyAnswers,
                 comment: comment,
@@ -2316,6 +2376,568 @@ body {
                 document.getElementById('quizResult').classList.remove('show');
             }
         }
+
+        // ===== Login System Functions =====
+        let loggedInUser = null;
+
+        function initializeLoginSystem() {
+            // ตรวจสอบว่ามีผู้ใช้เข้าสู่ระบบอยู่แล้วหรือไม่
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                loggedInUser = JSON.parse(savedUser);
+                hideLoginPage();
+            } else {
+                showLoginPage();
+            }
+        }
+
+        function switchTab(tab) {
+            // ซ่อนฟอร์มทั้งหมด
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            
+            // ลบ active class จากแท็บทั้งหมด
+            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+            
+            // แสดงฟอร์มที่เลือก
+            if (tab === 'login') {
+                document.getElementById('loginForm').style.display = 'block';
+                document.querySelectorAll('.login-tab')[0].classList.add('active');
+                clearLoginMessages();
+            } else {
+                document.getElementById('registerForm').style.display = 'block';
+                document.querySelectorAll('.login-tab')[1].classList.add('active');
+                clearLoginMessages();
+            }
+        }
+
+        function clearLoginMessages() {
+            document.getElementById('loginMessage').textContent = '';
+            document.getElementById('registerMessage').textContent = '';
+        }
+
+        function handleLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const messageDiv = document.getElementById('loginMessage');
+
+            if (!username || !password) {
+                messageDiv.textContent = '❌ กรุณากรอกชื่อผู้ใช้และรหัสผ่าน';
+                return;
+            }
+
+            // ส่งข้อมูลไปยัง Backend API
+            fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    loggedInUser = data.user;
+                    localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
+                    messageDiv.textContent = '✅ เข้าสู่ระบบสำเร็จ!';
+                    messageDiv.classList.add('success');
+                    
+                    setTimeout(() => {
+                        hideLoginPage();
+                    }, 1000);
+                } else {
+                    messageDiv.textContent = '❌ ' + data.message;
+                }
+            })
+            .catch(err => {
+                messageDiv.textContent = '❌ เกิดข้อผิดพลาด: ' + err.message;
+                console.error('Login error:', err);
+            });
+
+            // ล้างฟอร์ม
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        function handleRegister() {
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+            const passwordConfirm = document.getElementById('regPasswordConfirm').value.trim();
+            const messageDiv = document.getElementById('registerMessage');
+
+            // ตรวจสอบความถูกต้อง
+            if (!firstName || !lastName || !email || !phone || !username || !password || !passwordConfirm) {
+                messageDiv.textContent = '❌ กรุณากรอกข้อมูลให้ครบถ้วน';
+                return;
+            }
+
+            if (password !== passwordConfirm) {
+                messageDiv.textContent = '❌ รหัสผ่านไม่ตรงกัน';
+                return;
+            }
+
+            if (password.length < 6) {
+                messageDiv.textContent = '❌ รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร';
+                return;
+            }
+
+            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                messageDiv.textContent = '❌ อีเมลไม่ถูกต้อง';
+                return;
+            }
+
+            // ส่งข้อมูลไปยัง Backend API
+            fetch('/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'ok') {
+                    loggedInUser = data.user;
+                    localStorage.setItem('currentUser', JSON.stringify(loggedInUser));
+                    messageDiv.textContent = '✅ สมัครสมาชิกสำเร็จ! กำลังเข้าสู่ระบบ...';
+                    messageDiv.classList.add('success');
+
+                    setTimeout(() => {
+                        hideLoginPage();
+                    }, 1000);
+                } else {
+                    messageDiv.textContent = '❌ ' + data.message;
+                }
+            })
+            .catch(err => {
+                messageDiv.textContent = '❌ เกิดข้อผิดพลาด: ' + err.message;
+                console.error('Register error:', err);
+            });
+
+            // ล้างฟอร์ม
+            document.getElementById('regFirstName').value = '';
+            document.getElementById('regLastName').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regPhone').value = '';
+            document.getElementById('regUsername').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regPasswordConfirm').value = '';
+        }
+
+        function logout() {
+            if (confirm('คุณแน่ใจหรือไม่ที่ต้องการออกจากระบบ?')) {
+                localStorage.removeItem('currentUser');
+                loggedInUser = null;
+                showPage('home');
+                showLoginPage();
+            }
+        }
+
+        function showLoginPage() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('userInfoBar').style.display = 'none';
+            switchTab('login');
+        }
+
+        function hideLoginPage() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('userInfoBar').style.display = 'flex';
+            document.getElementById('currentUsername').textContent = loggedInUser.firstName + ' ' + loggedInUser.lastName;
+            
+            // แสดงปุ่ม Dashboard Admin เฉพาะ admin
+            if (loggedInUser.role === 'admin') {
+                document.getElementById('adminDashboardBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('adminDashboardBtn').style.display = 'none';
+            }
+            
+            showPage('home');
+        }
+
+        // ===== Admin Dashboard Functions =====
+        
+        function downloadAssessmentsExcel() {
+            // ใช้ค่า category ที่เก็บไว้
+            const category = selectedAssessmentCategory;
+            
+            // สร้าง URL params
+            let url = '/api/admin/assessments/export';
+            if (category) {
+                url += '?category=' + encodeURIComponent(category);
+            }
+            
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                    }
+                    return res.blob();
+                })
+                .then(blob => {
+                    // สร้าง URL จาก blob
+                    const url = window.URL.createObjectURL(blob);
+                    // สร้าง link สำหรับดาวน์โหลด
+                    const link = document.createElement('a');
+                    link.href = url;
+                    const filename = category ? `assessment_${category.replace(/\s+/g, '_')}_${new Date().getTime()}.xlsx` : `assessment_data_${new Date().getTime()}.xlsx`;
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                    alert(`✅ ดาวน์โหลดไฟล์ Excel สำเร็จ!\n(${category || 'ทั้งหมด'})`);
+                })
+                .catch(err => {
+                    alert(`❌ เกิดข้อผิดพลาด: ${err?.message || 'ไม่สามารถดาวน์โหลดได้'}`);
+                    console.error('Error:', err);
+                });
+        }
+        
+        function loadAdminUsers() {
+            const contentDiv = document.getElementById('adminContent');
+            contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
+
+            fetch('/api/admin/users')
+                .then(res => res.json())
+                .then(data => {
+                    let html = '<h3>👥 รายชื่อผู้ใช้งาน</h3>';
+                    html += '<div style="overflow-x: auto; margin-top: 20px;"><table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.1);">';
+                    html += '<thead><tr style="background: rgba(76, 175, 80, 0.3);">';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ลำดับ</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ชื่อผู้ใช้</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">สถานะ</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">วันที่สมัคร</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">จัดการ</th>';
+                    html += '</tr></thead><tbody>';
+
+                    data.forEach((user, index) => {
+                        const roleDisplay = user.role === 'admin' ? '👑 Admin' : '👤 User';
+                        const createdDate = new Date(user.created_at).toLocaleDateString('th-TH');
+                        const isAdmin = user.username === 'adminkm';
+                        
+                        html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">`;
+                        html += `<td style="padding: 15px;">${index + 1}</td>`;
+                        html += `<td style="padding: 15px;"><strong>${user.username}</strong></td>`;
+                        html += `<td style="padding: 15px;">${roleDisplay}</td>`;
+                        html += `<td style="padding: 15px;">${createdDate}</td>`;
+                        html += `<td style="padding: 15px;">`;
+                        
+                        if (!isAdmin) {
+                            if (user.role === 'admin') {
+                                html += `<button onclick="changeUserRole('${user.username}', 'user')" style="background: #2196F3; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; margin-right: 5px;">👤 เปลี่ยนเป็น User</button>`;
+                            } else {
+                                html += `<button onclick="changeUserRole('${user.username}', 'admin')" style="background: #FF9800; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; margin-right: 5px;">👑 เปลี่ยนเป็น Admin</button>`;
+                            }
+                            html += `<button onclick="deleteUser('${user.username}')" style="background: #f44336; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer;">🗑️ ลบ</button>`;
+                        } else {
+                            html += `<span style="color: #81d4fa;">ป้องกันการแก้ไข</span>`;
+                        }
+                        
+                        html += `</td>`;
+                        html += `</tr>`;
+                    });
+
+                    html += '</tbody></table></div>';
+                    contentDiv.innerHTML = html;
+                })
+                .catch(err => {
+                    contentDiv.innerHTML = `<p style="color: #ff5252; text-align: center;">❌ เกิดข้อผิดพลาด: ${err.message}</p>`;
+                    console.error('Error:', err);
+                });
+        }
+
+        // เก็บหมวดหมู่ที่เลือก
+        let selectedAssessmentCategory = '';
+
+        function loadAdminAssessments() {
+            const contentDiv = document.getElementById('adminContent');
+            contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
+
+            fetch('/api/admin/assessments')
+                .then(res => res.json())
+                .then(data => {
+                    // ดึงหมวดหมู่ที่มีอยู่
+                    const categories = [...new Set(data.map(item => item.category))];
+                    
+                    let html = '<h3>📝 ผลการประเมิน</h3>';
+                    
+                    // เพิ่ม filter dropdown
+                    html += '<div style="margin-bottom: 30px; padding: 15px; background: linear-gradient(135deg, rgba(30, 127, 92, 0.2) 0%, rgba(22, 90, 71, 0.2) 100%); border-radius: 8px; border-left: 4px solid #1e7f5c; position: relative; z-index: 10;">';
+                    html += '<label style="color: #4ade80; margin-right: 15px; font-weight: bold; font-size: 14px;">🏷️ กรองตามหมวดหมู่:</label>';
+                    html += '<select id="categoryFilter" onchange="handleCategoryChange()" style="padding: 10px 15px; border: 2px solid #1e7f5c; border-radius: 6px; background: rgba(30, 127, 92, 0.15); color: white; font-weight: 500; cursor: pointer; font-size: 14px; position: relative; z-index: 100; min-width: 250px;">';
+                    html += '<option value="" style="background: #1e3c2f; color: white;">📋 ทั้งหมด</option>';
+                    categories.forEach(cat => {
+                        html += `<option value="${cat}" style="background: #1e3c2f; color: white;">${cat}</option>`;
+                    });
+                    html += '</select>';
+                    html += '</div>';
+                    html += '<div style="overflow-x: auto; margin-top: 40px; position: relative; z-index: 1;"><table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.1);">';
+                    html += '<thead><tr style="background: rgba(76, 175, 80, 0.3); position: sticky; top: 0; z-index: 5;">';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ลำดับ</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">ชื่อผู้ใช้</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">หมวดหมู่</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">คะแนน</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">หมายเหตุ</th>';
+                    html += '<th style="padding: 15px; text-align: left; border-bottom: 2px solid rgba(255,255,255,0.2);">วันที่</th>';
+                    html += '</tr></thead><tbody>';
+
+                    // filter ข้อมูลตามหมวดหมู่ที่เลือก
+                    const filteredData = selectedAssessmentCategory ? data.filter(item => item.category === selectedAssessmentCategory) : data;
+                    
+                    filteredData.forEach((assessment, index) => {
+                        const scoreColor = assessment.avg_score >= 0.7 ? '#4CAF50' : assessment.avg_score >= 0.5 ? '#FFC107' : '#f44336';
+                        const date = new Date(assessment.created_at).toLocaleDateString('th-TH');
+                        html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">`;
+                        html += `<td style="padding: 15px;">${index + 1}</td>`;
+                        html += `<td style="padding: 15px;"><strong>${assessment.username}</strong></td>`;
+                        html += `<td style="padding: 15px;">${assessment.category}</td>`;
+                        html += `<td style="padding: 15px; color: ${scoreColor}; font-weight: bold;">${(assessment.avg_score || 0).toFixed(2)}/5.00</td>`;
+                        html += `<td style="padding: 15px;">${assessment.comment || '-'}</td>`;
+                        html += `<td style="padding: 15px;">${date}</td>`;
+                        html += `</tr>`;
+                    });
+
+                    html += '</tbody></table></div>';
+                    contentDiv.innerHTML = html;
+                    
+                    // ตั้งค่าดรอปดาวน์ให้เท่ากับค่าที่เลือก
+                    setTimeout(() => {
+                        const categoryFilter = document.getElementById('categoryFilter');
+                        if (categoryFilter && selectedAssessmentCategory) {
+                            categoryFilter.value = selectedAssessmentCategory;
+                        }
+                    }, 0);
+                })
+                .catch(err => {
+                    contentDiv.innerHTML = `<p style="color: #ff5252; text-align: center;">❌ เกิดข้อผิดพลาด: ${err.message}</p>`;
+                    console.error('Error:', err);
+                });
+        }
+
+        function handleCategoryChange() {
+            const categoryFilter = document.getElementById('categoryFilter');
+            selectedAssessmentCategory = categoryFilter.value;
+            loadAdminAssessments();
+        }
+
+        function changeUserRole(username, newRole) {
+            if (confirm(`ต้องการเปลี่ยนบทบาทของ ${username} เป็น ${newRole === 'admin' ? 'Admin' : 'User'} ใช่หรือไม่?`)) {
+                fetch(`/api/admin/users/${username}/role`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ role: newRole })
+                })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data && data.status === 'ok') {
+                        alert(`✅ เปลี่ยนบทบาทของ ${username} เป็น ${newRole} แล้ว`);
+                        loadAdminUsers();
+                    } else {
+                        alert(`❌ เกิดข้อผิดพลาด: ${data?.message || 'ไม่ทราบ'}`);
+                    }
+                })
+                .catch(err => {
+                    alert(`❌ เกิดข้อผิดพลาด: ${err?.message || err || 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์'}`);
+                    console.error('Error:', err);
+                });
+            }
+        }
+
+        function deleteUser(username) {
+            if (confirm(`⚠️ ต้องการลบผู้ใช้ ${username} ใช่หรือไม่? การกระทำนี้ไม่สามารถยกเลิกได้`)) {
+                fetch(`/api/admin/users/${username}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data && data.status === 'ok') {
+                        alert(`✅ ลบผู้ใช้ ${username} แล้ว`);
+                        loadAdminUsers();
+                    } else {
+                        alert(`❌ เกิดข้อผิดพลาด: ${data?.message || 'ไม่ทราบ'}`);
+                    }
+                })
+                .catch(err => {
+                    alert(`❌ เกิดข้อผิดพลาด: ${err?.message || err || 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์'}`);
+                    console.error('Error:', err);
+                });
+            }
+        }
+
+        function showAddUserForm() {
+            const contentDiv = document.getElementById('adminContent');
+            let html = '<h3>➕ เพิ่มผู้ใช้ใหม่</h3>';
+            html += '<form id="addUserForm" style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; max-width: 500px;">';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">ชื่อผู้ใช้ (Username):</label>';
+            html += '  <input type="text" id="newUsername" placeholder="ชื่อผู้ใช้" required style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">รหัสผ่าน (Password):</label>';
+            html += '  <input type="password" id="newPassword" placeholder="รหัสผ่าน" required style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">ชื่อจริง (First Name):</label>';
+            html += '  <input type="text" id="newFirstName" placeholder="ชื่อจริง" style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">นามสกุล (Last Name):</label>';
+            html += '  <input type="text" id="newLastName" placeholder="นามสกุล" style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">อีเมล (Email):</label>';
+            html += '  <input type="email" id="newEmail" placeholder="อีเมล" style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">เบอร์โทรศัพท์ (Phone):</label>';
+            html += '  <input type="tel" id="newPhone" placeholder="เบอร์โทรศัพท์" style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '</div>';
+            html += '<div style="margin-bottom: 15px;">';
+            html += '  <label style="display: block; margin-bottom: 5px; color: #81d4fa;">บทบาท (Role):</label>';
+            html += '  <select id="newRole" style="width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: rgba(255,255,255,0.1); color: white;">';
+            html += '    <option value="user" style="background: #333;">👤 User</option>';
+            html += '    <option value="admin" style="background: #333;">👑 Admin</option>';
+            html += '  </select>';
+            html += '</div>';
+            html += '<div style="display: flex; gap: 10px;">';
+            html += '  <button type="button" onclick="submitAddUser()" style="flex: 1; background: #4CAF50; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">✅ เพิ่มผู้ใช้</button>';
+            html += '  <button type="button" onclick="loadAdminUsers()" style="flex: 1; background: #f44336; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">❌ ยกเลิก</button>';
+            html += '</div>';
+            html += '</form>';
+            contentDiv.innerHTML = html;
+        }
+
+        function submitAddUser() {
+            const username = document.getElementById('newUsername').value.trim();
+            const password = document.getElementById('newPassword').value.trim();
+            const firstName = document.getElementById('newFirstName').value.trim();
+            const lastName = document.getElementById('newLastName').value.trim();
+            const email = document.getElementById('newEmail').value.trim();
+            const phone = document.getElementById('newPhone').value.trim();
+            const role = document.getElementById('newRole').value;
+
+            if (!username || !password) {
+                alert('❌ กรุณากรอก ชื่อผู้ใช้ และ รหัสผ่าน');
+                return;
+            }
+
+            if (username.length < 3) {
+                alert('❌ ชื่อผู้ใช้ต้องมีอย่างน้อย 3 ตัวอักษร');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('❌ รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร');
+                return;
+            }
+
+            fetch('/api/admin/users/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    firstName: firstName || null,
+                    lastName: lastName || null,
+                    email: email || null,
+                    phone: phone || null,
+                    role: role
+                })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (data && data.status === 'ok') {
+                    alert(`✅ เพิ่มผู้ใช้ ${username} แล้ว`);
+                    loadAdminUsers();
+                } else {
+                    alert(`❌ เกิดข้อผิดพลาด: ${data?.message || 'ไม่ทราบ'}`);
+                }
+            })
+            .catch(err => {
+                alert(`❌ เกิดข้อผิดพลาด: ${err?.message || err || 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์'}`);
+                console.error('Error:', err);
+            });
+        }
+
+        function loadAdminStats() {
+            const contentDiv = document.getElementById('adminContent');
+            contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
+
+            fetch('/api/admin/stats')
+                .then(res => res.json())
+                .then(data => {
+                    let html = '<h3>📈 สถิติการประเมิน</h3>';
+                    html += '<div style="margin-top: 20px;">';
+
+                    if (data.length === 0) {
+                        html += '<p style="text-align: center;">ยังไม่มีข้อมูลการประเมิน</p>';
+                    } else {
+                        data.forEach(stat => {
+                            const avgScore = parseFloat(stat.avg_score).toFixed(2);
+                            const percentage = ((avgScore / 5) * 100).toFixed(0);
+                            const barColor = avgScore >= 3.5 ? '#4CAF50' : avgScore >= 2.5 ? '#FFC107' : '#f44336';
+                            
+                            html += `<div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid ${barColor};">`;
+                            html += `<h4 style="color: #81d4fa; margin-bottom: 15px;">${stat.category}</h4>`;
+                            html += `<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">`;
+                            html += `<div><strong>จำนวนที่ตอบ:</strong> ${stat.count} คน</div>`;
+                            html += `<div><strong>คะแนนเฉลี่ย:</strong> <span style="color: ${barColor}; font-weight: bold;">${avgScore}/5.00 (${percentage}%)</span></div>`;
+                            html += `<div><strong>คะแนนต่ำสุด:</strong> ${parseFloat(stat.min_score || 0).toFixed(2)}</div>`;
+                            html += `<div><strong>คะแนนสูงสุด:</strong> ${parseFloat(stat.max_score || 0).toFixed(2)}</div>`;
+                            html += `</div>`;
+                            html += `</div>`;
+                        });
+                    }
+
+                    html += '</div>';
+                    contentDiv.innerHTML = html;
+                })
+                .catch(err => {
+                    contentDiv.innerHTML = `<p style="color: #ff5252; text-align: center;">❌ เกิดข้อผิดพลาด: ${err.message}</p>`;
+                    console.error('Error:', err);
+                });
+        }
+
+        // เริ่มต้นระบบ login เมื่อหน้าโหลด
+        window.addEventListener('load', function() {
+            initializeLoginSystem();
+        });
     </script>
 </body>
 </html>
