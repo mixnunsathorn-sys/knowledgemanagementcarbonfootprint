@@ -449,19 +449,152 @@ h4{font-size: 23px;}
             height: auto;
         }
 
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2em;
+        @media (max-width: 1024px) {
+            .hero {
+                padding: 24px 16px 60px;
             }
-            
+
+            .hero h1 {
+                font-size: 2.4em;
+            }
+
+            .menu-card {
+                padding: 30px 20px;
+                margin: 20px auto;
+            }
+
             .content-card {
+                padding: 24px;
+                margin: 15px 0;
+            }
+
+            .content-card h2 {
+                font-size: 1.8em;
+            }
+
+            .content-card h3 {
+                font-size: 1.35em;
+            }
+
+            .content-card h4 {
+                font-size: 1.1em;
+            }
+
+            .menu-item {
+                font-size: 1rem;
+                padding: 14px 18px;
+            }
+
+            .calc-input-group label,
+            .calc-input-group input,
+            .calc-input-group select,
+            .calc-btn,
+            .back-link {
+                font-size: 0.96rem;
+            }
+
+            .calculator-card {
                 padding: 20px;
             }
-            
+
+            .diagram-card,
+            .scope-diagram,
+            .quiz-section,
+            .impact-box {
+                padding: 16px;
+            }
+
+            .table-container,
+            table,
+            th,
+            td {
+                font-size: 0.9rem;
+            }
+
             .reduction-grid {
                 grid-template-columns: 1fr;
             }
         }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: auto;
+                padding-top: 20px;
+                padding-bottom: 40px;
+            }
+
+            .hero h1 {
+                font-size: 1.8em;
+            }
+
+            .school-logo img {
+                width: 90px;
+                height: 90px;
+            }
+
+            .menu-card {
+                padding: 18px;
+                border-radius: 18px;
+            }
+
+            .menu-item {
+                font-size: 0.95rem;
+                padding: 12px;
+            }
+
+            .content-card {
+                padding: 16px;
+                margin: 12px 0;
+            }
+
+            .content-card h2 {
+                font-size: 1.55em;
+            }
+
+            .content-card h3 {
+                font-size: 1.2em;
+                margin: 18px 0 12px;
+            }
+
+            .content-card p,
+            .content-card li,
+            .impact-box p,
+            .impact-box li {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            .calc-input-group label,
+            .calc-input-group input,
+            .calc-input-group select,
+            .calc-btn,
+            .back-link {
+                font-size: 0.9rem;
+            }
+
+            .home-btn {
+                width: 44px;
+                height: 44px;
+                top: 16px;
+                left: 12px;
+                font-size: 20px;
+            }
+
+            .back-link {
+                padding: 10px 18px;
+                margin-top: 20px;
+            }
+
+            .scope-diagram,
+            .diagram-card,
+            .impact-box,
+            .calculator-card,
+            .quiz-section {
+                margin: 15px 0;
+                padding: 16px;
+            }
+        }
+
         /* ===== ใส่โค้ดธีมเขียว-ขาวตรงนี้ ===== */
 
 body {
@@ -677,36 +810,66 @@ body {
     border-radius: 0 0 0 15px;
     z-index: 999;
     display: flex;
-    gap: 15px;
+    gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
-.logout-btn {
+.user-info-bar .user-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.user-info-key {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.logout-btn, .toggle-userbar-btn {
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid white;
     color: white;
-    padding: 8px 15px;
+    padding: 8px 12px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
     transition: all 0.3s;
 }
 
-.logout-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+.toggle-userbar-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    line-height: 1;
+    font-size: 16px;
+    font-weight: 700;
 }
 
-    </style>
-</head>
+.logout-btn:hover, .toggle-userbar-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+        </style>
+    </head>
 <body>
     <div class="leaf-bg"></div>
-    
     <!-- User Info Bar (hidden until login) -->
     <div id="userInfoBar" class="user-info-bar" style="display: none;">
-        <div>👤 ยินดีต้อนรับ: <strong id="currentUsername"></strong></div>
-        <button id="adminDashboardBtn" class="logout-btn" onclick="showPage('admin')" style="display: none; background: #ff6b00;">📊 Admin Dashboard</button>
-        <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+        <div class="user-info-key">👤 ยินดีต้อนรับ: <strong id="currentUsername"></strong></div>
+        <div class="user-actions">
+            <button id="toggleUserBarBtn" class="toggle-userbar-btn" aria-label="ซ่อนแถบผู้ใช้" onclick="toggleUserBar()">×</button>
+            <button id="adminDashboardBtn" class="logout-btn" onclick="showPage('admin')" style="display: none; background: #ff6b00;">📊</button>
+            <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+        </div>
     </div>
+
+    <button id="showUserBarBtn" class="toggle-userbar-btn" style="display:none; position: fixed; top: 12px; right: 12px; z-index:1001; background: #007a6d; border-color:#fff;" onclick="toggleUserBar()">👤</button>
     
     <!-- Login Page -->
     <div id="loginPage" class="login-container">
@@ -877,7 +1040,7 @@ body {
                     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
                         <iframe 
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
-                            src="https://www.youtube.com/embed/ibdvzk90X-Y" 
+                            src="https://www.youtube.com/embed/gD5D7nldC7I"
                             title="สื่อวิดีโอเกี่ยวกับภาวะโลกร้อน" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -897,6 +1060,9 @@ body {
         <div id="carbon-info" class="page">
             <div class="content-card">
                 <h2>Carbon Footprint คืออะไร?</h2>
+                <div style="text-align: center; margin: 30px 0;">
+                    <img src="image/CFS.png" alt="การชดเชยคาร์บอน" style="max-width: 700px; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.15);">
+                </div>
                 <p><strong>Carbon Footprint</strong> คือ ปริมาณก๊าซเรือนกระจกทั้งหมดที่ถูกปล่อยออกมาจากกิจกรรมของมนุษย์ ไม่ว่าจะเป็นการใช้ชีวิตประจำวัน การคมนาคมขนส่ง การผลิตสินค้าปโภคบริโภค ฯลฯ ทางพฤติให้เห็นกาพง่าย ๆ การดำเนินชีวิตประจำวันของเรากก คน ไม่ว่าจะเป็นการเลี้ยงสัตว์ การใช้ไฟฟ้า การเดินทางโดยรถยนต์ส่วนตัว หรือแม้กระทั้งของเสียที่เกิดจากกอาหารในแต่ละวัน ล้วนแต่ก่อให้เกิดการปล่อยก๊าซเรือนกระจกทั้งสิ้น</p>
                 
                 <p>โดยก๊าซเรือนกระจกที่น่าหน่วงพวงรณาม์อยู่ 7 ตัวด้วยกัน คือ ก๊าซคาร์บอนไดออกไซด์, ก๊าซมีเทน, ก๊าซในตรีสออกไซด์, กลุ่มก๊าซไฮโดรฟลูออโรคาร์บอน, กลุ่มก๊าซเปอร์ฟลูออโรคาร์บอน, ก๊าซซัลเฟอร์เฮกซะฟลูออโรไซด์ และก๊าซไนโตรเจนไตรฟลูออโรไซด์</p>
@@ -912,6 +1078,24 @@ body {
                     <li><strong>ระดับน้ำทะเลสูงขึ้น:</strong> น้ำแข็งที่ละลายส่งผลให้ระดับน้ำทะเลสูงขึ้น</li>
                     <li><strong>การเปลี่ยนแปลงระบบนิเวศ:</strong> เช่น การเปลี่ยนแปลงของฤดูกาล, การย้ายถิ่นของสัตว์, และการเปลี่ยนแปลงของแหล่งอาหาร</li>
                 </ul>
+
+                <h3 style="margin-top: 40px; text-align: center; color: #81d4fa;">สื่อวิดีโอให้ความรู้เกี่ยวกับ Carbon Footprint</h3>
+                
+                <div style="background: rgba(129,212,250,0.2); padding: 30px; border-radius: 20px; margin: 30px 0; text-align: center;">
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
+                        <iframe 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                            src="https://www.youtube.com/embed/K38b_pJl_EY" 
+                            title="สื่อวิดีโอเกี่ยวกับ Carbon Footprint" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 1.1em; color: #b3e5fc;">
+                        วิดีโอให้ความรู้เกี่ยวกับ Carbon Footprint และผลกระทบต่อสิ่งแวดล้อม
+                    </p>
+                </div>
 
                 <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
             </div>
@@ -1139,7 +1323,7 @@ body {
                         <p>• ปลูกต้นไม้และอนุรักษ์พื้นที่ป่า<br>
                         • สนับสนุนโครงการ Carbon Offset เช่น การปลูกป่า หรือการผลิตพลังงานสะอาด<br>
                         • จัดการของเสียและน้ำเสียอย่างถูกวิธีเพื่อลดก๊าซมีเทน</p>
-                        <h3 style="margin-top: 40px; text-align: center; color: #81d4fa;">📺 วิดีโอแนวทางการลดปริมาณ Carbon</h3>
+                        <h3 style="margin-top: 40px; text-align: center; color: #81d4fa;">วิดีโอแนวทางการลดปริมาณ Carbon</h3>
 
 <div style="background: rgba(129,212,250,0.2); padding: 30px; border-radius: 20px; margin: 30px 0; text-align: center;">
     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
@@ -1230,6 +1414,18 @@ body {
             pages.forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0, 0);
+        }
+
+        function toggleUserBar() {
+            const bar = document.getElementById('userInfoBar');
+            const showBtn = document.getElementById('showUserBarBtn');
+            if (bar.style.display === 'none' || bar.style.display === '') {
+                bar.style.display = 'flex';
+                showBtn.style.display = 'none';
+            } else {
+                bar.style.display = 'none';
+                showBtn.style.display = 'block';
+            }
         }
 
         // ฟังก์ชันแสดงหน้า results และโหลดข้อมูล
@@ -2622,12 +2818,14 @@ body {
         function showLoginPage() {
             document.getElementById('loginPage').style.display = 'flex';
             document.getElementById('userInfoBar').style.display = 'none';
+            document.getElementById('showUserBarBtn').style.display = 'none';
             switchTab('login');
         }
 
         function hideLoginPage() {
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('userInfoBar').style.display = 'flex';
+            document.getElementById('showUserBarBtn').style.display = 'none';
             document.getElementById('currentUsername').textContent = loggedInUser.firstName + ' ' + loggedInUser.lastName;
             
             // แสดงปุ่ม Dashboard Admin เฉพาะ admin
