@@ -307,6 +307,8 @@
             </select>
             <button class="btn-secondary" onclick="downloadCSV()">📥 ดาวน์โหลด CSV</button>
             <button class="btn-secondary" onclick="downloadTXT()">📥 ดาวน์โหลด TXT</button>
+            <button class="btn-secondary" onclick="loadUsageStats()">📈 ดูประวัติการใช้งาน</button>
+            <button class="btn-secondary" onclick="downloadUsageSummary()">📤 ส่งออก Usage CSV</button>
             <button class="btn-danger" onclick="backToHome()">🏠 กลับหน้าหลัก</button>
         </div>
 
@@ -314,6 +316,13 @@
             <div id="tableContainer" class="loading">
                 <div class="spinner"></div>
                 <p>กำลังโหลดข้อมูล...</p>
+            </div>
+        </div>
+
+        <div class="table-wrapper" id="usageWrapper" style="margin-top: 20px; display: none;">
+            <div id="usageContainer" class="loading">
+                <div class="spinner"></div>
+                <p>กำลังโหลดประวัติการใช้งาน...</p>
             </div>
         </div>
 
@@ -402,6 +411,80 @@
                 `;
                 console.error('Error:', error);
             }
+        }
+
+        async function loadUsageStats() {
+            document.getElementById('usageWrapper').style.display = 'block';
+            document.getElementById('usageContainer').innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>กำลังโหลดประวัติการใช้งาน...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${API_URL}/admin/usage`);
+                if (!response.ok) throw new Error('ไม่สามารถโหลดข้อมูลได้');
+                const usageData = await response.json();
+
+                if (!Array.isArray(usageData) || usageData.length === 0) {
+                    document.getElementById('usageContainer').innerHTML = `
+                        <div class="no-data">
+                            <p>📭 ยังไม่มีข้อมูลประวัติการใช้งาน</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let usageHtml = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ลำดับที่</th>
+                                <th>ชื่อผู้ใช้</th>
+                                <th>ชื่อ-สกุล</th>
+                                <th>อีเมล</th>
+                                <th>จำนวนครั้งเข้าระบบ</th>
+                                <th>ก่อนเรียน</th>
+                                <th>หลังเรียน</th>
+                                <th>แบบประเมิน</th>
+                                <th>รวมเหตุการณ์</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                usageData.forEach((row, index) => {
+                    usageHtml += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${row.username}</td>
+                            <td>${row.first_name || '-'} ${row.last_name || '-'}</td>
+                            <td>${row.email || '-'}</td>
+                            <td>${row.visits}</td>
+                            <td>${row.pretests}</td>
+                            <td>${row.posttests}</td>
+                            <td>${row.evaluations}</td>
+                            <td>${row.total_events}</td>
+                        </tr>
+                    `;
+                });
+
+                usageHtml += `</tbody></table>`;
+                document.getElementById('usageContainer').innerHTML = usageHtml;
+            } catch (error) {
+                document.getElementById('usageContainer').innerHTML = `
+                    <div class="no-data">
+                        <p>❌ เกิดข้อผิดพลาดในการโหลดประวัติการใช้งาน</p>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+                console.error('Error loading usage:', error);
+            }
+        }
+
+        function downloadUsageSummary() {
+            window.location.href = `${API_URL}/admin/usage/export`;
         }
 
         function displayData(data) {

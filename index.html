@@ -1329,7 +1329,7 @@ body {
     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
         <iframe 
             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
-            src="https://www.youtube.com/embed/cHabfIIPGqY" 
+            src="https://www.youtube.com/embed/B9uUWdzDOhw"
             title="วิดีโอแนวทางการลดปริมาณ Carbon" 
             frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -1390,15 +1390,119 @@ body {
                     <button class="calc-btn" onclick="loadAdminStats()" style="margin-right: 10px;">📈 ดูสถิติ</button>
                     <button class="calc-btn" onclick="downloadAssessmentsExcel()" style="background: #4CAF50; margin-right: 10px;">📥 ดาวน์โหลด Excel</button>
                     <button class="calc-btn" onclick="showAddUserForm()" style="background: #ff9800;">➕ เพิ่ม User ใหม่</button>
+                    <button class="calc-btn" onclick="loadUsageStats()" style="background: #2196F3; color: #fff;">📈 ดูสรุปการใช้งาน</button>
+                    <button class="calc-btn" onclick="downloadUsageSummary()" style="background: #43a047; color: #fff;">📤 ส่งออก Usage CSV</button>
                 </div>
 
                 <div id="adminContent" style="margin-top: 30px;"></div>
+                <div class="table-wrapper" id="usageWrapper" style="margin-top: 20px; display: none;">
+                    <div id="usageContainer" class="loading">
+                        <div class="spinner"></div>
+                        <p>กำลังโหลดประวัติการใช้งาน...</p>
+                    </div>
+                </div>
+
 
                 <a href="#" class="back-link" onclick="showPage('home'); return false;">← ย้อนกลับ</a>
             </div>
         </div>
 
     <script>
+                // ซ่อนทุกส่วนใน Admin Dashboard ก่อนแสดงผลใหม่
+                function hideAllAdminSections() {
+                    document.getElementById('adminContent').style.display = 'none';
+                    document.getElementById('usageWrapper').style.display = 'none';
+                }
+        // ===== Usage Summary Functions =====
+        async function loadUsageStats() {
+            document.getElementById('usageWrapper').style.display = 'block';
+            document.getElementById('usageContainer').innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>กำลังโหลดประวัติการใช้งาน...</p>
+                </div>
+            `;
+            try {
+                const response = await fetch('/api/admin/usage');
+                if (!response.ok) throw new Error('ไม่สามารถโหลดข้อมูลได้');
+                const usageData = await response.json();
+                if (!Array.isArray(usageData) || usageData.length === 0) {
+                    document.getElementById('usageContainer').innerHTML = `
+                        <div class="no-data">
+                            <p>📭 ยังไม่มีข้อมูลประวัติการใช้งาน</p>
+                        </div>
+                    `;
+                    return;
+                }
+                let usageHtml = `
+                    <table style="width:100%; border-collapse: collapse; background: rgba(255,255,255,0.1);">
+                        <thead>
+                            <tr style="background: rgba(76, 175, 80, 0.3);">
+                                <th style="padding: 10px;">ลำดับที่</th>
+                                <th style="padding: 10px;">ชื่อผู้ใช้</th>
+                                <th style="padding: 10px;">ชื่อ-สกุล</th>
+                                <th style="padding: 10px;">อีเมล</th>
+                                <th style="padding: 10px;">จำนวนครั้งเข้าระบบ</th>
+                                <th style="padding: 10px;">ก่อนเรียน</th>
+                                <th style="padding: 10px;">หลังเรียน</th>
+                                <th style="padding: 10px;">แบบประเมิน</th>
+                                <th style="padding: 10px;">รวมเหตุการณ์</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                usageData.forEach((row, index) => {
+                    usageHtml += `
+                        <tr>
+                            <td style="padding: 10px;">${index + 1}</td>
+                            <td style="padding: 10px;">${row.username}</td>
+                            <td style="padding: 10px;">${row.first_name || '-'} ${row.last_name || '-'}</td>
+                            <td style="padding: 10px;">${row.email || '-'}</td>
+                            <td style="padding: 10px;">${row.visits}</td>
+                            <td style="padding: 10px;">${row.pretests}</td>
+                            <td style="padding: 10px;">${row.posttests}</td>
+                            <td style="padding: 10px;">${row.evaluations}</td>
+                            <td style="padding: 10px;">${row.total_events}</td>
+                        </tr>
+                    `;
+                });
+                usageHtml += `</tbody></table>`;
+                document.getElementById('usageContainer').innerHTML = usageHtml;
+            } catch (error) {
+                document.getElementById('usageContainer').innerHTML = `
+                    <div class="no-data">
+                        <p>❌ เกิดข้อผิดพลาดในการโหลดประวัติการใช้งาน</p>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function downloadUsageSummary() {
+            fetch('/api/admin/usage/export')
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                    }
+                    return res.blob();
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    const filename = `usage_summary_${new Date().getTime()}.csv`;
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                    alert('✅ ดาวน์โหลด Usage CSV สำเร็จ!');
+                })
+                .catch(err => {
+                    alert(`❌ เกิดข้อผิดพลาด: ${err?.message || 'ไม่สามารถดาวน์โหลดได้'}`);
+                    console.error('Error:', err);
+                });
+        }
         // ตัวแปรสำหรับเก็บข้อมูลส่วนตัว
         let userInfo = {
             firstName: '',
@@ -2648,12 +2752,30 @@ body {
         // ===== Login System Functions =====
         let loggedInUser = null;
 
+        async function logUsageEvent(eventType, eventData = {}) {
+            if (!loggedInUser || !loggedInUser.username) return;
+            try {
+                await fetch('/api/usage/event', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: loggedInUser.username,
+                        eventType: eventType,
+                        eventData: eventData
+                    })
+                });
+            } catch (err) {
+                console.error('Failed to log usage event:', err);
+            }
+        }
+
         function initializeLoginSystem() {
             // ตรวจสอบว่ามีผู้ใช้เข้าสู่ระบบอยู่แล้วหรือไม่
             const savedUser = localStorage.getItem('currentUser');
             if (savedUser) {
                 loggedInUser = JSON.parse(savedUser);
                 hideLoginPage();
+                logUsageEvent('visit');
             } else {
                 showLoginPage();
             }
@@ -2715,6 +2837,7 @@ body {
                     
                     setTimeout(() => {
                         hideLoginPage();
+                        logUsageEvent('visit');
                     }, 1000);
                 } else {
                     messageDiv.textContent = '❌ ' + data.message;
@@ -2786,6 +2909,7 @@ body {
 
                     setTimeout(() => {
                         hideLoginPage();
+                        logUsageEvent('visit');
                     }, 1000);
                 } else {
                     messageDiv.textContent = '❌ ' + data.message;
@@ -2878,7 +3002,9 @@ body {
         }
         
         function loadAdminUsers() {
+            hideAllAdminSections();
             const contentDiv = document.getElementById('adminContent');
+            contentDiv.style.display = 'block';
             contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
 
             fetch('/api/admin/users')
@@ -2934,7 +3060,9 @@ body {
         let selectedAssessmentCategory = '';
 
         function loadAdminAssessments() {
+            hideAllAdminSections();
             const contentDiv = document.getElementById('adminContent');
+            contentDiv.style.display = 'block';
             contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
 
             fetch('/api/admin/assessments')
@@ -3166,7 +3294,9 @@ body {
         }
 
         function loadAdminStats() {
+            hideAllAdminSections();
             const contentDiv = document.getElementById('adminContent');
+            contentDiv.style.display = 'block';
             contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
 
             fetch('/api/admin/stats')

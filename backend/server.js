@@ -66,7 +66,21 @@ async function initializeDatabase() {
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_username ON assessments(username);`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_category ON assessments(category);`);
     await pool.query(`CREATE INDEX IF NOT EXISTS idx_created_at ON assessments(created_at);`);
-    
+
+    // สร้างตาราง usage_history สำหรับเก็บประวัติการใช้งาน
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS usage_history (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(50) NOT NULL,
+        event_type VARCHAR(50) NOT NULL,
+        event_data JSONB,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
+      );
+    `);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_usage_username ON usage_history(username);`);
+    await pool.query(`CREATE INDEX IF NOT EXISTS idx_usage_event_type ON usage_history(event_type);`);
+
     console.log('✅ Database tables initialized successfully');
   } catch (err) {
     console.error('❌ Error initializing database:', err);
@@ -153,6 +167,8 @@ app.post('/api/assessment', async (req, res) => {
   const { username, category, answers, avgScore, comment } = req.body;
   
   try {
+    await pool.query('BEGIN');
+
     const query = `
       INSERT INTO assessments (username, category, answers, avg_score, comment)
       VALUES ($1, $2, $3, $4, $5)
@@ -161,10 +177,41 @@ app.post('/api/assessment', async (req, res) => {
     
     const values = [username, category, JSON.stringify(answers), avgScore, comment];
     const result = await pool.query(query, values);
-    
+
+    // เก็บ usage history event จากการทำแบบทดสอบ/ประเมิน
+    let eventType = 'assessment';
+    if (category === 'แบบทดสอบก่อนเรียน') eventType = 'pretest';
+    else if (category === 'แบบทดสอบหลังเรียน') eventType = 'posttest';
+    else if (category === 'แบบประเมินความพึงพอใจ') eventType = 'evaluation';
+
+    await pool.query(
+      `INSERT INTO usage_history (username, event_type, event_data) VALUES ($1, $2, $3)`,
+      [username, eventType, JSON.stringify({ category, avgScore, comment })]
+    );
+
+    await pool.query('COMMIT');
     res.json({ status: 'ok', id: result.rows[0].id });
   } catch (err) {
+    await pool.query('ROLLBACK');
     console.error('Database error:', err);
+    res.status(500).json({ status: 'error', message: err.message });
+  }
+});
+
+// บันทึกประวัติการเข้าถึงระบบสำหรับผู้ใช้งาน
+app.post('/api/usage/event', async (req, res) => {
+  const { username, eventType, eventData } = req.body;
+
+  try {
+    const query = `
+      INSERT INTO usage_history (username, event_type, event_data)
+      VALUES ($1, $2, $3)
+      RETURNING id;
+    `;
+    await pool.query(query, [username, eventType, JSON.stringify(eventData || {})]);
+    res.json({ status: 'ok' });
+  } catch (err) {
+    console.error('Usage save error:', err);
     res.status(500).json({ status: 'error', message: err.message });
   }
 });
@@ -209,6 +256,70 @@ app.get('/api/admin/assessments', async (req, res) => {
     res.json(data);
   } catch (err) {
     console.error('Database error:', err);
+    res.status(500).json({ status: 'error', message: err.message });
+  }
+});
+
+// ดึงสถิติ usage history per user (Admin only)
+app.get('/api/admin/usage', async (req, res) => {
+  try {
+    const query = `
+      SELECT
+        u.username,
+        u.first_name,
+        u.last_name,
+        u.email,
+        COALESCE(SUM(CASE WHEN uh.event_type = 'visit' THEN 1 ELSE 0 END), 0) AS visits,
+        COALESCE(SUM(CASE WHEN uh.event_type = 'pretest' THEN 1 ELSE 0 END), 0) AS pretests,
+        COALESCE(SUM(CASE WHEN uh.event_type = 'posttest' THEN 1 ELSE 0 END), 0) AS posttests,
+        COALESCE(SUM(CASE WHEN uh.event_type = 'evaluation' THEN 1 ELSE 0 END), 0) AS evaluations,
+        COALESCE(COUNT(uh.*), 0) AS total_events
+      FROM users u
+      LEFT JOIN usage_history uh ON u.username = uh.username
+      GROUP BY u.username, u.first_name, u.last_name, u.email
+      ORDER BY total_events DESC;
+    `;
+
+    const result = await pool.query(query);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Database error:', err);
+    res.status(500).json({ status: 'error', message: err.message });
+  }
+});
+
+// ส่งออกประวัติการใช้งานผู้ใช้เป็น CSV (Admin only)
+app.get('/api/admin/usage/export', async (req, res) => {
+  try {
+    const query = `
+      SELECT
+        u.username,
+        u.first_name,
+        u.last_name,
+        u.email,
+        COALESCE(SUM(CASE WHEN uh.event_type = 'visit' THEN 1 ELSE 0 END), 0) AS visits,
+        COALESCE(SUM(CASE WHEN uh.event_type = 'pretest' THEN 1 ELSE 0 END), 0) AS pretests,
+        COALESCE(SUM(CASE WHEN uh.event_type = 'posttest' THEN 1 ELSE 0 END), 0) AS posttests,
+        COALESCE(SUM(CASE WHEN uh.event_type = 'evaluation' THEN 1 ELSE 0 END), 0) AS evaluations,
+        COALESCE(COUNT(uh.*), 0) AS total_events
+      FROM users u
+      LEFT JOIN usage_history uh ON u.username = uh.username
+      GROUP BY u.username, u.first_name, u.last_name, u.email
+      ORDER BY total_events DESC;
+    `;
+
+    const result = await pool.query(query);
+
+    let csv = 'ลำดับที่,username,ชื่อ,นามสกุล,อีเมล,เข้าระบบ (visit),ก่อนเรียน,หลังเรียน,แบบประเมิน,รวมเหตุการณ์\n';
+    result.rows.forEach((row, idx) => {
+      csv += `${idx + 1},${row.username},${row.first_name || ''},${row.last_name || ''},${row.email || ''},${row.visits},${row.pretests},${row.posttests},${row.evaluations},${row.total_events}\n`;
+    });
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    res.setHeader('Content-Disposition', `attachment; filename="usage_summary_${Date.now()}.csv"`);
+    res.send('\uFEFF' + csv);
+  } catch (err) {
+    console.error('Export usage error:', err);
     res.status(500).json({ status: 'error', message: err.message });
   }
 });
