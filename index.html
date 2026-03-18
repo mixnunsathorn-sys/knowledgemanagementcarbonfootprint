@@ -2341,7 +2341,7 @@ body {
                     username: loggedInUser.username,
                     category: quizType === 'pre' ? 'แบบทดสอบก่อนเรียน' : 'แบบทดสอบหลังเรียน',
                     answers: answers,
-                    avgScore: parseFloat(avgScore),
+                    avgScore: (totalScore / 20) * 5,
                     comment: `คะแนนรวม ${totalScore}/20`
                 })
             })
@@ -3103,7 +3103,7 @@ body {
                         html += `<td style="padding: 15px;">${index + 1}</td>`;
                         html += `<td style="padding: 15px;"><strong>${assessment.username}</strong></td>`;
                         html += `<td style="padding: 15px;">${assessment.category}</td>`;
-                        html += `<td style="padding: 15px; color: ${scoreColor}; font-weight: bold;">${(assessment.avg_score || 0).toFixed(2)}/5.00</td>`;
+                        html += `<td style="padding: 15px; color: ${scoreColor}; font-weight: bold;">${((assessment.avg_score / 5) * 100).toFixed(0)}%</td>`;
                         html += `<td style="padding: 15px;">${assessment.comment || '-'}</td>`;
                         html += `<td style="padding: 15px;">${date}</td>`;
                         html += `</tr>`;
@@ -3294,45 +3294,88 @@ body {
         }
 
         function loadAdminStats() {
-            hideAllAdminSections();
-            const contentDiv = document.getElementById('adminContent');
-            contentDiv.style.display = 'block';
-            contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
+    hideAllAdminSections();
+    const contentDiv = document.getElementById('adminContent');
+    contentDiv.style.display = 'block';
+    contentDiv.innerHTML = '<p style="text-align: center; color: #81d4fa;">⏳ กำลังโหลดข้อมูล...</p>';
 
-            fetch('/api/admin/stats')
-                .then(res => res.json())
-                .then(data => {
-                    let html = '<h3>📈 สถิติการประเมิน</h3>';
-                    html += '<div style="margin-top: 20px;">';
+    fetch('/api/admin/assessments')
+        .then(res => res.json())
+        .then(data => {
+            let html = '<h3>📈 สถิติการประเมิน</h3>';
 
-                    if (data.length === 0) {
-                        html += '<p style="text-align: center;">ยังไม่มีข้อมูลการประเมิน</p>';
-                    } else {
-                        data.forEach(stat => {
-                            const avgScore = parseFloat(stat.avg_score).toFixed(2);
-                            const percentage = ((avgScore / 5) * 100).toFixed(0);
-                            const barColor = avgScore >= 3.5 ? '#4CAF50' : avgScore >= 2.5 ? '#FFC107' : '#f44336';
-                            
-                            html += `<div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid ${barColor};">`;
-                            html += `<h4 style="color: #81d4fa; margin-bottom: 15px;">${stat.category}</h4>`;
-                            html += `<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">`;
-                            html += `<div><strong>จำนวนที่ตอบ:</strong> ${stat.count} คน</div>`;
-                            html += `<div><strong>คะแนนเฉลี่ย:</strong> <span style="color: ${barColor}; font-weight: bold;">${avgScore}/5.00 (${percentage}%)</span></div>`;
-                            html += `<div><strong>คะแนนต่ำสุด:</strong> ${parseFloat(stat.min_score || 0).toFixed(2)}</div>`;
-                            html += `<div><strong>คะแนนสูงสุด:</strong> ${parseFloat(stat.max_score || 0).toFixed(2)}</div>`;
-                            html += `</div>`;
-                            html += `</div>`;
+            const types = ['แบบทดสอบก่อนเรียน', 'แบบทดสอบหลังเรียน', 'แบบประเมินความพึงพอใจ'];
+            const categories = ['ภาวะโลกร้อน', 'Carbon Footprint', 'GHG Protocol', 'แนวทางการลดปริมาณ Carbon'];
+
+            types.forEach(type => {
+                const typeData = data.filter(d => d.category === type);
+                if (typeData.length === 0) return;
+
+                const avgScore = typeData.reduce((s, d) => s + d.avg_score, 0) / typeData.length;
+                const minScore = Math.min(...typeData.map(d => d.avg_score));
+                const maxScore = Math.max(...typeData.map(d => d.avg_score));
+                const isQuiz = type !== 'แบบประเมินความพึงพอใจ';
+
+                html += `
+                <div style="background: #efeeee; padding: 25px; border-radius: 15px; margin-bottom: 25px; border-left: 5px solid #4CAF50;">
+                    <h4 style="color: #81d4fa; margin-bottom: 15px; font-size: 1.2em;">${type}</h4>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
+                        <div>จำนวนที่ตอบ: <strong>${typeData.length} คน</strong></div>
+                        <div>คะแนนเฉลี่ย: <strong>${isQuiz ? (avgScore * 100).toFixed(0) + '%' : avgScore.toFixed(2) + '/5.00'}</strong></div>
+                        <div>คะแนนต่ำสุด: <strong>${isQuiz ? (minScore * 100).toFixed(0) + '%' : minScore.toFixed(2)}</strong></div>
+                        <div>คะแนนสูงสุด: <strong>${isQuiz ? (maxScore * 100).toFixed(0) + '%' : maxScore.toFixed(2)}</strong></div>
+                    </div>
+                `;
+
+                // แสดงคะแนนแยกหมวดหมู่เฉพาะแบบทดสอบ
+                if (isQuiz) {
+                    html += `<div style="margin-top: 15px;"><p style="color: #a8d5ba; margin-bottom: 10px;">📊 คะแนนแยกรายหมวดหมู่ (เฉลี่ยจากทุกคน):</p>`;
+                    
+                    categories.forEach((cat, catIndex) => {
+                        // แต่ละหมวดหมู่มี 5 ข้อ (ข้อ 0-4, 5-9, 10-14, 15-19)
+                        const start = catIndex * 5;
+                        
+                        let totalCorrect = 0;
+                        typeData.forEach(person => {
+                            if (person.answers) {
+                                const answers = typeof person.answers === 'string' ? JSON.parse(person.answers) : person.answers;
+                                // นับข้อที่ถูกในหมวดนี้
+                                for (let i = start; i < start + 5; i++) {
+                                    if (answers[i] !== undefined && answers[i] === allQuestions.filter(q => q.category === cat)[i - start]?.answer) {
+                                        totalCorrect++;
+                                    }
+                                }
+                            }
                         });
-                    }
+                        
+                        const avgCorrect = typeData.length > 0 ? totalCorrect / typeData.length : 0;
+                        const barWidth = (avgCorrect / 5) * 100;
+                        const barColor = avgCorrect >= 4 ? '#4CAF50' : avgCorrect >= 3 ? '#FFC107' : '#f44336';
 
-                    html += '</div>';
-                    contentDiv.innerHTML = html;
-                })
-                .catch(err => {
-                    contentDiv.innerHTML = `<p style="color: #ff5252; text-align: center;">❌ เกิดข้อผิดพลาด: ${err.message}</p>`;
-                    console.error('Error:', err);
-                });
-        }
+                        html += `
+                        <div style="margin: 10px 0;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span style="font-size: 0.95em;">${cat}</span>
+                                <span style="color: ${barColor}; font-weight: bold;">${avgCorrect.toFixed(1)}/5</span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); height: 25px; border-radius: 8px; overflow: hidden;">
+                                <div style="background: ${barColor}; height: 100%; width: ${barWidth}%; border-radius: 8px;"></div>
+                            </div>
+                        </div>`;
+                    });
+                    
+                    html += `</div>`;
+                }
+
+                html += `</div>`;
+            });
+
+            contentDiv.innerHTML = html;
+        })
+        .catch(err => {
+            contentDiv.innerHTML = `<p style="color: #ff5252;">❌ เกิดข้อผิดพลาด: ${err.message}</p>`;
+        });
+}
 
         // เริ่มต้นระบบ login เมื่อหน้าโหลด
         window.addEventListener('load', function() {
