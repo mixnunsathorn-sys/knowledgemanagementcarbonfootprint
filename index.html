@@ -1466,12 +1466,16 @@ body {
     <script>
                 // ซ่อนทุกส่วนใน Admin Dashboard ก่อนแสดงผลใหม่
                 function hideAllAdminSections() {
-                    document.getElementById('adminContent').style.display = 'none';
-                    document.getElementById('usageWrapper').style.display = 'none';
-                }
+    const adminContent = document.getElementById('adminContent');
+    const usageWrapper = document.getElementById('usageWrapper');
+    if (adminContent) adminContent.style.display = 'none';
+    if (usageWrapper) usageWrapper.style.display = 'none';
+    if (adminContent) adminContent.innerHTML = '';
+}
         // ===== Usage Summary Functions =====
         async function loadUsageStats() {
-            document.getElementById('usageWrapper').style.display = 'block';
+    hideAllAdminSections();
+    document.getElementById('usageWrapper').style.display = 'block';
             document.getElementById('usageContainer').innerHTML = `
                 <div class="loading">
                     <div class="spinner"></div>
@@ -1490,10 +1494,12 @@ body {
                     `;
                     return;
                 }
-                let usageHtml = `
-                    <table style="width:100%; border-collapse: collapse; background: rgba(255,255,255,0.1);">
-                        <thead>
-                            <tr style="background: rgba(76, 175, 80, 0.3);">
+               let usageHtml = `
+    <h3 style="margin-bottom: 20px;">📈 สรุปการใช้งาน</h3>
+    <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+    <table style="width:100%; min-width: 600px; border-collapse: collapse; background: rgba(255,255,255,0.1);">
+        <thead>
+            <tr style="background: rgba(76, 175, 80, 0.3);">
                                 <th style="padding: 10px;">ลำดับที่</th>
                                 <th style="padding: 10px;">ชื่อผู้ใช้</th>
                                 <th style="padding: 10px;">ชื่อ-สกุล</th>
@@ -1522,7 +1528,7 @@ body {
                         </tr>
                     `;
                 });
-                usageHtml += `</tbody></table>`;
+                usageHtml += `</tbody></table></div>`;
                 document.getElementById('usageContainer').innerHTML = usageHtml;
             } catch (error) {
                 document.getElementById('usageContainer').innerHTML = `
@@ -2355,11 +2361,7 @@ body {
                     margin-top: 30px;
                 ">
                     <h3 style="color: white; margin-bottom: 20px; font-size: 1.8em;">ผลการทำแบบทดสอบ</h3>
-                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
-                        <p style="font-size: 0.95em; color: #c8e6c9; margin-bottom: 10px;">ชื่อ-นามสกุล: <strong>${userInfo.firstName} ${userInfo.lastName}</strong></p>
-                        <p style="font-size: 0.95em; color: #c8e6c9; margin-bottom: 10px;">อีเมล: <strong>${userInfo.email}</strong></p>
-                        <p style="font-size: 0.95em; color: #c8e6c9;">เบอร์โทร: <strong>${userInfo.phone}</strong></p>
-                    </div>
+                    
                     <p style="font-size: 1.5em; margin: 15px 0;">
                         คะแนนที่ได้: <strong style="color: ${summaryColor}; font-size: 1.3em;">${totalScore}/${currentQuiz.length}</strong>
                     </p>
@@ -3377,9 +3379,9 @@ body {
                     <h4 style="color: #81d4fa; margin-bottom: 15px; font-size: 1.2em;">${type}</h4>
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
                         <div>จำนวนที่ตอบ: <strong>${typeData.length} คน</strong></div>
-                        <div>คะแนนเฉลี่ย: <strong>${isQuiz ? (avgScore * 100).toFixed(0) + '%' : avgScore.toFixed(2) + '/5.00'}</strong></div>
-                        <div>คะแนนต่ำสุด: <strong>${isQuiz ? (minScore * 100).toFixed(0) + '%' : minScore.toFixed(2)}</strong></div>
-                        <div>คะแนนสูงสุด: <strong>${isQuiz ? (maxScore * 100).toFixed(0) + '%' : maxScore.toFixed(2)}</strong></div>
+                       <div>คะแนนเฉลี่ย: <strong>${isQuiz ? (avgScore / 5 * 100).toFixed(0) + '%' : avgScore.toFixed(2) + '/5.00'}</strong></div>
+<div>คะแนนต่ำสุด: <strong>${isQuiz ? (minScore / 5 * 100).toFixed(0) + '%' : minScore.toFixed(2)}</strong></div>
+<div>คะแนนสูงสุด: <strong>${isQuiz ? (maxScore / 5 * 100).toFixed(0) + '%' : maxScore.toFixed(2)}</strong></div>
                     </div>
                 `;
 
